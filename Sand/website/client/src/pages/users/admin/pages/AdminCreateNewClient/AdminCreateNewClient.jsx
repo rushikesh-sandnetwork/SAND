@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import PageTitle from "../../../../../components/PageTitles/PageTitle";
 import "./AdminCreateNewClient.css";
+import { useParams } from "react-router-dom";
 
 const AdminCreateNewClient = () => {
   const [clientName, setClientName] = useState("");
@@ -11,6 +12,16 @@ const AdminCreateNewClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+
+
+  const { campaignId } = useParams();
+  
+    useEffect(() => {
+      if (!campaignId) {
+        console.error("Campaign ID is missing");
+      }
+    }, [campaignId]);
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);

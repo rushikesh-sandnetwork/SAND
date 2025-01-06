@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
           withCredentials: true,
         }
       );
-      // console.log(response.data.data);
+      //console.log(response.data.data);
       setUser(response.data.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -42,9 +42,9 @@ const AuthProvider = ({ children }) => {
       );
       setUser(null);
       setIsAuthenticated(false);
-      <Navigate to={<LoginPage />} replace />;
+      navigate("/",{replace:true})
     } catch (error) {
-      console.error("Error during logout:", error);
+      console.error("Error during logout`:", error);
     }
   };
 

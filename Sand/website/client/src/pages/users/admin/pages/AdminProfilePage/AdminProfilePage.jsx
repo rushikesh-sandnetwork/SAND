@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../../../../../components/PageTitles/PageTitle";
 import "./AdminProfilePage.css";
+import { useParams } from "react-router-dom";
 
-const AdminProfilePage = ({ userId }) => {
+const AdminProfilePage = () => {
   // Updated to accept userId as a prop
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {id} = useParams();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -18,10 +20,10 @@ const AdminProfilePage = ({ userId }) => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ userId }), // Send userId in the request body
+            body: JSON.stringify({ id }), // Send id from the URL
           }
         );
-
+  
         const data = await response.json();
         if (response.ok) {
           setUserDetails(data.data);
@@ -34,10 +36,10 @@ const AdminProfilePage = ({ userId }) => {
         setLoading(false);
       }
     };
-
+  
     fetchUserDetails();
-  }, [userId]); // Ensure userId is a dependency for useEffect
-
+  }, [id]); // Include id as a dependency
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 

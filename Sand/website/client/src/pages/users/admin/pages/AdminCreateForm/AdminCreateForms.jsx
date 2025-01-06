@@ -24,6 +24,8 @@ import FIleUpload from './FormUtils/elements/FormFields/FileUpload/FIleUpload';
 import StarRating from './FormUtils/elements/FormFields/StarRating/StarRating';
 import ScaleRating from './FormUtils/elements/FormFields/ScaleRating/ScaleRating';
 import Table from './FormUtils/elements/FormFields/Table/Table';
+import { useParams } from 'react-router-dom';
+
 
 
 const dragItems = [
@@ -48,6 +50,18 @@ const dragItems = [
 ];
 
 const AdminCreateForms = () => {
+
+
+
+
+
+
+
+
+
+
+
+  
   const [items, setItems] = useState([]);
   const [itemList , setItemList] = useState([]);
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import { connect } from "react-redux";
-import { useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import DraggableItem from "./DraggableItem";
 import "./DropArea.css";
 import axios from "axios";
@@ -17,7 +16,6 @@ const DropArea = ({ onDrop, setFullNameData }) => {
   const [showModal, setShowModal] = useState(false);
   const [formId, setFormId] = useState("");
   const [nested, setNested] = useState(false);
-
   const { campaignId } = useParams();
   const navigate = useNavigate();
 
@@ -50,10 +48,6 @@ const DropArea = ({ onDrop, setFullNameData }) => {
       setFullNameData(id, event.target.value, "Form Title");
     }
   };
-
-  useEffect(() => {
-    console.log("Full Name Data List:", fullNameDataList);
-  }, [fullNameDataList]);
 
   const handleDelete = (id) => {
     setDroppedItems((prevItems) => prevItems.filter((item) => item.id !== id));
@@ -169,4 +163,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   setFullNameData,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(DropArea);

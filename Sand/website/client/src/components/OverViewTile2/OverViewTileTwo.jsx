@@ -37,7 +37,7 @@ const OverViewTileTwo = ({ setActiveTab }) => {
     <div className="OverViewTileTwoContainer">
       {campaigns.map((campaign) => (
         <OverViewTileTwoBox
-          id={campaign.id}
+          id={campaign._id}
           key={campaign._id}
           title={campaign.title}
           details={campaign.details}

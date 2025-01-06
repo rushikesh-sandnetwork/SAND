@@ -36,6 +36,7 @@ const createNewClient = asyncHandler(async (req, res) => {
       throw new apiError(400, "Failed to upload client Photo");
     }
 
+//mongo => connecting ur incoming info n saving it back to db
     const newClient = await client.create({
       clientName,
       clientLocation,
@@ -238,7 +239,7 @@ const createNewForm = asyncHandler(async (req, res) => {
       throw new apiError(400, "All data is required.");
     }
 
-    console.log("wkring");
+    console.log("working");
 
     const formName = formFields[0]["title"];
     console.log("Form Name : ", formName);

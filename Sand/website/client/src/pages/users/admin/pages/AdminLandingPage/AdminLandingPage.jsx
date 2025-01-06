@@ -1,95 +1,52 @@
-import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import AdminOverViewPage from "../AdminOverViewPage/AdminOverViewPage";
-import AdminViewClientsPage from "../AdminViewClientsPage/AdminViewClientsPage";
-import AdminProfilePage from "../AdminProfilePage/AdminProfilePage";
-import AdminViewCampaignsPage from "../AdminViewCampaignsPage/AdminViewCampaignsPage";
-import AdminCreateNewClient from "../AdminCreateNewClient/AdminCreateNewClient";
-import AdminCampaignDetailsPage from "../AdminCampaignDetailsPage/AdminCampaignDetailsPage";
-import AdminFormDetails from "../AdminFormDetails/AdminFormDetails";
-import AdminCreateNewCampaign from "../AdminCreateNewCampaign/AdminCreateNewCampaign";
-import AdminFormItems from "../AdminFormItems/AdminFormItems";
-import AdminCreateNewUser from "../AdminCreateNewUser/AdminCreateNewUser";
-import "./AdminLandingPage.css";
-import "./AdminLandingPage.css";
-import Logo from "./SAND 1 logo.png"; // Corrected import statement
-import AdminViewAttendance from "../AdminViewAttendance/AdminViewAttendance";
-import { useAuth } from "../../../../../context/AuthContext";
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import './AdminLandingPage.css';
+import Logo from './SAND 1 logo.png';
+
+
+
 
 const AdminLandingPage = () => {
-  const [activeTab, setActiveTab] = useState("overview");
-  const [activeClient, setActiveClient] = useState("");
-  const { id } = useParams(); // Destructure to get the `id` from useParams
-  const { logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
+  const userId = '123'; 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    // Confirm logout, then redirect to login
+    if (window.confirm('Are you sure you want to log out?')) {
+      navigate('/'); // Redirect to login page
+    }
   };
 
   return (
-    <div className="LandingPage-container">
+    <div className="landing-page-container">
       <div className="sidebar">
         <div className="navbar">
-          <img src={Logo} alt="" />
-          <a onClick={() => setActiveTab("overview")}>Overview</a>
-          <a onClick={() => setActiveTab("newClient")}>New Client</a>
-          <a onClick={() => setActiveTab("viewClients")}>View Clients</a>
-          <a onClick={() => setActiveTab("profile")}>Profile</a>
-          <a onClick={() => setActiveTab("newUser")}>New User</a>
-          <a onClick={() => setActiveTab("promoterAttendance")}>
+          <img src={Logo} alt="Logo" className="logo" />
+          <NavLink to=""  className="nav-link">
+            Overview
+          </NavLink>
+          <NavLink to="newClient"  className="nav-link">
+            New Client
+          </NavLink>
+          <NavLink to="viewClients"  className="nav-link">
+            View Clients
+          </NavLink>
+          <NavLink to="profile" className="nav-link">
+            Profile
+          </NavLink>
+          <NavLink to="newUser"  className="nav-link">
+            New User
+          </NavLink>
+          <NavLink to="promoterAttendance"  className="nav-link">
             Promoter Attendance
-          </a>
-          <input type="button" value="Logout" onClick={handleLogout} />
+          </NavLink>
+          <input type="button" value="Logout" onClick={handleLogout} className="logout-button" />
         </div>
-      </div>
-      <div className="content">
-        {activeTab === "overview" && (
-          <AdminOverViewPage setActiveTab={setActiveTab} />
-        )}
-        {activeTab === "newClient" && <AdminCreateNewClient />}
-        {activeTab === "viewClients" && (
-          <AdminViewClientsPage
-            setActiveTab={setActiveTab}
-            setActiveClient={setActiveClient}
-          />
-        )}
-        {activeTab === "profile" && <AdminProfilePage userId={id} />}{" "}
-        {/* Pass `id` to AdminProfilePage */}
-        {activeTab === "newUser" && <AdminCreateNewUser />}
-        {activeTab === "promoterAttendance" && <AdminViewAttendance />}
-        {activeTab.startsWith("client-detail") && (
-          <AdminViewCampaignsPage
-            clientId={activeTab.substring("client-detail".length + 1)}
-            setActiveTab={setActiveTab}
-          />
-        )}
-        {activeTab.startsWith("createNewCampaign") && (
-          <AdminCreateNewCampaign
-            clientId={activeTab.substring("createNewCampaign".length + 1)}
-            setActiveTab={setActiveTab}
-          />
-        )}
-        {activeTab.startsWith("campaignDetailsPage") && (
-          <AdminCampaignDetailsPage
-            campaignId={activeTab.substring("campaignDetailsPage".length + 1)}
-            setActiveTab={setActiveTab}
-          />
-        )}
-        {activeTab.startsWith("view-all-forms") && (
-          <AdminFormDetails
-            campaignId={activeTab.substring("view-all-forms".length + 1)}
-            setActiveTab={setActiveTab}
-          />
-        )}
-        {activeTab.startsWith("viewFormData") && (
-          <AdminFormItems
-            formId={activeTab.substring("viewFormData".length + 1)}
-            setActiveTab={setActiveTab}
-          />
-        )}
       </div>
     </div>
   );
 };
+
+
+
 
 export default AdminLandingPage;
