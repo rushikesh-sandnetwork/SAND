@@ -58,6 +58,7 @@ const App = () => {
         path="/admin/assignForm/:formId"
         element={<AdminAssignCreatedForm />}
       />
+      {/* <Route path="/admin/Ad" */}
       <Route path="/admin/acceptData/:formId" element={<AdminAcceptedData />} />
       <Route path="/admin/rejectData/:formId" element={<AdminRejectedData />} />
       <Route

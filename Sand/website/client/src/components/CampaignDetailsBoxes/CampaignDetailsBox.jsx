@@ -2,7 +2,7 @@ import React from 'react';
 import './CampaignDetailsBox.css';
 import { useNavigate } from 'react-router-dom';
 
-const CampaignDetailsBox = ({ campaignId, title, url, imgSrc, setActiveTab }) => {
+const CampaignDetailsBox = ({ campaignId, title, url, imgSrc }) => {
   const navigate = useNavigate();
 
   const handleNextClick = () => {
@@ -10,7 +10,7 @@ const CampaignDetailsBox = ({ campaignId, title, url, imgSrc, setActiveTab }) =>
       navigate(`/admin/createNewForm/${campaignId}`);
 
     } else {
-      setActiveTab(`${url}/${campaignId}`)
+      navigate('viewForms')
     }
   };
 

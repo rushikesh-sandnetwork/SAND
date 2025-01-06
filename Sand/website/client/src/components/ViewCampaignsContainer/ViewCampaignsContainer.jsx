@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./ViewCampaignsContainer.css";
 import ViewCampaignsBox from "./ViewCampaignsBox";
+import AdminCreateNewCampaign from "../../pages/users/admin/pages/AdminCreateNewCampaign/AdminCreateNewCampaign";
 
-const ViewCampaignsContainer = ({ clientId, setActiveTab }) => {
+const ViewCampaignsContainer = () => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  const {clientId} = useParams();
 
   useEffect(() => {
     const fetchCampaigns = async () => {
@@ -58,11 +61,11 @@ const ViewCampaignsContainer = ({ clientId, setActiveTab }) => {
 
   return (
     <div className="viewCampaignsContainer">
-      <input
+    <input
         className="newCampaignBtn"
         type="button"
         value="Create New Campaign"
-        onClick={() => setActiveTab(`createNewCampaign/${clientId}`)}
+        onClick={() => navigate('AdminCreateNewCampaign')}
       />
       <input
         className="deleteClientBtn"
@@ -78,7 +81,7 @@ const ViewCampaignsContainer = ({ clientId, setActiveTab }) => {
             url={campaign.campaignLogo}
             campaign={campaign}
             campaignId={campaign._id}
-            setActiveTab={setActiveTab}
+            // setActiveTab={setActiveTab}
           />
         ))}
       </div>

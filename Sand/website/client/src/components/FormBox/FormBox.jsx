@@ -1,7 +1,8 @@
 import React from 'react';
 import './FormBox.css';
-
-const FormBox = ({ form, setActiveTab ,formId}) => {
+import { useNavigate } from 'react-router-dom';
+const FormBox = ({ form,formId}) => {
+    const navigate =    useNavigate();
     return (
         <div className="formBox">
             <h3>{form.collectionName}</h3> {/* Displaying the form's title */}
@@ -12,7 +13,7 @@ const FormBox = ({ form, setActiveTab ,formId}) => {
                 value="More Info" 
                 onClick={() => {
                     console.log(form._id);
-                    setActiveTab(`viewFormData/${form._id}`)}} 
+                    navigate(`viewFormData/${form._id}`)}} 
             />
         </div>
     );
