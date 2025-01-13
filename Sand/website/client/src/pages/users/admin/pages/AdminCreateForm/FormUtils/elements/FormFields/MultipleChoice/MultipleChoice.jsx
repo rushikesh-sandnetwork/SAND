@@ -2,6 +2,7 @@ import React from 'react';
 import './MultipleChoice.css';
 
 const MultipleChoice = () => {
+  
   return (
     <div className="multipleChoice-container">
       <div className="multipleChoicetitle-container">
