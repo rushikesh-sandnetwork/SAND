@@ -9,3 +9,6 @@ export const setFullNameData = (id, fullName, componentName) => ({
     type: componentName,
   },
 });
+
+
+

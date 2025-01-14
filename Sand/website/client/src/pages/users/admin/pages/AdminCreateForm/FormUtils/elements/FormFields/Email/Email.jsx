@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import './Email.css';
@@ -6,29 +6,16 @@ import { setFullNameData } from '../actions/fullNameActions';
 import { v4 as uuidv4 } from 'uuid';
 
 const Email = ({ fullNameDataList, setFullNameData }) => {
-  const [componentId] = useState(uuidv4()); // Unique ID for this component instance
-
   const handleBlur = (event) => {
-    const inputValue = event.target.value.trim();
-
-    if (inputValue) {
-      const existingEntry = fullNameDataList.find(
-        (entry) => entry.uniqueId === componentId // Check if the entry already exists
-      );
-
-      if (existingEntry) {
-        // Update the existing entry
-        setFullNameData(existingEntry.uniqueId, inputValue, 'Email');
-      } else {
-        // Create a new entry
-        setFullNameData(componentId, inputValue, 'Email');
-      }
+    if (event.target.value.trim()) {
+      const id = uuidv4(); // Generate a unique ID
+      setFullNameData(id, event.target.value, 'Email');
     }
   };
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'item',
-    item: { id: componentId, type: 'Email', text: 'Email' },
+    item: { id: uuidv4(), type: 'Email', text: 'Email' },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -39,7 +26,7 @@ const Email = ({ fullNameDataList, setFullNameData }) => {
   }, [fullNameDataList]);
 
   return (
-    <div className={`email-container ${isDragging ? 'dragging' : ''}`} ref={dragRef}>
+    <div className="email-container" ref={dragRef}>
       <input
         type="email"
         name="emailTitle"
@@ -47,13 +34,7 @@ const Email = ({ fullNameDataList, setFullNameData }) => {
         placeholder="Email"
         onBlur={handleBlur} // Trigger save on losing focus
       />
-      <input
-        type="text"
-        name="emailInput"
-        className="email-input"
-        placeholder="Additional Info"
-        onBlur={handleBlur} // Trigger save for additional info
-      />
+      <input type="text" name="emailInput" className="email-input" />
     </div>
   );
 };

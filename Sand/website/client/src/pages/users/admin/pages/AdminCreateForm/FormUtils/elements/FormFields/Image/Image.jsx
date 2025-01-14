@@ -19,10 +19,10 @@ const Image = ({ fullNameDataList = [], setFullNameData }) => {
 
       if (existingEntry) {
         // Update the existing entry
-        setFullNameData(componentId, { ...existingEntry.data, title }, 'Image');
+        setFullNameData(componentId, title, 'Image');
       } else {
         // Create a new entry
-        setFullNameData(componentId, { title }, 'Image');
+        setFullNameData(componentId, title, 'Image');
       }
     }
   };
@@ -35,26 +35,17 @@ const Image = ({ fullNameDataList = [], setFullNameData }) => {
       reader.onload = (e) => {
         setImagePreview(e.target.result);
 
-        const fileData = {
-          fileName: file.name,
-          fileType: file.type,
-          preview: e.target.result,
-        };
-
+        const title = `Image (${file.name})`; // Default title for the image
         const existingEntry = fullNameDataList.find(
           (entry) => entry.uniqueId === componentId
         );
 
         if (existingEntry) {
-          // Update the existing entry with file info
-          setFullNameData(
-            componentId,
-            { ...existingEntry.data, file: fileData },
-            'Image'
-          );
+          // Update the existing entry
+          setFullNameData(componentId, existingEntry.title || title, 'Image');
         } else {
-          // Create a new entry with file info
-          setFullNameData(componentId, { file: fileData }, 'Image');
+          // Create a new entry
+          setFullNameData(componentId, title, 'Image');
         }
       };
 
