@@ -17,11 +17,11 @@ const AdminCreateNewClient = () => {
 
   const { campaignId } = useParams();
   
-    useEffect(() => {
-      if (!campaignId) {
-        console.error("Campaign ID is missing");
-      }
-    }, [campaignId]);
+    // useEffect(() => {
+    //   if (!campaignId) {
+    //     console.error("Campaign ID is missing");
+    //   }
+    // }, [campaignId]);
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
