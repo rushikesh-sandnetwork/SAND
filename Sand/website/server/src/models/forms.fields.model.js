@@ -19,6 +19,8 @@ const FormFieldItemSchema = new Schema({
 
 
 
+
+
 const FormFieldTableSchema = new Schema({
     uniqueId: {
         type: String,
@@ -44,6 +46,7 @@ const FormFieldSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Campaign',
         required: true,
+        unique: false,
     },
     formFields: {
         type: [FormFieldItemSchema],
@@ -58,6 +61,25 @@ const FormFieldSchema = new Schema({
         type: String,
         required: true,
     },
+
+    // new addition
+    isThisNestedForm: {
+        type: Boolean,
+        required: true,
+    },
+
+    mainFormId: {
+        type: Schema.Types.ObjectId,
+        ref: 'FormField',
+        unique: false
+    },
+
+    nestedForms: {
+        type: [Schema.Types.ObjectId], // Array of ObjectId references
+        ref: 'FormFieldSchema',       // Name of the model being referenced
+    }
+
+
 });
 
 module.exports = mongoose.model("FormField", FormFieldSchema);

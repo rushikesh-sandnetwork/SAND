@@ -5,13 +5,19 @@ import "./AdminFormDetails.css";
 import FormBox from "../../../../../components/FormBox/FormBox";
 import { useParams } from "react-router-dom";
 
+
+
 const AdminFormDetails = () => {
-  const {campaignId} = useParams();
+  const { campaignId } = useParams();
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  //const fetchnestedform  same as fetchform
+
+
 
   useEffect(() => {
+    //call if else if url contains "fetchnestedforms" call this or fetchforms. 
     const fetchForms = async () => {
       try {
         const response = await axios.post(
@@ -25,6 +31,13 @@ const AdminFormDetails = () => {
         setLoading(false);
       }
     };
+
+
+    const fetchNestedForm = async () => {
+      
+    }
+
+
 
     if (campaignId) {
       fetchForms();
@@ -40,14 +53,16 @@ const AdminFormDetails = () => {
         ) : error ? (
           <p>{error}</p>
         ) : forms.length > 0 ? (
-          forms.map((form) => (
-            <FormBox
-              key={form._id}
-              formId={form._id}
-              form={form}
+          forms.map((form) => {
+            if (!form.isThisNestedForm) {
+              return (<FormBox
+                key={form._id}
+                formId={form._id}
+                form={form}
               // setActiveTab={setActiveTab}
-            />
-          ))
+              />)
+            }
+          })
         ) : (
           <p>No forms available for this campaign.</p>
         )}

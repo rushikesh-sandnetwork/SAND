@@ -13,6 +13,12 @@ const FormFieldSchema = require("../models/forms.fields.model");
 const asyncHandler = require("../utils/asyncHandler");
 const formsFieldsModel = require("../models/forms.fields.model");
 
+
+
+
+
+
+//
 const createNewClient = asyncHandler(async (req, res) => {
   try {
     const { clientName, clientLocation, clientWebsite } = req.body;
@@ -36,7 +42,6 @@ const createNewClient = asyncHandler(async (req, res) => {
       throw new apiError(400, "Failed to upload client Photo");
     }
 
-//mongo => connecting ur incoming info n saving it back to db
     const newClient = await client.create({
       clientName,
       clientLocation,
@@ -52,10 +57,37 @@ const createNewClient = asyncHandler(async (req, res) => {
     throw new apiError(
       error.statusCode || 500,
       error.message ||
-        "An error occurred while creating new client. Try again later."
+      "An error occurred while creating new client. Try again later."
     );
   }
 });
+
+
+
+const fetchNestedForms = asyncHandler(async (req, res) => {
+  try {
+    const { mainFormId } = req.body;
+
+    if (!mainFormId) {
+      throw new apiError(400, "mainFormId is required");
+    }
+
+    const mainForm = await FormFieldSchema.findById(mainFormId);
+
+    if (!mainForm || !mainForm.nestedForms || mainForm.nestedForms.length === 0) {
+      throw new apiError(404, "Nested forms not found.");
+    }
+
+    res.status(200).json(new apiResponse(200, mainForm, "Fetched forms successfull"));
+  } catch (error) {
+    console.error(error);
+    throw new apiError(
+      error.statusCode || 500,
+      error.message || "Internal Server Problem"
+    );
+  }
+});
+
 
 const fetchClient = asyncHandler(async (req, res) => {
   try {
@@ -239,12 +271,12 @@ const createNewForm = asyncHandler(async (req, res) => {
       throw new apiError(400, "All data is required.");
     }
 
-    console.log("working");
+    console.log("wkring");
 
     const formName = formFields[0]["title"];
     console.log("Form Name : ", formName);
 
-    console.log("Form Field: ", formName);
+    // console.log("Form Field: ", formName);
     const campaignDetails = await campaign.findById(campaignId);
 
     if (!campaignDetails) {
@@ -257,6 +289,9 @@ const createNewForm = asyncHandler(async (req, res) => {
       campaignId,
       formFields,
       collectionName: formName,
+      isThisNestedForm: false,
+      mainFormId: null,
+
     };
 
     console.log(user);
@@ -290,7 +325,6 @@ const createNestedForm = asyncHandler(async (req, res) => {
     }
 
     const fetchFormDetails = await FormFieldSchema.findOne({ _id: mainFormId });
-    console.log(fetchFormDetails);
     if (!fetchFormDetails) {
       throw new apiError(404, "Form not found.");
     }
@@ -299,6 +333,8 @@ const createNestedForm = asyncHandler(async (req, res) => {
       campaignId: fetchFormDetails.campaignId,
       formFields,
       collectionName: formName,
+      isThisNestedForm: true,
+      mainFormId: mainFormId
     };
 
     const newForm = await FormFieldSchema.create(user);
@@ -672,7 +708,10 @@ const acceptRejectData = asyncHandler(async (req, res) => {
     );
   }
 });
-
+//create a new controller to fetch nested forms
+//parameters: mainformid=> look for an array object (nestedForms : Array (1)) fetch this
+// create route in route.js for this
+//adminFormdetails.jsx pe call this url(api call)
 module.exports = {
   unassignCreatedForm,
   fetchFormsForCampaigns,
@@ -694,5 +733,6 @@ module.exports = {
   fetchAllClients,
   fetchClient,
   createNewClient,
+  fetchNestedForms,
 };
 ``;
