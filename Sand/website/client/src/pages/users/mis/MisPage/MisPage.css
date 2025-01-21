@@ -1,0 +1,19 @@
+/* MisPage.css */
+
+.vertical-navbar {
+    width: 20%; /* Adjust width as needed */
+    position: fixed; /* Keep the navbar fixed */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #f8f9fa; /* Optional: Background color */
+    padding: 10px;
+    box-shadow: 2px 0 5px #0000001a;
+  }
+  
+  .Mis-page-content {
+    margin-left: 20%; /* Matches the navbar width */
+    padding: 20px;
+    overflow: auto; /* Prevents content from overflowing */
+  }
+  

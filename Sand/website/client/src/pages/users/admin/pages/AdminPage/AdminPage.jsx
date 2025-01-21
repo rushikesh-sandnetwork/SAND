@@ -16,6 +16,7 @@ import AdminFormViewData from '../AdminFormViewData/AdminFormViewData.jsx';
 import AdminListOfForms from '../AdminListOfForms/AdminListOfForms.jsx';
 import FormBox from '../../../../../components/FormBox/FormBox.jsx';
 import AdminFormItems from '../AdminFormItems/AdminFormItems.jsx';
+import AdminNestedViewData from '../AdminNestedViewData/AdminNestedViewData.jsx'; 
 
 const AdminPage = () => {
     return (
@@ -39,7 +40,7 @@ const AdminPage = () => {
                    
 
                     <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} />
-                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminFormDetails />} />
+                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />
 
 
 

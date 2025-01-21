@@ -72,8 +72,10 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
       throw new apiError(400, "mainFormId is required");
     }
 
-    const mainForm = await FormFieldSchema.findById(mainFormId);
 
+    const mainForm = await FormFieldSchema.findById(mainFormId);
+    console.log("Main Form: ", mainForm);
+    console.log("Nested Forms: ", mainForm.nestedForms);
     if (!mainForm || !mainForm.nestedForms || mainForm.nestedForms.length === 0) {
       throw new apiError(404, "Nested forms not found.");
     }
@@ -459,6 +461,11 @@ const unassignCreatedForm = asyncHandler(async (req, res) => {
     );
   }
 });
+
+
+
+
+
 
 const updateUserRights = asyncHandler(async (req, res) => {
   try {
