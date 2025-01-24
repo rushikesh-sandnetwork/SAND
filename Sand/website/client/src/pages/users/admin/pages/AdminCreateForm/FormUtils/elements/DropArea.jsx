@@ -24,12 +24,15 @@ const DropArea = ({ onDrop, setFullNameData }) => {
     dispatch({ type: RESET_FULL_NAME_DATA });
   };
 
-
   const { formId: mainParentForm } = useParams();
 
   const fullNameDataList = useSelector(
     (state) => state.fullName.fullNameDataList
   );
+
+  useEffect(() => {
+    console.log("Full Name Data List:", fullNameDataList);
+  }, [fullNameDataList]);
 
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: "item",
@@ -52,7 +55,6 @@ const DropArea = ({ onDrop, setFullNameData }) => {
 
   if (nested) {
     console.log("this nest");
-
   }
 
   const handleBlur = (event) => {
@@ -72,7 +74,7 @@ const DropArea = ({ onDrop, setFullNameData }) => {
   function arrayToFormFields(array) {
     return array.map((item, index) => ({ id: index + 1, value: item }));
   }
-//nested updates
+  //nested updates
   const handleSubmitForm = async () => {
     try {
       const formFieldsArray = arrayToFormFields(droppedItemNames);
@@ -89,11 +91,10 @@ const DropArea = ({ onDrop, setFullNameData }) => {
         );
 
         response = await axios.post(
-          "http://localhost:8000/api/v1/admin/createNewForm",
+          "http://localhost:8080/api/v1/admin/createNewForm",
           formData
         );
       } else {
-
         const formData = {
           mainFormId: mainParentForm,
           formFields: fullNameDataList,
@@ -101,9 +102,8 @@ const DropArea = ({ onDrop, setFullNameData }) => {
 
         console.log(formData);
 
-
         response = await axios.post(
-          "http://localhost:8000/api/v1/admin/createNestedForm",
+          "http://localhost:8080/api/v1/admin/createNestedForm",
           formData
         );
       }
@@ -174,7 +174,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  setFullNameData
+  setFullNameData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropArea);
