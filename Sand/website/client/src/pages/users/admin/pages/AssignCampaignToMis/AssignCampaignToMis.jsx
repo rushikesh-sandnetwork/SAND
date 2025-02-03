@@ -13,9 +13,32 @@ const AssignCampaignToMis = () => {
 //   const [promoterEmailId, setPromoterEmailId] = useState("");
 //   const [password, setPassword] = useState("");
 
-//   const { formId } = useParams();
+const [campaign, setCampaign] = useState({});
 
+  const { campaignId } = useParams();
+ 
+  const fetchCampaign = async () => {
+    try {
+        const response = await axios.post(
+            "http://localhost:8000/api/v1/admin/fetchCampaignById",
+            {
+                campaignId,
+            }
+        );
+        if (response.status === 200) {
+            setCampaign(response.data.data);
+        } else {
+            setError("Failed to fetch campaign.");
+        }
+    } catch (error) {
+        console.log(error);
+        setError("An error occurred while fetching the campaign.");
+    }
+};
 
+useEffect(() => {
+    fetchCampaign();
+}, [campaignId]);
 
 
 
@@ -29,11 +52,12 @@ const AssignCampaignToMis = () => {
       if (response.status === 200) {
 
 
-        // const promotersWithAssignment = response.data.data.map((promoter) => ({
-        //   ...promoter,
-        //   hasFormAssigned: promoter.forms.includes(formId),
-        // }));
-        setMis(response.data.data);
+        const misWithAssignment = response.data.data.map((mis) => ({
+          ...mis,
+          hasCampaignAssigned: campaign.listOfMis.includes(mis._id),
+        }));
+
+        setMis(misWithAssignment);
       } else {
         setError("Failed to fetch Mis.");
       }
@@ -49,67 +73,67 @@ const AssignCampaignToMis = () => {
     fetchMis();
   }, []);
 
-//   const assignFormToPromoter = async (promoterId) => {
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:8000/api/v1/admin/assignCreatedForms",
-//         {
-//           formId,
-//           promoterId,
-//         }
-//       );
+  const assignCampaignToMis = async (misId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/admin/assignCampaignToMis",
+        {
+          campaignId,
+          misId,
+        }
+      );
 
-//       if (response.status === 200) {
-//         alert("Form assigned successfully!");
-//         setPromoters((prevPromoters) =>
-//           prevPromoters.map((promoter) => {
-//             if (promoter._id === promoterId) {
-//               return {
-//                 ...promoter,
-//                 hasFormAssigned: true,
-//               };
-//             }
-//             return promoter;
-//           })
-//         );
-//       } else {
-//         alert("Failed to assign form.");
-//       }
-//     } catch (error) {
-//       alert("An error occurred while assigning the form.");
-//     }
-//   };
+      if (response.status === 200) {
+        alert("Mis assigned successfully!");
+        setMis((prevMis) =>
+          prevMis.map((mis) => {
+            if (mis._id === misId) {
+              return {
+                ...mis,
+                hasCampaignAssigned: true,
+              };
+            }
+            return mis;
+          })
+        );
+      } else {
+        alert("Failed to assign form.");
+      }
+    } catch (error) {
+      alert("An error occurred while assigning the form.");
+    }
+  };
 
-//   const unassignFormFromPromoter = async (promoterId) => {
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:8000/api/v1/admin/unassignCreatedForms",
-//         {
-//           formId,
-//           promoterId,
-//         }
-//       );
+  const unassignFormFromPromoter = async (promoterId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/admin/unassignCreatedForms",
+        {
+          formId,
+          promoterId,
+        }
+      );
 
-//       if (response.status === 200) {
-//         alert("Form unassigned successfully!");
-//         setPromoters((prevPromoters) =>
-//           prevPromoters.map((promoter) => {
-//             if (promoter._id === promoterId) {
-//               return {
-//                 ...promoter,
-//                 hasFormAssigned: false,
-//               };
-//             }
-//             return promoter;
-//           })
-//         );
-//       } else {
-//         alert("Failed to unassign form.");
-//       }
-//     } catch (error) {
-//       alert("An error occurred while unassigning the form.");
-//     }
-//   };
+      if (response.status === 200) {
+        alert("Form unassigned successfully!");
+        setPromoters((prevPromoters) =>
+          prevPromoters.map((promoter) => {
+            if (promoter._id === promoterId) {
+              return {
+                ...promoter,
+                hasFormAssigned: false,
+              };
+            }
+            return promoter;
+          })
+        );
+      } else {
+        alert("Failed to unassign form.");
+      }
+    } catch (error) {
+      alert("An error occurred while unassigning the form.");
+    }
+  };
 
 //   const handleCreatePromoter = async (e) => {
 //     e.preventDefault();
@@ -173,7 +197,7 @@ const AssignCampaignToMis = () => {
                     ) : (
                       <button
                         className="assignFormBtn"
-                        onClick={()=>{} }
+                        onClick={()=> assignCampaignToMis(mis._id)} 
                       >
                         Assign campaign
                       </button>
@@ -189,5 +213,6 @@ const AssignCampaignToMis = () => {
     </div>
   );
 };
+
 
 export default AssignCampaignToMis;

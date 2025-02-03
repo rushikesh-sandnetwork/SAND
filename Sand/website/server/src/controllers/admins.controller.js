@@ -473,7 +473,7 @@ const unassignCreatedForm = asyncHandler(async (req, res) => {
 const assignCampaignToMis = asyncHandler(async (req, res) => {
 
   try {
-    const { campaignId, misId } = req.body; // Allow multiple `misIds`
+    const { campaignId, misId } = req.body; 
 
     if (!campaignId || !misId) {
       throw new apiError(400, "Campaign ID and MIS IDs are required and must be an array");
