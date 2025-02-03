@@ -106,7 +106,7 @@ const fetchMisCampaigns = asyncHandler(async (req, res) => {
         // Fetch campaign details using campaign IDs
         const misCampaigns = await campaign.find({ _id: { $in: misDoc.listOfCampaigns } });
 
-        res.status(200).json(new apiResponse(200, "Fetched campaigns successfully.", misCampaigns));
+        res.status(200).json(new apiResponse(200, misCampaigns,"Fetched campaigns successfully."));
     } catch (error) {
         console.error(`Error in fetching campaigns`, error);
         res.status(400).json(new apiError(400, `Error fetching campaigns.`));

@@ -1,13 +1,13 @@
 import React from 'react';
-import PageTitle from '../../../../../components/PageTitles/PageTitle';
 import './AdminViewCampaignPage.css';
 import ViewCampaignsContainer from '../../../../../components/ViewCampaignsContainer/ViewCampaignsContainer';
+import PageTitle from '../../../../../components/PageTitles/PageTitle';
 
 const AdminViewCampaignsPage = ({ setActiveTab  }) => {
     return (
         <div className="adminViewCampaignsPage-container">
             <PageTitle title={`View Campaigns`} />
-            <ViewCampaignsContainer setActiveTab={setActiveTab} />
+            <ViewCampaignsContainer  role="admin"/>
         </div>
     );
 }
