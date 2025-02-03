@@ -21,11 +21,10 @@ const FullName = ({ fullNameDataList, setFullNameData }) => {
         setFullNameData(existingEntry.uniqueId, inputValue, "Full Name");
       } else {
         // Create a new entry
-        setFullNameData(componentId, inputValue, "FormList");
+        setFullNameData(componentId, inputValue, "Full Name");
       }
     }
   };
-
 
   // just for testing purposes
   // const handleFocus = (event) => {

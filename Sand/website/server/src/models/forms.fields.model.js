@@ -11,15 +11,16 @@ const FormFieldItemSchema = new Schema({
     type: {
         type: String,
     },
-    options: {
-        type: Map,
-        of: [Map],
-    }
+    options: [
+        {
+            headers: [String],
+            data: {
+                type: Map,
+                of: [Array],
+            },
+        },
+    ],
 });
-
-
-
-
 
 const FormFieldTableSchema = new Schema({
     uniqueId: {
@@ -44,7 +45,7 @@ const FormFieldTableSchema = new Schema({
 const FormFieldSchema = new Schema({
     campaignId: {
         type: Schema.Types.ObjectId,
-        ref: 'Campaign',
+        ref: "Campaign",
         required: true,
         unique: false,
     },
@@ -54,7 +55,7 @@ const FormFieldSchema = new Schema({
     },
 
     tableFields: {
-        type: [FormFieldTableSchema]
+        type: [FormFieldTableSchema],
     },
 
     collectionName: {
@@ -70,16 +71,14 @@ const FormFieldSchema = new Schema({
 
     mainFormId: {
         type: Schema.Types.ObjectId,
-        ref: 'FormField',
-        unique: false
+        ref: "FormField",
+        unique: false,
     },
 
     nestedForms: {
         type: [Schema.Types.ObjectId], // Array of ObjectId references
-        ref: 'FormFieldSchema',       // Name of the model being referenced
-    }
-
-
+        ref: "FormFieldSchema", // Name of the model being referenced
+    },
 });
 
 module.exports = mongoose.model("FormField", FormFieldSchema);
