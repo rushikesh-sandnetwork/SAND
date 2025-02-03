@@ -8,23 +8,6 @@ const CampaignAssignBox = ({ campaignId, title, imgSrc }) => {
   const [selectedMisId, setSelectedMisId] = useState("");
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    const fetchMISUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/v1/admin/fetchAllMISUsers");
-        if (response.data.success) {
-          setMisUsers(response.data.data);
-        } else {
-          setMessage(response.data.message);
-        }
-      } catch (error) {
-        setMessage("Error fetching MIS users");
-        console.error("Error:", error);
-      }
-    };
-
-    fetchMISUsers();
-  }, []);
 
   const handleAssign = async () => {
     try {

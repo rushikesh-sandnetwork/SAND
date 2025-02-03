@@ -89,6 +89,6 @@ router.route("/ assignCampaign").post(adminController.assignCampaign);
 
 router.route("/unassignCampaign").post(adminController.unassignCampaign);
 
-router.route("/fetchAllMISUsers").post(adminController.fetchAllMISUsers);
+router.route("/fetchUsersByRole").post(adminController.fetchUsersByRole);
 
 module.exports = router;
