@@ -19,7 +19,7 @@ const AdminAcceptedData = () => {
     setError(null);
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/promoter/fetchFormFilledData",
+        "http://localhost:8000/api/v1/promoter/fetchFormFilledData",
         {
           method: "POST",
           headers: {

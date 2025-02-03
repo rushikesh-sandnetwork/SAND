@@ -1,121 +1,79 @@
-.campaign-details-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  box-sizing: border-box;
+.campaign-details-boxes{
+    background-color: #CDF0FF;
+    height: 75vh;
+    width: 95%;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px 0px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .campaign-details-boxes {
-  background-color: #cdf0ff;
-  height: auto; /* Allow height to adjust for content */
-  min-height: 75vh; /* Maintain a minimum height */
-  width: 95%;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  margin: 20px 0;
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; /* Space items evenly */
-  transition: box-shadow 0.3s ease-in-out;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap; /* Allow items to wrap */
-  justify-content: space-around; /* Space items evenly */
-  width: 100%;
-}
-
-.campaign-details-box {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  width: 200px; /* Default width for larger screens */
-  margin: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: box-shadow 0.3s ease-in-out;
-  flex-shrink: 0; /* Prevent items from shrinking */
-}
-
-.icon-box {
-  margin-bottom: 10px;
-}
-
-.icon-box img {
-  max-width: 90px;
-  max-height: 90px;
-}
-
-.text {
-  font-size: 20px;
-  color: #333;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.delete-campaign-button {
-  background-color: #dc3545; /* Bootstrap danger color for a delete button */
-  color: white;
-  font-family: "Poppins", sans-serif;
-  font-weight: bold;
-  letter-spacing: 1px;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.delete-campaign-button:hover {
-  background-color: #c82333; /* Darker red for hover effect */
-  transform: scale(1.05); /* Slightly enlarge the button on hover */
-}
-
-.delete-campaign-button:active {
-  background-color: #a71d2a; /* Even darker red for active state */
-  transform: scale(0.95); /* Slightly shrink the button on click */
-}
-
-/* Responsive Styling */
-@media (max-width: 1024px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Adjust as per your layout preference */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-around; /* Adjust as per your layout preference */
+    width: 100%;
+    /* margin-bottom: 20px; */
+  }
+  
   .campaign-details-box {
-    width: 180px; /* Adjust box width for medium screens */
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    width: 200px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out;
   }
-
-  .text {
-    font-size: 18px; /* Adjust text size */
+  
+  .icon-box {
+    margin-bottom: 10px;
   }
-}
-
-@media (max-width: 768px) {
-  .campaign-details-boxes {
-    flex-direction: column; /* Stack rows vertically */
-    align-items: center; /* Center align items */
-  }
-
-  .campaign-details-box {
-    width: 90%; /* Use most of the screen width */
-    margin: 10px 0; /* Adjust margins */
-  }
-}
-
-@media (max-width: 480px) {
-  .campaign-details-box {
-    width: 100%; /* Full width for small screens */
-  }
-
-  .text {
-    font-size: 16px; /* Further reduce font size */
-  }
-
+  
   .icon-box img {
-    max-width: 70px; /* Adjust icon size */
-    max-height: 70px;
+    max-width: 90px;
+    max-height: 90px;
   }
-}
+  
+  .text {
+    font-size: 20px;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .delete-campaign-button {
+    background-color: #dc3545; /* Bootstrap danger color for a delete button */
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .delete-campaign-button:hover {
+    background-color: #c82333; /* Darker red for hover effect */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+  }
+  
+  .delete-campaign-button:active {
+    background-color: #a71d2a; /* Even darker red for active state */
+    transform: scale(0.95); /* Slightly shrink the button on click */
+  }

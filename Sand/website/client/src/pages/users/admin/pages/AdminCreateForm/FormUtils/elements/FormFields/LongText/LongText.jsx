@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useDrag } from "react-dnd";
-import { setFullNameData } from "../actions/fullNameActions";
-import { v4 as uuidv4 } from "uuid";
-import "./LongText.css";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useDrag } from 'react-dnd';
+import { setFullNameData } from '../actions/fullNameActions';
+import { v4 as uuidv4 } from 'uuid';
+import './LongText.css';
 
 const LongText = ({ fullNameDataList = [], setFullNameData }) => {
   const [componentId] = useState(uuidv4()); // Unique ID for this instance
@@ -21,32 +21,29 @@ const LongText = ({ fullNameDataList = [], setFullNameData }) => {
         setFullNameData(
           componentId,
           { ...existingEntry.data, text: textValue },
-          "Long Text"
+          'Long Text'
         );
       } else {
         // Create a new entry
-        setFullNameData(componentId, textValue, "Long Text");
+        setFullNameData(componentId, { text: textValue }, 'Long Text');
       }
     }
   };
 
   const [{ isDragging }, dragRef] = useDrag({
-    type: "item",
-    item: { id: componentId, type: "Long Text", text: "Long Text" },
+    type: 'item',
+    item: { id: componentId, type: 'Long Text', text: 'Long Text' },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   useEffect(() => {
-    console.log("Full Name Data List:", fullNameDataList);
+    console.log('Full Name Data List:', fullNameDataList);
   }, [fullNameDataList]);
 
   return (
-    <div
-      className={`longText-container ${isDragging ? "dragging" : ""}`}
-      ref={dragRef}
-    >
+    <div className={`longText-container ${isDragging ? 'dragging' : ''}`} ref={dragRef}>
       <input
         type="text"
         className="longText-title"

@@ -1,126 +1,50 @@
-.create-form-container {
-  width: 100%;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
+.create-form-container{
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.title {
-  margin: 10px 10px;
+.title{
+    margin: 10px 10px ;
 }
 
-/* Ensure containers take up correct space and prevent overflow */
-.create-form-container-content {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  gap: 20px; /* Added gap to avoid overlap */
-  box-sizing: border-box; /* To ensure padding doesn't affect layout */
+
+.create-form-container-content{
+    display: flex;
+    flex-direction: row;
+    width: 100%;    
+    height: 100%;
 }
 
-.left-container {
-  height: 85vh;
-  width: 20%; /* Ensure this is the intended width */
-  background-color: #33384a;
-  margin-bottom: 10px;
-  margin-left: 10px;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  box-sizing: border-box; /* Avoid any margin or padding affecting the layout */
+
+.left-container{
+    height: 85vh;
+    width: 15%;
+    background-color: #33384a;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    border-radius: 12px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+-ms-overflow-style: none;
+scrollbar-width: none; 
 }
 
 .left-container::-webkit-scrollbar {
-  display: none;
-}
-
-.right-container {
-  position: relative;
-  height: 85vh;
-  width: 75%; /* Ensure it takes the correct width */
-  background-color: #cdf0ff;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; /* Align items at the top */
-  overflow: hidden; /* Prevent overflow of child elements */
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-.drop-area-container {
-  position: absolute; /* Fix the drop area container within the right container */
-  top: 0; /* Keep it at the top */
-  left: 0;
-  width: 100%; /* Ensure it takes up the full width */
-  height: 100%; /* Ensure it takes up the full height */
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* Keep items aligned to the top */
-  box-sizing: border-box;
-  overflow-y: auto; /* Allow scrolling if content overflows */
-}
-
-/* Media Query for small screens (max-width: 768px) */
-@media (max-width: 768px) {
-  .create-form-container-content {
-    flex-direction: column;
-    height: auto;
+    display: none;  
   }
+  
 
-  .left-container {
-    width: 100%; /* Ensure it takes up 100% of the screen width */
-    margin-right: 0;
-    height: auto;
-  }
-
-  .right-container {
-    width: 100%;
-    margin-top: 20px;
-    height: auto; /* Allow the right container to adjust its height */
-  }
-
-  /* Fix dropdown overlap issue by adjusting the right container */
-  .create-form-container-content {
-    gap: 0; /* Reset gap for smaller screens */
-  }
-
-  .drop-area-container {
-    position: relative; /* Remove absolute positioning on small screens */
-    height: auto; /* Allow drop area to adjust dynamically */
-  }
-}
-
-/* Media Query for extra small screens (max-width: 480px) */
-@media (max-width: 480px) {
-  .title {
-    font-size: 18px;
-  }
-
-  .left-container {
-    width: 100%;
-    height: auto;
-  }
-
-  .right-container {
-    width: 100%;
-  }
-
-  /* Ensure both containers adapt correctly */
-  .create-form-container-content {
-    flex-direction: column;
-    gap: 10px; /* A small gap for extra small screens */
-  }
-
-  .drop-area-container {
-    height: auto; /* Allow drop area to adjust dynamically */
-    overflow-y: auto; /* Allow scrolling for content */
-  }
+.right-container{
+    height: 85vh;
+    width: 80%;
+    background-color: #CDF0FF;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }

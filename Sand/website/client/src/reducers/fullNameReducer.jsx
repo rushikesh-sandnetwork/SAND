@@ -1,9 +1,8 @@
 // fullNameReducer.js
 import {
   SET_FULL_NAME_DATA,
-  RESET_FULL_NAME_DATA,
-  DELETE_FULL_NAME_DATA,
-} from "../pages/users/admin/pages/AdminCreateForm/FormUtils/elements/FormFields/actions/types";
+  RESET_FULL_NAME_DATA
+} from '../pages/users/admin/pages/AdminCreateForm/FormUtils/elements/FormFields/actions/types';
 
 const initialState = {
   fullNameDataList: [],
@@ -13,9 +12,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case SET_FULL_NAME_DATA:
       // Check if the item already exists in the list
-      const existingIndex = state.fullNameDataList.findIndex(
-        (item) => item.uniqueId === action.payload.uniqueId
-      );
+      const existingIndex = state.fullNameDataList.findIndex(item => item.uniqueId === action.payload.uniqueId);
 
       if (existingIndex !== -1) {
         // If item exists, update it in the list
@@ -38,15 +35,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         fullNameDataList: [],
-      };
-    case DELETE_FULL_NAME_DATA:
-      // Remove the item with the given id from the list
-      console.log("Deleting item with uniqueId:", action.payload);
-      return {
-        ...state,
-        fullNameDataList: state.fullNameDataList.filter(
-          (item) => item.uniqueId !== action.payload
-        ),
       };
 
     default:

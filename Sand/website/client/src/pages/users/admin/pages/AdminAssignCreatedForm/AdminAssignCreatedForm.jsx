@@ -18,7 +18,7 @@ const AdminAssignCreatedForm = () => {
   const fetchPromoters = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/promoter/fetchPromoters"
+        "http://localhost:8000/api/v1/promoter/fetchPromoters"
       );
       if (response.status === 200) {
         const promotersWithAssignment = response.data.data.map((promoter) => ({
@@ -43,7 +43,7 @@ const AdminAssignCreatedForm = () => {
   const assignFormToPromoter = async (promoterId) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/admin/assignCreatedForms",
+        "http://localhost:8000/api/v1/admin/assignCreatedForms",
         {
           formId,
           promoterId,
@@ -74,7 +74,7 @@ const AdminAssignCreatedForm = () => {
   const unassignFormFromPromoter = async (promoterId) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/admin/unassignCreatedForms",
+        "http://localhost:8000/api/v1/admin/unassignCreatedForms",
         {
           formId,
           promoterId,
@@ -106,7 +106,7 @@ const AdminAssignCreatedForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/promoter/registerNewPromoter",
+        "http://localhost:8000/api/v1/promoter/registerNewPromoter",
         {
           promoterName,
           promoterEmailId,

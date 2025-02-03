@@ -1,48 +1,27 @@
 .form-items-container {
-  background-color: #cdf0ff;
-  height: auto; /* Changed to auto for better responsiveness */
-  width: 95%;
-  border-radius: 16px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  margin: 20px 0px;
-  padding: 20px;
-  transition: box-shadow 0.3s ease-in-out;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px; /* Reduced gap for better spacing on smaller screens */
+    background-color: #CDF0FF;
+    height: 75vh;
+    width: 95%;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin: 20px 0px;
+    padding: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
 }
 
 .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 20px; /* Reduced gap for better spacing on smaller screens */
-  flex-wrap: wrap; /* Allow items to wrap to the next line on smaller screens */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px; /* Adjust the gap value to reduce the horizontal space between items */
 }
 
-/* Media Queries for Responsiveness */
-
-/* For tablets and smaller screens */
-@media (max-width: 768px) {
-  .row {
-    gap: 15px; /* Further reduce gap for tablets */
-  }
-
-  .form-items-container {
-    padding: 15px; /* Reduce padding for smaller screens */
-  }
-}
-
-/* For mobile devices */
-@media (max-width: 480px) {
-  .row {
-    flex-direction: column; /* Stack items vertically on mobile */
-    gap: 10px; /* Reduce gap for mobile */
-  }
-
-  .form-items-container {
-    padding: 10px; /* Further reduce padding for mobile */
-  }
-}
+/* .row > * {
+    flex: 1;
+    min-width: 250px;
+} */

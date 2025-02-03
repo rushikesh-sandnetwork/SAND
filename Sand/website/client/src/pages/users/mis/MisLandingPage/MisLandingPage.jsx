@@ -7,7 +7,7 @@ import Logo from './SAND 1 logo.png'; // Ensure this path is correct
 
 
 const MisLandingPage = () => {
-  const userId = '123';
+  const userId = '123'; 
   const navigate = useNavigate();
   const handleLogout = () => {
     // Confirm logout, then redirect to login
@@ -21,13 +21,13 @@ const MisLandingPage = () => {
       <div className="sidebar">
         <div className="navbar">
           <img src={Logo} alt="Logo" className="logo" />
-          <NavLink to="" className="nav-link">
+          <NavLink to=""  className="nav-link">
             Overview
-          </NavLink>7iu
+          </NavLink>
           {/* <NavLink to="newClient"  className="nav-link">
             New Client
           </NavLink> */}
-          <NavLink to="viewClients" className="nav-link">
+          <NavLink to="viewClients"  className="nav-link">
             View Clients
           </NavLink>
           <NavLink to="profile" className="nav-link">
@@ -36,7 +36,7 @@ const MisLandingPage = () => {
           {/* <NavLink to="newUser"  className="nav-link">
             New User
           </NavLink> */}
-          <NavLink to="promoterAttendance" className="nav-link">
+          <NavLink to="promoterAttendance"  className="nav-link">
             Promoter Attendance
           </NavLink>
           <input type="button" value="Logout" onClick={handleLogout} className="logout-button" />

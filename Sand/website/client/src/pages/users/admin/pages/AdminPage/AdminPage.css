@@ -1,50 +1,6 @@
-.admin-page-container {
-  display: flex;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  height: 100vh; /* Full viewport height */
-  overflow: hidden; /* Prevent unwanted scrolling */
-}
-
-.vertical-navbar {
-  width: 275px; /* Sidebar width */
-  height: 100vh; /* Full viewport height */
-  position: fixed; /* Fix sidebar position */
-  top: 0;
-  left: 0;
-  background-color: white;
-  overflow-y: auto; /* Allow scrolling if sidebar content exceeds height */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.admin-page-content {
-  flex: 1; /* Take up the remaining width */
-  margin-left: 275px; /* Match sidebar width */
-  padding: 20px;
-  height: 100vh; /* Full viewport height */
-  overflow-y: auto; /* Scroll only inside the content area */
-  box-sizing: border-box; /* Include padding in width/height calculations */
-}
-
-@media (max-width: 768px) {
-  .vertical-navbar {
-    width: 200px; /* Adjust sidebar width for smaller screens */
-  }
-
-  .admin-page-content {
-    margin-left: 200px; /* Match the adjusted sidebar width */
-  }
-}
-
-@media (max-width: 480px) {
-  .vertical-navbar {
-    width: 100%; /* Make the sidebar full width on very small screens */
-    position: static; /* Stack it above the content */
-    height: auto; /* Let it adjust based on content */
-  }
-
-  .admin-page-content {
-    margin-left: 0; /* Remove left margin */
-    width: 100%; /* Use full width for content */
-  }
+.admin-page-content{
+    margin-left: 275px;
+    padding: 20px;
+    width: calc(100% - 275px);
+    overflow: auto;
 }
