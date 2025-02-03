@@ -1,33 +1,33 @@
-import { Router } from "express";
-import userController from "../controllers/users.controller.js";
-import apiResponse from "../utils/apiResponse.js";
-import apiError from "../utils/apiError.js";
-import uploadOnCloudinary from "../utils/cloudinary.js";
-import mongoose from "mongoose";
-import client from "../models/client.model.js";
-import campaign from "../models/campaign.model.js";
-import Promoter from "../models/promoter.model.js";
-import campaignRights from "../models/campaignsRightSchema.model.js";
-import FormFieldSchema from "../models/forms.fields.model.js";
-import asyncHandler from "../utils/asyncHandler.js";
-import formsFieldsModel from "../models/forms.fields.model.js";
-import User from "../models/user.model.js";
+// import { Router } from "express";
+// import userController from "../controllers/users.controller.js";
+// import apiResponse from "../utils/apiResponse.js";
+// import apiError from "../utils/apiError.js";
+// import uploadOnCloudinary from "../utils/cloudinary.js";
+// import mongoose from "mongoose";
+// import client from "../models/client.model.js";
+// import campaign from "../models/campaign.model.js";
+// import Promoter from "../models/promoter.model.js";
+// import campaignRights from "../models/campaignsRightSchema.model.js";
+// import FormFieldSchema from "../models/forms.fields.model.js";
+// import asyncHandler from "../utils/asyncHandler.js";
+// import formsFieldsModel from "../models/forms.fields.model.js";
+// import User from "../models/user.model.js";
 
-// const { Router } = require("express");
-// const userController = require("../controllers/users.controller");
-// const router = Router();
-// const apiResponse = require("../utils/apiResponse");
-// const apiError = require("../utils/apiError");
-// const uploadOnCloudinary = require("../utils/cloudinary");
-// const mongoose = require("mongoose");
-// const client = require("../models/client.model");
-// const campaign = require("../models/campaign.model");
-// const Promoter = require("../models/promoter.model");
-// const campaignRights = require("../models/campaignsRightSchema.model");
-// const FormFieldSchema = require("../models/forms.fields.model");
-// const asyncHandler = require("../utils/asyncHandler");
-// const formsFieldsModel = require("../models/forms.fields.model");
-// const User = require("../models/user.model");
+const { Router } = require("express");
+const userController = require("../controllers/users.controller");
+const router = Router();
+const apiResponse = require("../utils/apiResponse");
+const apiError = require("../utils/apiError");
+const uploadOnCloudinary = require("../utils/cloudinary");
+const mongoose = require("mongoose");
+const client = require("../models/client.model");
+const campaign = require("../models/campaign.model");
+const Promoter = require("../models/promoter.model");
+const campaignRights = require("../models/campaignsRightSchema.model");
+const FormFieldSchema = require("../models/forms.fields.model");
+const asyncHandler = require("../utils/asyncHandler");
+const formsFieldsModel = require("../models/forms.fields.model");
+const User = require("../models/user.model");
 
 const acceptRejectData = asyncHandler(async (req, res) => {
     const { formId, userId, collectionName, status } = req.body;
@@ -114,7 +114,7 @@ const fetchMisCampaigns = asyncHandler(async (req, res) => {
 });
 
 
-export {
+module.exports = {
     acceptRejectData,
     fetchAcceptedData,
     fetchRejectedData,
