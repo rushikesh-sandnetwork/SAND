@@ -11,13 +11,13 @@ const ViewCampaignsContainer = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const {clientId} = useParams();
+  const { clientId } = useParams();
 
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
+          "http://localhost:8080/api/v1/admin/fetchAllCampaigns",
           { clientId }
         );
         setCampaigns(response.data.data.reverse());
@@ -35,7 +35,7 @@ const ViewCampaignsContainer = () => {
   const handleDeleteClient = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:8000/api/v1/admin/deleteClient",
+        "http://localhost:8080/api/v1/admin/deleteClient",
         {
           data: { clientId },
         }
@@ -43,7 +43,7 @@ const ViewCampaignsContainer = () => {
 
       if (response.status === 200) {
         alert("Client deleted successfully.");
-        setActiveTab("viewClients");
+        // setActiveTab("viewClients");
       }
     } catch (error) {
       console.error("Error deleting client:", error);
@@ -61,11 +61,11 @@ const ViewCampaignsContainer = () => {
 
   return (
     <div className="viewCampaignsContainer">
-    <input
+      <input
         className="newCampaignBtn"
         type="button"
         value="Create New Campaign"
-        onClick={() => navigate('AdminCreateNewCampaign')}
+        onClick={() => navigate("AdminCreateNewCampaign")}
       />
       <input
         className="deleteClientBtn"

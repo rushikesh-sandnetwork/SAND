@@ -15,7 +15,7 @@ const AdminNestedViewData = () => {
     const fetchNestedForms = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchnestedforms",
+          "http://localhost:8080/api/v1/admin/fetchnestedforms",
           { mainFormId: campaignId }
         );
         console.log("Response: ", response);
@@ -46,11 +46,7 @@ const AdminNestedViewData = () => {
           <p>{error}</p>
         ) : forms.length > 0 ? (
           forms.map((formId) => (
-            <FormBox
-              key={formId}
-              formId={formId}
-              form={{ _id: formId }}
-            />
+            <FormBox key={formId} formId={formId} form={{ _id: formId }} />
           ))
         ) : (
           <p>No nested forms available for this campaign.</p>
