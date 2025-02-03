@@ -4,13 +4,16 @@ import { connect, useSelector } from "react-redux";
 import DraggableItem from "./DraggableItem";
 import "./DropArea.css";
 import axios from "axios";
-import { setFullNameData } from "./FormFields/actions/fullNameActions";
+import {
+  setFullNameData,
+  deleteFullNameData,
+} from "./FormFields/actions/fullNameActions";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { RESET_FULL_NAME_DATA } from "./FormFields/actions/types";
-const DropArea = ({ onDrop, setFullNameData }) => {
+const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [droppedItemNames, setDroppedItemNames] = useState([]);
   const [successMessage, setSuccessMessage] = useState("");
@@ -24,12 +27,15 @@ const DropArea = ({ onDrop, setFullNameData }) => {
     dispatch({ type: RESET_FULL_NAME_DATA });
   };
 
-
   const { formId: mainParentForm } = useParams();
 
   const fullNameDataList = useSelector(
     (state) => state.fullName.fullNameDataList
   );
+
+  useEffect(() => {
+    console.log("Full Name Data List:", fullNameDataList);
+  }, [fullNameDataList]);
 
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: "item",
@@ -52,27 +58,25 @@ const DropArea = ({ onDrop, setFullNameData }) => {
 
   if (nested) {
     console.log("this nest");
-
   }
 
-  const handleBlur = (event) => {
-    if (event.target.value.trim()) {
-      const id = uuidv4(); // Generate a unique ID
-      setFullNameData(id, event.target.value, "Form Title", null);
-    }
+  const handleInputChange = (id, value, type) => {
+    setFullNameData(id, value, type);
   };
 
   const handleDelete = (id) => {
+    console.log("Deleting item with id:", id); // Debugging
     setDroppedItems((prevItems) => prevItems.filter((item) => item.id !== id));
     setDroppedItemNames((prevNames) =>
       prevNames.filter((name, index) => droppedItems[index].id !== id)
     );
+    deleteFullNameData(id); // Dispatch the delete action
   };
 
   function arrayToFormFields(array) {
     return array.map((item, index) => ({ id: index + 1, value: item }));
   }
-//nested updates
+  //nested updates
   const handleSubmitForm = async () => {
     try {
       const formFieldsArray = arrayToFormFields(droppedItemNames);
@@ -93,14 +97,12 @@ const DropArea = ({ onDrop, setFullNameData }) => {
           formData
         );
       } else {
-
         const formData = {
           mainFormId: mainParentForm,
           formFields: fullNameDataList,
         };
 
         console.log(formData);
-
 
         response = await axios.post(
           "http://localhost:8000/api/v1/admin/createNestedForm",
@@ -135,8 +137,14 @@ const DropArea = ({ onDrop, setFullNameData }) => {
             type="text"
             name="formTitle"
             className="formTitle"
-            placeholder="Create Form Here"
-            onBlur={handleBlur}
+            placeholder="Enter Title Name"
+            value={
+              fullNameDataList.find((data) => data.uniqueId === campaignId)
+                ?.title || ""
+            }
+            onChange={(e) =>
+              handleInputChange(campaignId, e.target.value, "Form Title")
+            }
           />
           <input
             type="button"
@@ -174,7 +182,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  setFullNameData
+  setFullNameData,
+  deleteFullNameData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropArea);

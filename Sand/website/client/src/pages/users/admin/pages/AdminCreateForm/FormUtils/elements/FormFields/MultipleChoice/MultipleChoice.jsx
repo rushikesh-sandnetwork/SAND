@@ -304,7 +304,7 @@ const MultipleChoiceField = ({ fullNameDataList, setFullNameData }) => {
 
     const finalSubmission = `${fieldTitle},${filteredChoices.join(",")}`;
 
-    setFullNameData(fieldId, finalSubmission, "MultipleChoiceField");
+    setFullNameData(fieldId, finalSubmission, "Multiple Choice");
     // console.log("Multiple Choice Field submitted:", {
     //   fieldId,
     //   finalSubmission,

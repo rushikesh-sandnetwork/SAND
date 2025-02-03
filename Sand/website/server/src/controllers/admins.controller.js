@@ -14,10 +14,6 @@ const asyncHandler = require("../utils/asyncHandler");
 const formsFieldsModel = require("../models/forms.fields.model");
 const User = require("../models/user.model");
 
-
-
-
-
 //
 const createNewClient = asyncHandler(async (req, res) => {
   try {
@@ -57,12 +53,10 @@ const createNewClient = asyncHandler(async (req, res) => {
     throw new apiError(
       error.statusCode || 500,
       error.message ||
-      "An error occurred while creating new client. Try again later."
+        "An error occurred while creating new client. Try again later."
     );
   }
 });
-
-
 
 const fetchNestedForms = asyncHandler(async (req, res) => {
   try {
@@ -72,15 +66,20 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
       throw new apiError(400, "mainFormId is required");
     }
 
-
     const mainForm = await FormFieldSchema.findById(mainFormId);
     console.log("Main Form: ", mainForm);
     console.log("Nested Forms: ", mainForm.nestedForms);
-    if (!mainForm || !mainForm.nestedForms || mainForm.nestedForms.length === 0) {
+    if (
+      !mainForm ||
+      !mainForm.nestedForms ||
+      mainForm.nestedForms.length === 0
+    ) {
       throw new apiError(404, "Nested forms not found.");
     }
 
-    res.status(200).json(new apiResponse(200, mainForm, "Fetched forms successfull"));
+    res
+      .status(200)
+      .json(new apiResponse(200, mainForm, "Fetched forms successfull"));
   } catch (error) {
     console.error(error);
     throw new apiError(
@@ -89,7 +88,6 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
     );
   }
 });
-
 
 const fetchClient = asyncHandler(async (req, res) => {
   try {
@@ -267,25 +265,28 @@ const fetchCampaignDetails = asyncHandler(async (req, res) => {
 const createNewForm = asyncHandler(async (req, res) => {
   try {
     const { campaignId, formFields } = req.body;
-    console.log("Fields required: ", campaignId, formFields);
 
+    // Validate required fields
     if (!campaignId || !formFields) {
       throw new apiError(400, "All data is required.");
     }
 
-    console.log("wkring");
+    // Validate formFields structure
+    formFields.forEach((field) => {
+      if (field.type === "dropdown" && !Array.isArray(field.options)) {
+        throw new apiError(400, `Invalid options for field ${field.title}.`);
+      }
+    });
 
-    const formName = formFields[0]["title"];
-    console.log("Form Name : ", formName);
+    const formName = formFields[0]?.title;
+    if (!formName) {
+      throw new apiError(400, "Form title is required.");
+    }
 
-    // console.log("Form Field: ", formName);
     const campaignDetails = await campaign.findById(campaignId);
-
     if (!campaignDetails) {
       throw new apiError(404, "Campaign not found.");
     }
-
-    console.log("working till here");
 
     const user = {
       campaignId,
@@ -293,15 +294,13 @@ const createNewForm = asyncHandler(async (req, res) => {
       collectionName: formName,
       isThisNestedForm: false,
       mainFormId: null,
-
     };
-
-    console.log(user);
 
     const newForm = await FormFieldSchema.create(user);
     if (!newForm) {
-      throw new apiError(400, "Error Occured while creating form.");
+      throw new apiError(400, "Error occurred while creating form.");
     }
+
     await mongoose.connection.db.createCollection(formName);
 
     return res
@@ -336,7 +335,7 @@ const createNestedForm = asyncHandler(async (req, res) => {
       formFields,
       collectionName: formName,
       isThisNestedForm: true,
-      mainFormId: mainFormId
+      mainFormId: mainFormId,
     };
 
     const newForm = await FormFieldSchema.create(user);
@@ -400,10 +399,6 @@ const createNewCampaign = asyncHandler(async (req, res) => {
   }
 });
 
-
-
-
-
 const assignCreatedForm = asyncHandler(async (req, res) => {
   try {
     const { formId, promoterId } = req.body;
@@ -434,7 +429,6 @@ const assignCreatedForm = asyncHandler(async (req, res) => {
     );
   }
 });
-
 
 const unassignCreatedForm = asyncHandler(async (req, res) => {
   try {
@@ -467,16 +461,16 @@ const unassignCreatedForm = asyncHandler(async (req, res) => {
   }
 });
 
-
-
-// assign campaign to MIS 
+// assign campaign to MIS
 const assignCampaignToMis = asyncHandler(async (req, res) => {
-
   try {
     const { campaignId, misId } = req.body; // Allow multiple `misIds`
 
     if (!campaignId || !misId) {
-      throw new apiError(400, "Campaign ID and MIS IDs are required and must be an array");
+      throw new apiError(
+        400,
+        "Campaign ID and MIS IDs are required and must be an array"
+      );
     }
 
     const mis = await User.findById(misId);
@@ -491,10 +485,11 @@ const assignCampaignToMis = asyncHandler(async (req, res) => {
 
     await mis.save();
 
-
-    res.status(200).json(
-      new apiResponse(200, mis, "Campaign assigned to MIS users successfully")
-    );
+    res
+      .status(200)
+      .json(
+        new apiResponse(200, mis, "Campaign assigned to MIS users successfully")
+      );
   } catch (error) {
     console.error("Error assigning campaign to MIS users:", error);
     throw new apiError(
@@ -503,8 +498,6 @@ const assignCampaignToMis = asyncHandler(async (req, res) => {
     );
   }
 });
-
-
 
 //unassign the campaign from Mis
 const unassignCampaignToMis = asyncHandler(async (req, res) => {
@@ -527,7 +520,13 @@ const unassignCampaignToMis = asyncHandler(async (req, res) => {
 
     res
       .status(200)
-      .json(new apiResponse(200, misDoc, "Campaign unassigned from MIS user successfully"));
+      .json(
+        new apiResponse(
+          200,
+          misDoc,
+          "Campaign unassigned from MIS user successfully"
+        )
+      );
   } catch (error) {
     console.error("Error unassigning campaign from MIS user:", error);
     throw new apiError(
@@ -537,23 +536,23 @@ const unassignCampaignToMis = asyncHandler(async (req, res) => {
   }
 });
 
-// fetch mis id's 
+// fetch mis id's
 
 const fetchUsersByRole = asyncHandler(async (req, res) => {
   try {
-
     const { role } = req.body;
 
     const users = await User.find({ role: role });
 
     if (!users || users.length === 0) {
-      return res
-        .status(200)
-        .json(new apiResponse(200, [], `No ${role} found`));
+      return res.status(200).json(new apiResponse(200, [], `No ${role} found`));
     }
 
-
-    res.status(200).json(new apiResponse(200, users, `Fetched all ${role} users successfully`));
+    res
+      .status(200)
+      .json(
+        new apiResponse(200, users, `Fetched all ${role} users successfully`)
+      );
   } catch (error) {
     console.error(`Error fetching ${role}`, error);
     throw new apiError(
@@ -562,12 +561,6 @@ const fetchUsersByRole = asyncHandler(async (req, res) => {
     );
   }
 });
-
-
-
-
-
-
 
 const updateUserRights = asyncHandler(async (req, res) => {
   try {
