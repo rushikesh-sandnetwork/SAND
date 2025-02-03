@@ -2,7 +2,7 @@ import "./App.css";
 import LoginPage from "./pages/globals/LoginPage/LoginPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 // import AdminLandingPage from "./pages/users/admin/pages/AdminLandingPage/AdminLandingPage";
-import AdminCreateForms from "./pages/users/admin/pages/AdminCreateForm/AdminCreateForms";
+import AdminCreateForms from  "./pages/users/admin/pages/AdminCreateForm/AdminCreateForms";
 import MisLandingPage from "./pages/users/mis/MisLandingPage/MisLandingPage";
 import AdminAssignCreatedForm from "./pages/users/admin/pages/AdminAssignCreatedForm/AdminAssignCreatedForm";
 import AdminFormViewData from "./pages/users/admin/pages/AdminFormViewData/AdminFormViewData";
@@ -15,11 +15,10 @@ import MisPage from './pages/users/mis/MisPage/MisPage';
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
 
 
-import AdminPage from "./pages/users/admin/pages/AdminPage/AdminPage";
-import MisPage from "./pages/users/mis/MisPage/MisPage";
 
 const App = () => {
   const { isAuthenticated, user, loading } = useAuth();
+
 
   // If loading or not authenticated, render the login page
   if (loading) {
@@ -30,80 +29,58 @@ const App = () => {
       <Route
         path="/"
         element={
-          isAuthenticated ? (
-            <Navigate to={`/admin/${user?._id}`} />
-          ) : (
-            <LoginPage />
-          )
+            <LoginPage />       
         }
       />
       <Route
         path="/admin/:id/*"
         element={
-          <RequiredAuth>
             <AdminPage />
-          </RequiredAuth>
         }
       />
-      <Route path="/mis/:id/*" element={<MisPage />} />
-
       <Route
-        path="/admin/createNewForm/:campaignId"
+        path="/mis/:id/*"
         element={
-          <RequiredAuth>
-            <AdminCreateForms />
-          </RequiredAuth>
+            <MisPage />
         }
       />
+
+
+<Route
+  path="/admin/createNewForm/:campaignId"
+  element={
+    <RequiredAuth>
+      <AdminCreateForms />
+    </RequiredAuth>
+  }
+/>
 
       <Route
         path="/admin/createNestedForm/:formId"
-        element={
-          <RequiredAuth>
-            <AdminCreateForms />
-          </RequiredAuth>
-        }
+        element={<AdminCreateForms />}
       />
       <Route
         path="/admin/viewFormData/:formId"
-        element={
-          <RequiredAuth>
-            <AdminFormViewData />
-          </RequiredAuth>
-        }
+        element={<AdminFormViewData />}
       />
       <Route
         path="/admin/assignForm/:formId"
-        element={
-          <RequiredAuth>
-            <AdminAssignCreatedForm />
-          </RequiredAuth>
-        }
+        element={<AdminAssignCreatedForm />}
       />
+      <Route
+      path="/admin/assignCampaignToMis/:campaignId"
+      element={<AssignCampaignToMis />}
+      />
+
+
+
+
       {/* <Route path="/admin/Ad" */}
-      <Route
-        path="/admin/acceptData/:formId"
-        element={
-          <RequiredAuth>
-            <AdminAcceptedData />
-          </RequiredAuth>
-        }
-      />
-      <Route
-        path="/admin/rejectData/:formId"
-        element={
-          <RequiredAuth>
-            <AdminRejectedData />
-          </RequiredAuth>
-        }
-      />
+      <Route path="/admin/acceptData/:formId" element={<AdminAcceptedData />} />
+      <Route path="/admin/rejectData/:formId" element={<AdminRejectedData />} />
       <Route
         path="/admin/viewPromoters/:formId"
-        element={
-          <RequiredAuth>
-            <AdminAssignCreatedForm />
-          </RequiredAuth>
-        }
+        element={<AdminAssignCreatedForm />}
       />
       <Route path="/mis" element={<MisLandingPage />} />
       {/* <Route path="*" element={<Navigate to="/" />} /> */}
@@ -112,5 +89,6 @@ const App = () => {
 
   );
 };
+
 
 export default App;

@@ -14,7 +14,7 @@ require("dotenv").config();
       connection.connection.host
     );
 
-    const port = process.env.PORT || 8000;
+    const port = process.env.PORT || 8080;
     app.listen(port, () => {
       console.log(
         `Express app is connected to SAND ONE & listening on port ${port}`
