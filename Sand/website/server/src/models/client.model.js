@@ -18,7 +18,6 @@ const clientSchema = new Schema({
         type: String,
         required: true,
     },
-    /// these are newly added for mis nd manager
     clientAssigned: [{
         misId: {
             type: mongoose.Schema.Types.ObjectId,

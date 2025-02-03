@@ -1,6 +1,7 @@
 import { asyncHandler } from '../utils/asyncHandler';
 import { apiError } from '../utils/apiError';
 import { apiResponse } from '../utils/apiResponse';
+const User = require("../models/user.model");
 import mongoose from 'mongoose';
 
 const acceptRejectData = asyncHandler(async (req, res) => {
@@ -62,6 +63,23 @@ const fetchRejectedData = asyncHandler(async (req, res) => {
     await fetchDataByStatus(req, res, false);
 });
 
+
+const fetchMisCampaigns = asyncHandler(async (req, res) => {
+    try {
+        const { misId } = await req.body;
+
+        if (!misId) {
+            throw new apiResponse(404, "No mis was found.");
+        }
+
+        const misDoc = await mis.findById(misId);
+
+
+    } catch (error) {
+        console.error(`Error in fetching campaigns`, error);
+        res.status(400).json(new apiError(400, `Error fetching campaigns.`));
+    }
+});
 
 export {
     acceptRejectData,

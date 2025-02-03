@@ -487,13 +487,13 @@ const assignCampaignToMis = asyncHandler(async (req, res) => {
       throw new apiError(404, "details not found");
     }
 
-    campaignDoc.listOfMis.push(mis);
+    mis.listOfCampaigns.push(campaignDoc._id);
 
-    await campaignDoc.save();
+    await mis.save();
 
 
     res.status(200).json(
-      new apiResponse(200, campaignDoc, "Campaign assigned to MIS users successfully")
+      new apiResponse(200, mis, "Campaign assigned to MIS users successfully")
     );
   } catch (error) {
     console.error("Error assigning campaign to MIS users:", error);
@@ -509,28 +509,25 @@ const assignCampaignToMis = asyncHandler(async (req, res) => {
 //unassign the campaign from Mis
 const unassignCampaignToMis = asyncHandler(async (req, res) => {
   try {
-
-
-
     const { campaignId, misId } = req.body;
 
     if (!campaignId || !misId) {
       throw new apiError(400, "Campaign ID and MIS ID are required");
     }
 
-    const campaignDoc = await campaign.findById(campaignId);
+    const misDoc = await User.findById(misId);
 
-    if (!campaignDoc) {
-      throw new apiError(404, "Campaign not found");
+    if (!misDoc) {
+      throw new apiError(404, "Mis not found");
     }
 
-    campaignDoc.listOfMis.pop(misId); // Unassign the MIS user
+    misDoc.listOfCampaigns.pop(campaignId);
 
-    await campaignDoc.save();
+    await misDoc.save();
 
     res
       .status(200)
-      .json(new apiResponse(200, campaignDoc, "Campaign unassigned from MIS user successfully"));
+      .json(new apiResponse(200, misDoc, "Campaign unassigned from MIS user successfully"));
   } catch (error) {
     console.error("Error unassigning campaign from MIS user:", error);
     throw new apiError(

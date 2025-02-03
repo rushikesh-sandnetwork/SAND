@@ -8,36 +8,12 @@ const AssignCampaignToMis = () => {
   const [Mis, setMis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [campaign, setCampaign] = useState(null);
 
   const { campaignId } = useParams();
 
   useEffect(() => {
-    const fetchCampaign = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchCampaignDetails",
-          { campaignId }
-        );
-
-        if (response.status === 200) {
-          setCampaign(response.data.data);
-        } else {
-          setError("Failed to fetch campaign.");
-        }
-      } catch (error) {
-        console.error(error);
-        setError("An error occurred while fetching the campaign.");
-      }
-    };
-
-    fetchCampaign();
-  }, [campaignId]);
-
-  useEffect(() => {
     const fetchMis = async () => {
-      if (!campaign) return; // Wait until campaign is fetched
-
+      
       try {
         const response = await axios.post(
           "http://localhost:8000/api/v1/admin/fetchUsersByRole",
@@ -47,7 +23,7 @@ const AssignCampaignToMis = () => {
         if (response.status === 200) {
           const misWithAssignment = response.data.data.map((mis) => ({
             ...mis,
-            hasCampaignAssigned: campaign.listOfMis?.includes(mis._id) || false,
+            hasCampaignAssigned: mis.listOfCampaigns?.includes(campaignId) || false,
           }));
 
           setMis(misWithAssignment);
@@ -63,7 +39,7 @@ const AssignCampaignToMis = () => {
     };
 
     fetchMis();
-  }, [campaign]); // Runs when `campaign` is updated
+  }, []); // Runs when `campaign` is updated
 
   const assignCampaignToMis = async (misId) => {
     try {

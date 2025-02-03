@@ -28,25 +28,36 @@ const userSchema = new Schema({
         required: true,
         enum: ['admin', 'mis', 'manager', 'subadmin'],
     },
+    listOfCampaigns: {
+        type: [Schema.Types.ObjectId],
+        ref: "Campaign",
+        default: [],
+    },
+    listOfClients: {
+        type: [Schema.Types.ObjectId],
+        ref: "Client",
+        default: [],
+    },
     refreshToken: {
         type: String
-    }
+    },
+
 }, {
     timestamps: true
 });
 
 userSchema.pre("save", async function (next) {
-    if(!this.isModified("password")) return next();
+    if (!this.isModified("password")) return next();
 
     this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
-userSchema.methods.isPasswordCorrect = async function(password){
+userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
 
-userSchema.methods.generateAccessToken = function() {
+userSchema.methods.generateAccessToken = function () {
     if (!process.env.ACCESS_TOKEN_SECRET || !process.env.ACCESS_TOKEN_EXPIRY) {
         throw new Error("ACCESS_TOKEN_SECRET and ACCESS_TOKEN_EXPIRY must be set in the environment variables.");
     }
@@ -64,7 +75,7 @@ userSchema.methods.generateAccessToken = function() {
     );
 };
 
-userSchema.methods.generateRefreshToken = function() {
+userSchema.methods.generateRefreshToken = function () {
     if (!process.env.REFRESH_TOKEN_SECRET || !process.env.REFRESH_TOKEN_EXPIRY) {
         throw new Error("REFRESH_TOKEN_SECRET and REFRESH_TOKEN_EXPIRY must be set in the environment variables.");
     }

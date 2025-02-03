@@ -14,11 +14,11 @@ const campaignSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Client"
     },
-    listOfMis: {
-        type: [Schema.Types.ObjectId],
-        ref: "User",
-        default: [],
-    },
+    // listOfMis: {
+    //     type: [Schema.Types.ObjectId],
+    //     ref: "User",
+    //     default: [],
+    // },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Campaign", campaignSchema);
