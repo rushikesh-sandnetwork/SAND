@@ -175,7 +175,7 @@ const fillFormData = asyncHandler(async (req, res) => {
         .json(new apiError(400, "Missing required data fields."));
     }
 
-    reqData.acceptedData = true;
+    reqData.acceptedData = false;
 
     const fileUrls = {};
 

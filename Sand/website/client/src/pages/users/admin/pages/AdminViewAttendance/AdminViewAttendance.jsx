@@ -1,11 +1,10 @@
-
 // import React from 'react';
 // import { NavLink, useNavigate } from 'react-router-dom';
 // import './AdminLandingPage.css';
 // import Logo from './SAND 1 logo.png';
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./AdminViewAttendance.css";
 import PageTitle from "../../../../../components/PageTitles/PageTitle";
 
@@ -21,7 +20,7 @@ const AdminViewAttendance = () => {
   const fetchAttendanceDetails = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/promoter/fetchPromoterAttendanceDetails",
+        "http://localhost:8080/api/v1/promoter/fetchPromoterAttendanceDetails",
         { email }
       );
 
@@ -256,10 +255,6 @@ const AdminViewAttendance = () => {
 };
 
 export default AdminViewAttendance;
-
-
-
-
 
 // const AdminViewAttendance = () => {
 //   const [attendanceData, setAttendanceData] = useState([]);

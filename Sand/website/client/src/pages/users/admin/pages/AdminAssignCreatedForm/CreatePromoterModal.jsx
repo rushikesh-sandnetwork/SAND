@@ -18,7 +18,7 @@ const CreatePromoterModal = memo(({ onClose, onCreate }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/promoter/registerNewPromoter",
+        "http://localhost:8080/api/v1/promoter/registerNewPromoter",
         {
           promoterName,
           promoterEmailId,
