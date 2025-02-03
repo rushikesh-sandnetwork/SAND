@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const RequiredAuth = ({ children }) => {
   const { isAuthenticated, loading } = useAuth(); // Get auth state and loading status
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Show a loading spinner while checking authentication
   if (loading) {
@@ -13,7 +13,9 @@ const RequiredAuth = ({ children }) => {
 
   // Redirect to login page if not authenticated
   if (!isAuthenticated) {
-    <Navigate to="/" replace />;
+    console.log("Not authenticated");
+
+    return <Navigate to="/" replace />;
     // return null; // Prevent rendering protected content
   }
 

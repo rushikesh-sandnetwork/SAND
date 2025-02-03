@@ -1,66 +1,55 @@
-.LandingPage-container {
+.landing-page-container {
   display: flex;
-  height: 100vh; 
+  height: 100vh; /* Full height for the viewport */
+  overflow: hidden; /* Prevent unnecessary scrolling */
 }
 
 .sidebar {
-  width: 275px; 
-  position: fixed; 
+  width: 275px;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100vh; 
-  overflow: auto; 
+  height: 100vh;
+  overflow-y: auto;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .content {
-  margin-left: 275px;
+  flex: 1; /* Automatically adjust to remaining width */
+  margin-left: 275px; /* Matches the sidebar width */
   padding: 20px;
-  width: calc(100% - 275px);
-  overflow: auto; 
+  overflow-y: auto; /* Allow scrolling within the content if necessary */
+  height: 100vh; /* Ensure it spans the full viewport height */
+  box-sizing: border-box; /* Include padding in height calculations */
 }
 
-/* Navbar styling */
 .navbar {
-  height: 90%;
-  width: 275px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  top: 0;
-  left: 0;
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  padding-top: 20px;
 }
 
 .navbar img {
-  margin-left: 10px;
   width: 200px;
   height: auto;
-  margin-bottom: 12px;
-  align-items: center;
+  margin-bottom: 20px;
 }
 
 .navbar a {
-  padding: 15px 8px 15px 16px;
-  width: 80%;
+  width: 90%;
   text-decoration: none;
   font-size: 18px;
   text-align: center;
   font-family: "Poppins", sans-serif;
   color: black;
-  display: block;
-  background-color: #f8f8f8;
-  margin-bottom: 18px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding: 15px;
+  margin-bottom: 12px;
   border-radius: 12px;
-  transition: background-color 00.3s ease-in-out;
-  cursor: pointer;
+  background-color: #f8f8f8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease-in-out;
 }
 
 .navbar a:hover {
@@ -69,21 +58,60 @@
 }
 
 .navbar input {
-  padding: 15px 8px 15px 16px;
-  background-color: #2d9bff;
   width: 90%;
+  background-color: #2d9bff;
   border: none;
-  margin-right: 5px;
-  border-radius: 10px;
   font-size: 18px;
+  padding: 15px;
+  margin-top: auto;
+  margin-bottom: 10px;
+  border-radius: 12px;
   font-weight: bold;
-  font-family: "Poppins", sans-serif;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  transition: background-color 00.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .navbar input:hover {
   background-color: #003e77;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .content {
+    margin-left: 200px;
+  }
+
+  .navbar a {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .navbar img {
+    width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 150px;
+  }
+
+  .content {
+    margin-left: 150px;
+  }
+
+  .navbar a {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .navbar img {
+    width: 120px;
+  }
 }

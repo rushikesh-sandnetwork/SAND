@@ -9,10 +9,11 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   const fetchCurrentUser = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/user/currentUser",
+        "http://localhost:8080/api/v1/user/currentUser",
         {
           withCredentials: true,
         }
@@ -36,13 +37,13 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/user/logout",
+        "http://localhost:8080/api/v1/user/logout",
         {},
         { withCredentials: true }
       );
       setUser(null);
       setIsAuthenticated(false);
-      navigate("/",{replace:true})
+      navigate("/", { replace: true });
     } catch (error) {
       console.error("Error during logout`:", error);
     }

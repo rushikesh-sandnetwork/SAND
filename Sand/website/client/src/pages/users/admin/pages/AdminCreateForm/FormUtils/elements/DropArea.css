@@ -81,6 +81,50 @@ p {
   width: 300px;
 }
 
+
+
+/* Media Query for small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .drop-area {
+    width: 100%;
+  }
+
+  .drop-area-title {
+    flex-direction: column;
+  }
+
+  .submitFormBtn {
+    width: 100%;
+  }
+}
+
+/* Media Query for extra small screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .drop-area {
+    width: 100%;
+    height: auto;
+  }
+
+  .create-form-btn {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 .formTitle {
   margin-bottom: 10px;
   margin-top: 20px;
