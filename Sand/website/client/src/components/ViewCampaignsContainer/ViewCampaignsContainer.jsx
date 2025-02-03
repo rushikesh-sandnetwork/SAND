@@ -3,34 +3,60 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ViewCampaignsContainer.css";
 import ViewCampaignsBox from "./ViewCampaignsBox";
-import AdminCreateNewCampaign from "../../pages/users/admin/pages/AdminCreateNewCampaign/AdminCreateNewCampaign";
 
-const ViewCampaignsContainer = () => {
+const ViewCampaignsContainer = ({ role }) => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  
+  const { clientId, id } = useParams();
 
-  const {clientId} = useParams();
+  const fetchAdminCampaigns = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
+        { clientId }
+      );
+      setCampaigns(response.data.data.reverse());
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching campaigns:", error);
+      setError("Failed to load campaigns");
+      setLoading(false);
+    }
+  };
+
+  const fetchMisCampaigns = async () => {
+    try {
+      console.log(id);
+      
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/mis/fetchMisCampaigns",
+        { misId:id }
+      );
+      console.log(response);
+      
+      setCampaigns(response.data.data.reverse());
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching campaigns:", error);
+      setError("Failed to load campaigns");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchCampaigns = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
-          { clientId }
-        );
-        setCampaigns(response.data.data.reverse());
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching campaigns:", error);
-        setError("Failed to load campaigns");
-        setLoading(false);
-      }
-    };
-
-    fetchCampaigns();
-  }, [clientId]);
+    if (role === "admin") {
+      console.log("admin wala");
+      
+      fetchAdminCampaigns();
+    } else {
+      console.log("mis wala");
+      
+      fetchMisCampaigns();
+    }
+  }, [role]); // Dependency added
 
   const handleDeleteClient = async () => {
     try {
@@ -43,7 +69,8 @@ const ViewCampaignsContainer = () => {
 
       if (response.status === 200) {
         alert("Client deleted successfully.");
-        setActiveTab("viewClients");
+        // Remove setActiveTab if it's not defined
+        // setActiveTab("viewClients");
       }
     } catch (error) {
       console.error("Error deleting client:", error);
@@ -61,11 +88,11 @@ const ViewCampaignsContainer = () => {
 
   return (
     <div className="viewCampaignsContainer">
-    <input
+      <input
         className="newCampaignBtn"
         type="button"
         value="Create New Campaign"
-        onClick={() => navigate('AdminCreateNewCampaign')}
+        onClick={() => navigate('/AdminCreateNewCampaign')}
       />
       <input
         className="deleteClientBtn"
@@ -81,7 +108,6 @@ const ViewCampaignsContainer = () => {
             url={campaign.campaignLogo}
             campaign={campaign}
             campaignId={campaign._id}
-            // setActiveTab={setActiveTab}
           />
         ))}
       </div>
