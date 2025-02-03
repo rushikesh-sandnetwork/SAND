@@ -12,6 +12,7 @@ import RequiredAuth from "./components/RequiredAuth/RequiredAuth";
 import { useAuth } from "./context/AuthContext";
 import AdminPage from './pages/users/admin/pages/AdminPage/AdminPage';
 import MisPage from './pages/users/mis/MisPage/MisPage';
+import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
 
 
 
@@ -66,6 +67,14 @@ const App = () => {
         path="/admin/assignForm/:formId"
         element={<AdminAssignCreatedForm />}
       />
+      <Route
+      path="/admin/assignCampaignToMis/:campaignId"
+      element={<AssignCampaignToMis />}
+      />
+
+
+
+
       {/* <Route path="/admin/Ad" */}
       <Route path="/admin/acceptData/:formId" element={<AdminAcceptedData />} />
       <Route path="/admin/rejectData/:formId" element={<AdminRejectedData />} />
@@ -76,6 +85,8 @@ const App = () => {
       <Route path="/mis" element={<MisLandingPage />} />
       {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes >
+
+
   );
 };
 

@@ -9,7 +9,10 @@ const CampaignDetailsBox = ({ campaignId, title, url, imgSrc }) => {
     if (url == "create-form") {
       navigate(`/admin/createNewForm/${campaignId}`);
 
-    } else {
+    } else if(url == "assignCampaignToMis"){
+      navigate(`/admin/assignCampaignToMis/${campaignId}`);
+    }
+    else {
       navigate('viewForms')
     }
   };

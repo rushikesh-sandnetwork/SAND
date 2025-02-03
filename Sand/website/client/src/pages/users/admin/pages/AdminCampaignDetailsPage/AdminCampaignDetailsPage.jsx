@@ -48,7 +48,7 @@ const AdminCampaignDetailsPage = ({  setActiveTab }) => {
           <CampaignDetailsBox
             imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
             title="ASSIGN MIS"
-            url="assignMis"
+            url="assignCampaignToMis"
             setActiveTab={setActiveTab}
             campaignId={campaignId}
           />
