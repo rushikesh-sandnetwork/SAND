@@ -4,29 +4,32 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./ViewCampaignsContainer.css";
 import ViewCampaignsBox from "./ViewCampaignsBox";
 
-const ViewCampaignsContainer = ({ setActiveTab }) => {
+const ViewCampaignsContainer = ({ setActiveTab, role }) => {
   const [campaigns, setCampaigns] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const {clientId} = useParams();
+  const fetchAdminCampaigns = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
+        { clientId }
+      );
+      setCampaigns(response.data.data.reverse());
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching campaigns:", error);
+      setError("Failed to load campaigns");
+      setLoading(false);
+    }
+  };
+  
+  
 
   useEffect(() => {
-    const fetchCampaigns = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
-          { clientId }
-        );
-        setCampaigns(response.data.data.reverse());
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching campaigns:", error);
-        setError("Failed to load campaigns");
-        setLoading(false);
-      }
-    };
+   
 
     fetchCampaigns();
   }, [clientId]);
