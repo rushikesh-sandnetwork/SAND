@@ -9,7 +9,7 @@ const ViewCampaignsContainer = ({ role }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
+
   const { clientId, id } = useParams();
 
   const fetchAdminCampaigns = async () => {
@@ -30,13 +30,13 @@ const ViewCampaignsContainer = ({ role }) => {
   const fetchMisCampaigns = async () => {
     try {
       console.log(id);
-      
+
       const response = await axios.post(
         "http://localhost:8000/api/v1/mis/fetchMisCampaigns",
-        { misId:id }
+        { misId: id }
       );
       console.log(response);
-      
+
       setCampaigns(response.data.data.reverse());
       setLoading(false);
     } catch (error) {
@@ -49,11 +49,11 @@ const ViewCampaignsContainer = ({ role }) => {
   useEffect(() => {
     if (role === "admin") {
       console.log("admin wala");
-      
+
       fetchAdminCampaigns();
     } else {
       console.log("mis wala");
-      
+
       fetchMisCampaigns();
     }
   }, [role]); // Dependency added
