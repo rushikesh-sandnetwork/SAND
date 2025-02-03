@@ -23,7 +23,7 @@ const MisLandingPage = () => {
           <img src={Logo} alt="Logo" className="logo" />
           <NavLink to=""  className="nav-link">
             Overview
-          </NavLink>
+          </NavLink>7iu
           {/* <NavLink to="newClient"  className="nav-link">
             New Client
           </NavLink> */}
