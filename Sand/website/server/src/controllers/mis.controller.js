@@ -1,8 +1,17 @@
-import { asyncHandler } from '../utils/asyncHandler';
-import { apiError } from '../utils/apiError';
-import { apiResponse } from '../utils/apiResponse';
-const User = require("../models/user.model");
-import mongoose from 'mongoose';
+import { Router } from "express";
+import userController from "../controllers/users.controller.js";
+import apiResponse from "../utils/apiResponse.js";
+import apiError from "../utils/apiError.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
+import mongoose from "mongoose";
+import client from "../models/client.model.js";
+import campaign from "../models/campaign.model.js";
+import Promoter from "../models/promoter.model.js";
+import campaignRights from "../models/campaignsRightSchema.model.js";
+import FormFieldSchema from "../models/forms.fields.model.js";
+import asyncHandler from "../utils/asyncHandler.js";
+import formsFieldsModel from "../models/forms.fields.model.js";
+import User from "../models/user.model.js";
 
 const acceptRejectData = asyncHandler(async (req, res) => {
     const { formId, userId, collectionName, status } = req.body;
@@ -66,23 +75,32 @@ const fetchRejectedData = asyncHandler(async (req, res) => {
 
 const fetchMisCampaigns = asyncHandler(async (req, res) => {
     try {
-        const { misId } = await req.body;
+        const { misId } = req.body;
 
         if (!misId) {
-            throw new apiResponse(404, "No mis was found.");
+            return res.status(404).json(new apiResponse(404, "No mis was found."));
         }
 
-        const misDoc = await mis.findById(misId);
+        const misDoc = await User.findById(misId);
 
+        if (!misDoc) {
+            return res.status(404).json(new apiResponse(404, "No mis was found."));
+        }
 
+        // Fetch campaign details using campaign IDs
+        const misCampaigns = await campaign.find({ _id: { $in: misDoc.listOfCampaigns } });
+
+        res.status(200).json(new apiResponse(200, "Fetched campaigns successfully.", misCampaigns));
     } catch (error) {
         console.error(`Error in fetching campaigns`, error);
         res.status(400).json(new apiError(400, `Error fetching campaigns.`));
     }
 });
 
+
 export {
     acceptRejectData,
     fetchAcceptedData,
-    fetchRejectedData
+    fetchRejectedData,
+    fetchMisCampaigns
 };
