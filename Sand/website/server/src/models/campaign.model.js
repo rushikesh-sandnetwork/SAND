@@ -1,37 +1,24 @@
 const mongoose = require("mongoose");
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 const campaignSchema = new Schema({
-    title:{
-        type:String,
-        required:true,
+    title: {
+        type: String,
+        required: true,
     },
-    campaignLogo:{
-        type:String,
-        required:true
+    campaignLogo: {
+        type: String,
+        required: true
     },
-    clientId:{
-        type:Schema.Types.ObjectId,
-        ref:"Client"
+    clientId: {
+        type: Schema.Types.ObjectId,
+        ref: "Client"
     },
-    listOfMis:{
-        type:[Schema.Types.ObjectId],
-        ref:"User",
-        default:[],
+    listOfMis: {
+        type: [Schema.Types.ObjectId],
+        ref: "User",
+        default: [],
     },
-    listOfManagers:{
-        type:[Schema.Types.ObjectId],
-        ref:"User",
-        default:[],
-    },
-    CampaignsAssigned: [
-        {
-            misIds: {
-                type: [Schema.Types.ObjectId],
-                ref: "User", // Reference to the 'User' collection
-            },
-        },
-    ],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Campaign", campaignSchema);

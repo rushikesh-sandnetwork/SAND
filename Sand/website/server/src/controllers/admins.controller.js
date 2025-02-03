@@ -470,34 +470,27 @@ const unassignCreatedForm = asyncHandler(async (req, res) => {
 
 
 // assign campaign to MIS 
-const assignCampaign = asyncHandler(async (req, res) => {
-  try {
-    const { campaignId, misIds } = req.body; // Allow multiple `misIds`
+const assignCampaignToMis = asyncHandler(async (req, res) => {
 
-    if (!campaignId || !misIds || !Array.isArray(misIds)) {
+  try {
+    const { campaignId, misId } = req.body; // Allow multiple `misIds`
+
+    if (!campaignId || !misId) {
       throw new apiError(400, "Campaign ID and MIS IDs are required and must be an array");
     }
 
-    const campaignDoc = await Campaign.findById(campaignId);
+    const mis = await User.findById(misId);
 
-    if (!campaignDoc) {
-      throw new apiError(404, "Campaign not found");
+    const campaignDoc = await campaign.findById(campaignId);
+
+    if (!campaignDoc || !mis) {
+      throw new apiError(404, "details not found");
     }
 
-    // Validate each MIS ID
-    for (const misId of misIds) {
-      const misUser = await User.findById(misId);
-      if (!misUser) {
-        throw new apiError(404, `MIS user with ID ${misId} not found`);
-      }
-
-      // Add to CampaignsAssigned if not already assigned
-      if (!campaignDoc.CampaignsAssigned.some((assignment) => assignment.misIds.includes(misId))) {
-        campaignDoc.CampaignsAssigned.push({ misIds: misId });
-      }
-    }
+    campaignDoc.listOfMis.push(mis);
 
     await campaignDoc.save();
+
 
     res.status(200).json(
       new apiResponse(200, campaignDoc, "Campaign assigned to MIS users successfully")
@@ -516,6 +509,9 @@ const assignCampaign = asyncHandler(async (req, res) => {
 //unassign the campaign from Mis
 const unassignCampaign = asyncHandler(async (req, res) => {
   try {
+
+
+
     const { campaignId, misId } = req.body;
 
     if (!campaignId || !misId) {
@@ -854,7 +850,7 @@ module.exports = {
   fetchClient,
   createNewClient,
   fetchNestedForms,
-  assignCampaign,
+  assignCampaignToMis,
   unassignCampaign,
   fetchUsersByRole,
 };

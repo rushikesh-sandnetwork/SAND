@@ -85,7 +85,7 @@ router.route("/fetchFormsForGivenClient").post(adminController.fetchFormsForCamp
 router.route("/fetchnestedforms").post(adminController.fetchNestedForms);
 
 //assign campaign to MIS and Manager
-router.route("/ assignCampaign").post(adminController.assignCampaign);
+router.route("/assignCampaignToMis").post(adminController.assignCampaignToMis);
 
 router.route("/unassignCampaign").post(adminController.unassignCampaign);
 
