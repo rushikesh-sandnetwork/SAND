@@ -45,6 +45,14 @@ const AdminCampaignDetailsPage = ({  setActiveTab }) => {
             setActiveTab={setActiveTab}
             campaignId={campaignId}
           />
+          <CampaignDetailsBox
+            imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
+            title="ASSIGN MIS"
+            url="assignMis"
+            setActiveTab={setActiveTab}
+            campaignId={campaignId}
+          />
+
           <CampaignDeleteBox
             imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
             title="DELETE CAMPAIGN"
@@ -52,12 +60,12 @@ const AdminCampaignDetailsPage = ({  setActiveTab }) => {
             setActiveTab={setActiveTab}
           />
 
-          <CampaignAssignBox 
+          {/* <CampaignAssignBox 
             imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
             title="ASSIGN CAMPAIGN"
             campaignId={campaignId}
             setActiveTab={setActiveTab}
-          />
+          /> */}
           
         </div>
       </div>
