@@ -7,6 +7,7 @@ import './MisPage.css';
 import MisViewCampaign from '../MisViewCampaign/MisViewCampaign'
 import AdminCampaignDetailsPage from '../../admin/pages/AdminCampaignDetailsPage/AdminCampaignDetailsPage'
 import AdminFormDetails from '../../admin/pages/AdminFormDetails/AdminFormDetails'
+import AdminFormItems from '../../admin/pages/AdminFormItems/AdminFormItems'
 const MisPage = () => {
     return (
         <>
@@ -21,6 +22,7 @@ const MisPage = () => {
                     <Route path="viewCampaigns" element={<MisViewCampaign />} />
                     <Route path="viewCampaigns/campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
                     <Route path="viewCampaigns/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
+                    <Route path = "viewCampaigns/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} />
                 </Routes>
             </div>
 

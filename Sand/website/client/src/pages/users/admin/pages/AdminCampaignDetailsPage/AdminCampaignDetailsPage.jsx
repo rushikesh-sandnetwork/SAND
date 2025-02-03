@@ -6,7 +6,7 @@ import './AdminCampaignDetailsPage.css';
 import CampaignDeleteBox from '../../../../../components/CampaignDetailsBoxes/CampaignDeleteBox';
 import CampaignAssignBox from '../../../../../components/CampaignDetailsBoxes/CampaignAssignBox';
 
-const AdminCampaignDetailsPage = ({}) => {
+const AdminCampaignDetailsPage = ({role}) => {
   const navigate = useNavigate();  // Initialize the useNavigate hook
 
   const {campaignId} = useParams();
@@ -31,17 +31,12 @@ const AdminCampaignDetailsPage = ({}) => {
       <PageTitle title="Campaign Details" />
       <div className="campaign-details-boxes">
         <div className="row">
-          <CampaignDetailsBox
+        {role === "admin" && (
+        <>
+          <CampaignDetailsBox 
             imgSrc="https://cdn-icons-png.flaticon.com/512/4074/4074958.png"
             title="CREATE FORM"
             url="create-form"
-            // setActiveTab={setActiveTab}
-            campaignId={campaignId}
-          />
-          <CampaignDetailsBox
-            imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
-            title="VIEW FORMS"
-            url="view-all-forms"
             // setActiveTab={setActiveTab}
             campaignId={campaignId}
           />
@@ -52,12 +47,20 @@ const AdminCampaignDetailsPage = ({}) => {
             // setActiveTab={setActiveTab}
             campaignId={campaignId}
           />
-
           <CampaignDeleteBox
             imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
             title="DELETE CAMPAIGN"
             campaignId={campaignId}
             // setActiveTab={setActiveTab}
+          />
+        </>)}
+
+          <CampaignDetailsBox
+            imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
+            title="VIEW FORMS"
+            url="view-all-forms"
+            // setActiveTab={setActiveTab}
+            campaignId={campaignId}
           />
 
           {/* <CampaignAssignBox 
