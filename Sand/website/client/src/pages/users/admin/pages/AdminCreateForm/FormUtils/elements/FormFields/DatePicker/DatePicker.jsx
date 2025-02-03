@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useDrag } from 'react-dnd';
-import { setFullNameData } from '../actions/fullNameActions';
-import { v4 as uuidv4 } from 'uuid';
-import './DatePicker.css';
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useDrag } from "react-dnd";
+import { setFullNameData } from "../actions/fullNameActions";
+import { v4 as uuidv4 } from "uuid";
+import "./DatePicker.css";
 
 const DatePicker = ({ fullNameDataList, setFullNameData }) => {
   const [componentId] = useState(uuidv4()); // Unique ID for this component instance
@@ -17,28 +17,31 @@ const DatePicker = ({ fullNameDataList, setFullNameData }) => {
 
       if (existingEntry) {
         // Update the existing entry
-        setFullNameData(existingEntry.uniqueId, inputValue, 'Date Picker');
+        setFullNameData(existingEntry.uniqueId, inputValue, "Date Picker");
       } else {
         // Create a new entry
-        setFullNameData(componentId, inputValue, 'Date Picker');
+        setFullNameData(componentId, inputValue, "Date Picker");
       }
     }
   };
 
   const [{ isDragging }, dragRef] = useDrag({
-    type: 'item',
-    item: { id: componentId, type: 'Date Picker', text: 'Date Picker' },
+    type: "item",
+    item: { id: componentId, type: "Date Picker", text: "Date Picker" },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
   useEffect(() => {
-    console.log('Full Name Data List:', fullNameDataList);
+    console.log("Full Name Data List:", fullNameDataList);
   }, [fullNameDataList]);
 
   return (
-    <div className={`datePicker-container ${isDragging ? 'dragging' : ''}`} ref={dragRef}>
+    <div
+      className={`datePicker-container ${isDragging ? "dragging" : ""}`}
+      ref={dragRef}
+    >
       <input
         type="text"
         name="datePickerTitle"
