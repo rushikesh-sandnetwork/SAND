@@ -84,4 +84,11 @@ router.route("/fetchFormsForGivenClient").post(adminController.fetchFormsForCamp
 //fetch nested forms
 router.route("/fetchnestedforms").post(adminController.fetchNestedForms);
 
+//assign campaign to MIS and Manager
+router.route("/ assignCampaign").post(adminController.assignCampaign);
+
+router.route("/unassignCampaign").post(adminController.unassignCampaign);
+
+router.route("/fetchAllMISUsers").post(adminController.fetchAllMISUsers);
+
 module.exports = router;

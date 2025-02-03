@@ -23,7 +23,15 @@ const campaignSchema = new Schema({
         type:[Schema.Types.ObjectId],
         ref:"User",
         default:[],
-    }
-},{timestamps:true});
+    },
+    CampaignsAssigned: [
+        {
+            misIds: {
+                type: [Schema.Types.ObjectId],
+                ref: "User", // Reference to the 'User' collection
+            },
+        },
+    ],
+}, { timestamps: true });
 
 module.exports = mongoose.model("Campaign", campaignSchema);

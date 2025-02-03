@@ -3,6 +3,7 @@ import MisProfilePage from '../MisProfilePage/MisProfilePage'
 import MisLandingPage from '../MisLandingPage/MisLandingPage'
 import { Routes, Route } from 'react-router-dom'
 import MisViewAttendance from '../MisViewAttendance/MisViewAttendance'
+import './MisPage.css';
 
 const MisPage = () => {
     return (

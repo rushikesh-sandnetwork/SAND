@@ -19,18 +19,15 @@ const clientSchema = new Schema({
         required: true,
     },
     /// these are newly added for mis nd manager
-    clientAssigned: [{
-        misId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "users", // Reference to the 'users' collection
-            required: true,
-        },
-        managerId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "users", // Reference to the 'users' collection
-            required: true,
-        },
-    }],
+    clientAssigned: [
+        {
+            managerId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "users", // Reference to the 'users' collection
+                required: true,
+            }
+        }
+    ]
 }, {
     timestamps: true,
 });

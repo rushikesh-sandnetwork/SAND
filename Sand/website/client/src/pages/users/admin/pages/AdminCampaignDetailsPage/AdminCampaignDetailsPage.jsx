@@ -4,6 +4,7 @@ import PageTitle from '../../../../../components/PageTitles/PageTitle';
 import CampaignDetailsBox from '../../../../../components/CampaignDetailsBoxes/CampaignDetailsBox';
 import './AdminCampaignDetailsPage.css';
 import CampaignDeleteBox from '../../../../../components/CampaignDetailsBoxes/CampaignDeleteBox';
+import CampaignAssignBox from '../../../../../components/CampaignDetailsBoxes/CampaignAssignBox';
 
 const AdminCampaignDetailsPage = ({  setActiveTab }) => {
   const navigate = useNavigate();  // Initialize the useNavigate hook
@@ -50,6 +51,14 @@ const AdminCampaignDetailsPage = ({  setActiveTab }) => {
             campaignId={campaignId}
             setActiveTab={setActiveTab}
           />
+
+          <CampaignAssignBox 
+            imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
+            title="ASSIGN CAMPAIGN"
+            campaignId={campaignId}
+            setActiveTab={setActiveTab}
+          />
+          
         </div>
       </div>
     </div>
