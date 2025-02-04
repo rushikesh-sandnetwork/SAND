@@ -16,6 +16,7 @@ import AdminCampaignDetailsPage from '../../admin/pages/AdminCampaignDetailsPage
 import AdminFormDetails from '../../admin/pages/AdminFormDetails/AdminFormDetails';
 import AdminFormItems from '../../admin/pages/AdminFormItems/AdminFormItems';
 import AdminNestedViewData from '../../admin/pages/AdminNestedViewData/AdminNestedViewData';
+import ManagerOverViewPage from '../ManagerOverViewPage/ManagerOverViewPage';
 const ManagerPage = () => {
     return (
         <>
@@ -24,7 +25,7 @@ const ManagerPage = () => {
             </div>
             <div className="Manager-page-content">
                 <Routes>
-                    <Route path="" element={<ManagerLandingPage />} />
+                    <Route path="" element={<ManagerOverViewPage />} />
                     <Route path="profile" element={<ManagerProfilePage />} />
                     <Route path="promoterAttendance" element={<ManagerViewAttendance     />} />
                     <Route path="newClient" element={<ManagerCreateNewClient />} />
