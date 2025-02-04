@@ -88,6 +88,9 @@ router.route("/fetchnestedforms").post(adminController.fetchNestedForms);
 router.route("/assignCampaignToMis").post(adminController.assignCampaignToMis);
 
 router.route("/unassignCampaignToMis").post(adminController.unassignCampaignToMis);
+router.route("/assignClientToManager").post(adminController.assignClientToManager);
+
+router.route("/unassignClientToManager").post(adminController.unassignClientToManager);
 
 router.route("/fetchUsersByRole").post(adminController.fetchUsersByRole);
 
