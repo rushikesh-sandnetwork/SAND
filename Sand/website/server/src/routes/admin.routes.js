@@ -4,7 +4,7 @@ const upload = require("../middlewares/multer.middleware");
 const adminController = require('../controllers/admins.controller');
 const { fetchNestedForms } = require('../controllers/admins.controller');
 
-    
+
 router.route("/createNestedForm").post(adminController.createNestedForm);
 router.route("/updateAcceptedData").patch(adminController.acceptRejectData);
 
@@ -13,11 +13,11 @@ router.route("/updateAcceptedData").patch(adminController.acceptRejectData);
 router.route("/createNewClient").post(
     upload.fields([
         {
-            name:"clientPhoto",
-            maxCount:1
+            name: "clientPhoto",
+            maxCount: 1
         }
     ])
-    ,adminController.createNewClient);
+    , adminController.createNewClient);
 
 
 // delete new client
@@ -48,8 +48,8 @@ router.route("/fetchCampaignDetails").post(adminController.fetchCampaignDetails)
 router.route("/createNewCampaign").post(
     upload.fields([
         {
-            name:"campaignPhoto",
-            maxCount:1
+            name: "campaignPhoto",
+            maxCount: 1
         }
     ]),
     adminController.createNewCampaign);
