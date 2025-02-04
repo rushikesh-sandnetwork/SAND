@@ -4,7 +4,7 @@ import PageTitle from '../../../../../components/PageTitles/PageTitle';
 import './AdminFormItems.css'
 import FormDetailsBox from '../../../../../components/FormDetailsBox/FormDetailsBox'; import { useParams } from 'react-router-dom';
 ;
-const AdminFormItems = ({ setActiveTab }) => {
+const AdminFormItems = ({ role }) => {
 
     const { formId } = useParams();
 
@@ -13,25 +13,28 @@ const AdminFormItems = ({ setActiveTab }) => {
             <PageTitle title="Form Items"></PageTitle>
             <div className="form-items-container">
                 <div className="row">
+                {role === "admin" && (
+                     <>
                     <FormDetailsBox
                         imgSrc="https://cdn-icons-png.flaticon.com/512/3329/3329465.png"
                         title="Nested Form"
                         formId={formId}
                         url="createNestedForm"
                     />
+                    </>)}
                     <FormDetailsBox
                         imgSrc="https://cdn-icons-png.flaticon.com/512/993/993762.png"
                         title="VIEW DATA"
                         formId={formId}
                         url="viewFormData"
-                        setActiveTab={setActiveTab}
+                        // setActiveTab={setActiveTab}
                     />
                     <FormDetailsBox
                         imgSrc="https://cdn-icons-png.flaticon.com/512/58/58679.png"
                         title="ACCEPTED DATA"
                         formId={formId}
                         url="acceptData"
-                        setActiveTab={setActiveTab}
+                        // setActiveTab={setActiveTab}
 
                     />
                 </div>
@@ -41,7 +44,7 @@ const AdminFormItems = ({ setActiveTab }) => {
                         title="REJECTED DATA"
                         formId={formId}
                         url="rejectData"
-                        setActiveTab={setActiveTab}
+                        // setActiveTab={setActiveTab}
 
                     />
 
@@ -50,7 +53,7 @@ const AdminFormItems = ({ setActiveTab }) => {
                         title="VIEW PROMOTERS"
                         formId={formId}
                         url="viewPromoters"
-                        setActiveTab={setActiveTab}
+                        // setActiveTab={setActiveTab}
 
                     />
                     <FormDetailsBox
@@ -58,7 +61,7 @@ const AdminFormItems = ({ setActiveTab }) => {
                         title="VIEW NESTED FORM DATA"
                         formId={formId}
                         url="viewNestedFormData"
-                        setActiveTab={setActiveTab}
+                        // setActiveTab={setActiveTab}
                     />
                 </div>
             </div>

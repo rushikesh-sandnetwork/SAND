@@ -27,9 +27,9 @@ const MisLandingPage = () => {
           {/* <NavLink to="newClient"  className="nav-link">
             New Client
           </NavLink> */}
-          <NavLink to="viewCampaigns"  className="nav-link">
+          {/* <NavLink to="viewCampaigns"  className="nav-link">
             View Campaigns
-          </NavLink>
+          </NavLink> */}
           <NavLink to="profile" className="nav-link">
             Profile
           </NavLink>

@@ -16,13 +16,13 @@ const MisPage = () => {
             </div>
             <div className="Mis-page-content">
                 <Routes>
-                    <Route path="" element={<MisLandingPage />} />
+                    <Route path="" element={<MisViewCampaign />} />
                     <Route path="profile" element={<MisProfilePage />} />
                     <Route path="promoterAttendance" element={<MisViewAttendance />} />
-                    <Route path="viewCampaigns" element={<MisViewCampaign />} />
-                    <Route path="viewCampaigns/campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
-                    <Route path="viewCampaigns/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
-                    <Route path = "viewCampaigns/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} />
+                    {/* <Route path="viewCampaigns" element={<MisViewCampaign />} /> */}
+                    <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
+                    <Route path="campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
+                    <Route path = "campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} />
                 </Routes>
             </div>
 
