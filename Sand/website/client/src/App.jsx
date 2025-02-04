@@ -13,6 +13,7 @@ import { useAuth } from "./context/AuthContext";
 import AdminPage from './pages/users/admin/pages/AdminPage/AdminPage';
 import MisPage from './pages/users/mis/MisPage/MisPage';
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
+import ManagerPage from "./pages/users/manager/ManagerPage/ManagerPage";
 
 
 
@@ -42,6 +43,12 @@ const App = () => {
         path="/mis/:id/*"
         element={
             <MisPage />
+        }
+      />
+      <Route
+        path="/manager/:id/*"
+        element={
+            <ManagerPage />
         }
       />
 
