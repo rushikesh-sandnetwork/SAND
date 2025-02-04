@@ -1,9 +1,5 @@
-.Mis-view-attendance {
-  padding: 20px;
-}
-
 .Mis-view-attendance-container {
-  background-color: #CDF0FF;
+  background-color: #cdf0ff;
   border-radius: 18px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   padding: 20px;
@@ -43,7 +39,7 @@
   font-family: "Poppins", sans-serif;
   border: none;
   border-radius: 12px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   box-shadow: 2px 2px 2px rgb(138, 138, 138);
   cursor: pointer;
@@ -51,7 +47,7 @@
 }
 
 .search-button:disabled {
-  background-color: #7A7A7A;
+  background-color: #7a7a7a;
   cursor: not-allowed;
 }
 
@@ -69,8 +65,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .attendance-table {
@@ -78,7 +78,8 @@
   border-collapse: collapse;
 }
 
-.attendance-table th, .attendance-table td {
+.attendance-table th,
+.attendance-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -96,26 +97,29 @@
   margin-top: 20px;
 }
 
-.previous-button, .next-button {
+.previous-button,
+.next-button {
   margin-left: 20px;
   font-size: 18px;
   padding: 10px 25px;
   font-family: "Poppins", sans-serif;
   border: none;
   border-radius: 12px;
-  background-color: #007BFF;
+  background-color: #007bff;
   color: #fff;
   box-shadow: 2px 2px 2px rgb(138, 138, 138);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
 
-.previous-button:disabled, .next-button:disabled {
-  background-color: #7A7A7A;
+.previous-button:disabled,
+.next-button:disabled {
+  background-color: #7a7a7a;
   cursor: not-allowed;
 }
 
-.previous-button:not(:disabled):hover, .next-button:not(:disabled):hover {
+.previous-button:not(:disabled):hover,
+.next-button:not(:disabled):hover {
   background-color: #0056b3;
 }
 
@@ -155,7 +159,6 @@
   cursor: pointer;
   background: transparent;
 }
-
 
 /* Fullscreen Image View */
 .fullscreen-image-container {

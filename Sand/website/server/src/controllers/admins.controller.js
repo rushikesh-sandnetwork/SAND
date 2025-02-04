@@ -69,13 +69,13 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
     const mainForm = await FormFieldSchema.findById(mainFormId);
     if (
       !mainForm ||
-      !mainForm.nestedForms) {
+      !mainForm.nestedForms    ) {
       throw new apiError(404, "Nested forms not found.");
     }
 
     const nestedFormsDetails = await FormFieldSchema.find({ _id: { $in: mainForm.nestedForms } });
     console.log(nestedFormsDetails);
-
+    
     res
       .status(200)
       .json(new apiResponse(200, nestedFormsDetails, "Fetched forms successfull"));
