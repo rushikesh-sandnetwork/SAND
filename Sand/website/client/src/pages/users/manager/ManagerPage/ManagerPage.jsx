@@ -9,6 +9,7 @@ import ManagerProfilePage from '../ManagerProfilePage/ManagerProfilePage';
 import ManagerLandingPage from '../ManagerLandingPage/ManagerLandingPage';
 import ManagerViewAttendance from '../ManagerViewAttendance/ManagerViewAttendance';
 import ManagerCreateNewClient from '../ManagerCreateNewClient/ManagerCreateNewClient';
+import ManagerViewClient from '../ManagerViewClient/ManagerViewClient';
 const ManagerPage = () => {
     return (
         <>
@@ -21,6 +22,7 @@ const ManagerPage = () => {
                     <Route path="profile" element={<ManagerProfilePage />} />
                     <Route path="promoterAttendance" element={<ManagerViewAttendance     />} />
                     <Route path="newClient" element={<ManagerCreateNewClient />} />
+                    <Route path="viewClients" element={<ManagerViewClient />} />
                     {/* <Route path="viewCampaigns" element={<MisViewCampaign />} /> */}
                     {/* <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
                     <Route path="campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
