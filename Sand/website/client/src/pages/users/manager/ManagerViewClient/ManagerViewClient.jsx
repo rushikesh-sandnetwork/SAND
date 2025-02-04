@@ -2,11 +2,11 @@ import React from 'react'
 import PageTitle from '../../../../components/PageTitles/PageTitle';
 import './ManagerViewClient.css'
 import ViewClientsContainer from '../../../../components/ViewClientsContainer/ViewClientsContainer';
-const ManagerViewClient = ({}) => {
+const ManagerViewClient = () => {
   return (
     <div className="adminViewClientsPage-container">
             <PageTitle title="View Clients" />
-            <ViewClientsContainer ></ViewClientsContainer>
+            <ViewClientsContainer role="manager" ></ViewClientsContainer>
     </div>
   )
 }
