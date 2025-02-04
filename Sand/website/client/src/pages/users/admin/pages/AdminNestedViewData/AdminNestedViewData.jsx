@@ -6,7 +6,7 @@ import FormBox from "../../../../../components/FormBox/FormBox";
 import { useParams } from "react-router-dom";
 
 const AdminNestedViewData = () => {
-  const { campaignId } = useParams();
+  const { formId } = useParams();
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const AdminNestedViewData = () => {
       try {
         const response = await axios.post(
           "http://localhost:8000/api/v1/admin/fetchnestedforms",
-          { mainFormId: campaignId }
+          { mainFormId: formId }
         );
         console.log("Response: ", response);
         if (response.data.success) {
@@ -31,10 +31,10 @@ const AdminNestedViewData = () => {
       }
     };
 
-    if (campaignId) {
+    if (formId) {
       fetchNestedForms();
     }
-  }, [campaignId]);
+  }, [formId]);
 
   return (
     <div className="form-details">
