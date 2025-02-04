@@ -30,9 +30,9 @@ const ManagerPage = () => {
                     <Route path="newClient" element={<ManagerCreateNewClient />} />
                     <Route path="viewClients" element={<ManagerViewClient />} />
                     <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage  role = "manager"/>} />
-                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage role =""/>} />
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage role ="manager"/>} />
                     <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
-                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems role ="admin"/>} />
+                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems role ="manager"/>} />
                     <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />  
                 </Routes>
             </div>

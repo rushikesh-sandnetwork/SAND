@@ -96,20 +96,25 @@ const ViewCampaignsContainer = ({ role }) => {
             value="Create New Campaign"
             onClick={() => navigate('AdminCreateNewCampaign')}
           />
-          <input
-            className="newCampaignBtn"
-            type="button"
-            value="Assign Client To Manager"
-            onClick={() => navigate(`/admin/AssignClientToManager/${clientId}`)}
-          />
-          <input
+          
+        </>
+      )}
+
+      {(role === "admin" ) && (<>
+        <input
+        className="newCampaignBtn"
+        type="button"
+        value="Assign Client To Manager"
+        onClick={() => navigate(`/admin/AssignClientToManager/${clientId}`)}
+      /> 
+      <input
             className="deleteClientBtn"
             type="button"
             value="Delete Client"
             onClick={handleDeleteClient}
           />
-        </>
-      )}
+      </>
+      )} 
 
       <div className="allCampaignsContainer">
         {campaigns.map((campaign) => (

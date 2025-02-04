@@ -30,8 +30,8 @@ const AdminCampaignDetailsPage = ({role}) => {
     <div className="campaign-details-container">
       <PageTitle title="Campaign Details" />
       <div className="campaign-details-boxes">
-        <div className="row">
-        {role === "admin" && (
+        <div className="row"> 
+        {(role === "admin" || role ==="manager") && (
         <>
           <CampaignDetailsBox 
             imgSrc="https://cdn-icons-png.flaticon.com/512/4074/4074958.png"
@@ -40,20 +40,24 @@ const AdminCampaignDetailsPage = ({role}) => {
             // setActiveTab={setActiveTab}
             campaignId={campaignId}
           />
-          <CampaignDetailsBox
-            imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
-            title="ASSIGN MIS"
-            url="assignCampaignToMis"
-            // setActiveTab={setActiveTab}
-            campaignId={campaignId}
-          />
-          <CampaignDeleteBox
-            imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
-            title="DELETE CAMPAIGN"
-            campaignId={campaignId}
-            // setActiveTab={setActiveTab}
-          />
         </>)}
+        {(role === "admin" )&&(
+          <>
+            <CampaignDetailsBox
+              imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
+              title="ASSIGN MIS"
+              url="assignCampaignToMis"
+              // setActiveTab={setActiveTab}
+              campaignId={campaignId}
+            />
+            <CampaignDeleteBox
+              imgSrc="https://cdn-icons-png.flaticon.com/512/2723/2723639.png"
+              title="DELETE CAMPAIGN"
+              campaignId={campaignId}
+              // setActiveTab={setActiveTab}
+            />
+          </>
+        )}
 
           <CampaignDetailsBox
             imgSrc="https://cdn-icons-png.flaticon.com/512/9316/9316720.png"
@@ -69,6 +73,8 @@ const AdminCampaignDetailsPage = ({role}) => {
             campaignId={campaignId}
             setActiveTab={setActiveTab}
           /> */}
+
+          
           
         </div>
       </div>
