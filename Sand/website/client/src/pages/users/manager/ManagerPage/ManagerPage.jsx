@@ -10,6 +10,12 @@ import ManagerLandingPage from '../ManagerLandingPage/ManagerLandingPage';
 import ManagerViewAttendance from '../ManagerViewAttendance/ManagerViewAttendance';
 import ManagerCreateNewClient from '../ManagerCreateNewClient/ManagerCreateNewClient';
 import ManagerViewClient from '../ManagerViewClient/ManagerViewClient';
+
+import AdminViewCampaignsPage from '../../admin/pages/AdminViewCampaignsPage/AdminViewCampaignsPage';
+import AdminCampaignDetailsPage from '../../admin/pages/AdminCampaignDetailsPage/AdminCampaignDetailsPage';
+import AdminFormDetails from '../../admin/pages/AdminFormDetails/AdminFormDetails';
+import AdminFormItems from '../../admin/pages/AdminFormItems/AdminFormItems';
+import AdminNestedViewData from '../../admin/pages/AdminNestedViewData/AdminNestedViewData';
 const ManagerPage = () => {
     return (
         <>
@@ -23,10 +29,11 @@ const ManagerPage = () => {
                     <Route path="promoterAttendance" element={<ManagerViewAttendance     />} />
                     <Route path="newClient" element={<ManagerCreateNewClient />} />
                     <Route path="viewClients" element={<ManagerViewClient />} />
-                    {/* <Route path="viewCampaigns" element={<MisViewCampaign />} /> */}
-                    {/* <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
-                    <Route path="campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
-                    <Route path = "campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} /> */}
+                    <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage />} />
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage role ="admin"/>} />
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
+                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems role ="admin"/>} />
+                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />  
                 </Routes>
             </div>
 
