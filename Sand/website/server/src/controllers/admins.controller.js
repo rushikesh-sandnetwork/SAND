@@ -53,7 +53,7 @@ const createNewClient = asyncHandler(async (req, res) => {
     throw new apiError(
       error.statusCode || 500,
       error.message ||
-        "An error occurred while creating new client. Try again later."
+      "An error occurred while creating new client. Try again later."
     );
   }
 });
@@ -67,19 +67,20 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
     }
 
     const mainForm = await FormFieldSchema.findById(mainFormId);
-    console.log("Main Form: ", mainForm);
-    console.log("Nested Forms: ", mainForm.nestedForms);
+    // console.log("Main Form: ", mainForm);
+    // console.log("Nested Forms: ", mainForm.nestedForms);
     if (
       !mainForm ||
-      !mainForm.nestedForms ||
-      mainForm.nestedForms.length === 0
-    ) {
+      !mainForm.nestedForms    ) {
       throw new apiError(404, "Nested forms not found.");
     }
 
+    const nestedFormsDetails = await FormFieldSchema.find({ _id: { $in: mainForm.nestedForms } });
+    console.log(nestedFormsDetails);
+    
     res
       .status(200)
-      .json(new apiResponse(200, mainForm, "Fetched forms successfull"));
+      .json(new apiResponse(200, nestedFormsDetails, "Fetched forms successfull"));
   } catch (error) {
     console.error(error);
     throw new apiError(

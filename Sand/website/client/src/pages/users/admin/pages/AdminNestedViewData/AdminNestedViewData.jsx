@@ -20,7 +20,7 @@ const AdminNestedViewData = () => {
         );
         console.log("Response: ", response);
         if (response.data.success) {
-          setForms(response.data.data.nestedForms);
+          setForms(response.data.data);
         } else {
           setError(response.data.message);
         }
@@ -36,6 +36,9 @@ const AdminNestedViewData = () => {
     }
   }, [formId]);
 
+  console.log(forms);
+
+
   return (
     <div className="form-details">
       <PageTitle title="Nested Forms Details" />
@@ -45,11 +48,11 @@ const AdminNestedViewData = () => {
         ) : error ? (
           <p>{error}</p>
         ) : forms.length > 0 ? (
-          forms.map((formId) => (
+          forms.map((form) => (
             <FormBox
-              key={formId}
-              formId={formId}
-              form={{ _id: formId }}
+              key={form._id}
+              formId={forms._id}
+              form={form}
             />
           ))
         ) : (
