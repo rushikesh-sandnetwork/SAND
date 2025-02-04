@@ -220,6 +220,7 @@ const logoutUser = asyncHandler(async (req, res) => {
 //Controller: Current User
 const currentUser = asyncHandler(async (req, res) => {
   try {
+    
     const user = await User.findById(req.user._id).select("-password");
     // console.log("User: ", user);
     res
