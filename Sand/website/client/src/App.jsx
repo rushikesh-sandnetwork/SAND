@@ -14,6 +14,7 @@ import AdminPage from './pages/users/admin/pages/AdminPage/AdminPage';
 import MisPage from './pages/users/mis/MisPage/MisPage';
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
 import ManagerPage from "./pages/users/manager/ManagerPage/ManagerPage";
+import AssignClientToManager from "./pages/users/admin/pages/AssignClientToManager/AssignClientToManager";
 
 
 
@@ -77,6 +78,10 @@ const App = () => {
       <Route
       path="/admin/assignCampaignToMis/:campaignId"
       element={<AssignCampaignToMis />}
+      />
+      <Route
+      path="/admin/assignClientToManager/:clientId"
+      element={<AssignClientToManager />}
       />
 
 

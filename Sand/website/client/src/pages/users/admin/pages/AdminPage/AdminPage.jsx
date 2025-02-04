@@ -33,7 +33,7 @@ const AdminPage = () => {
                     <Route path="promoterAttendance" element={<AdminViewAttendance />} />
                     <Route path="profile" element={<AdminProfilePage />} />
                     <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
-                    <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage />} />
+                    <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage role = "admin" />} />
                     <Route path="viewClients/client-detail/:clientId/AdminCreateNewCampaign" element={<AdminCreateNewCampaign />} />
                     <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={< AdminCampaignDetailsPage role="admin"/> } />
                     <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />

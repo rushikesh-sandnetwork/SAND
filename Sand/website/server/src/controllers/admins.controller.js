@@ -600,7 +600,7 @@ const unassignClientToManager = asyncHandler(async (req, res) => {
       .json(
         new apiResponse(
           200,
-          misDoc,
+          managerDoc,
           "Client unassigned from manager user successfully"
         )
       );

@@ -47,7 +47,7 @@ const ViewCampaignsContainer = ({ role }) => {
   };
 
   useEffect(() => {
-    if (role === "admin") {
+    if (role === "admin"|| role === "manager") {
       console.log("admin wala");
 
       fetchAdminCampaigns();
@@ -88,13 +88,19 @@ const ViewCampaignsContainer = ({ role }) => {
 
   return (
     <div className="viewCampaignsContainer">
-      {role === "admin" && (
+      {(role === "admin" || role === "manager") && (
         <>
           <input
             className="newCampaignBtn"
             type="button"
             value="Create New Campaign"
-            onClick={() => navigate('/AdminCreateNewCampaign')}
+            onClick={() => navigate('AdminCreateNewCampaign')}
+          />
+          <input
+            className="newCampaignBtn"
+            type="button"
+            value="Assign Client To Manager"
+            onClick={() => navigate(`/admin/AssignClientToManager/${clientId}`)}
           />
           <input
             className="deleteClientBtn"
