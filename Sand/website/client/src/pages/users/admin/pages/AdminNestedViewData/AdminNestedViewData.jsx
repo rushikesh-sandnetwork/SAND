@@ -54,7 +54,7 @@ const AdminNestedViewData = () => {
               formId={forms._id}
               form={form}
             />
-          ))
+          ))``
         ) : (
           <p>No nested forms available for this campaign.</p>
         )}

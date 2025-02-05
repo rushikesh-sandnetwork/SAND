@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PageTitle from "../../../../../components/PageTitles/PageTitle";
 import axios from "axios";
 import "./AdminAssignCreatedForm.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AdminAssignCreatedForm = () => {
   const [promoters, setPromoters] = useState([]);
@@ -14,6 +14,8 @@ const AdminAssignCreatedForm = () => {
   const [password, setPassword] = useState("");
 
   const { formId } = useParams();
+  const { campaignId } = useParams();
+  const navigate = useNavigate();
 
   const fetchPromoters = async () => {
     try {
@@ -39,6 +41,18 @@ const AdminAssignCreatedForm = () => {
   useEffect(() => {
     fetchPromoters();
   }, [formId]);
+//handled back button issue
+  useEffect(() => {
+    const handlePopState = () => {
+      navigate(`/admin/campaignDetailsPage/${campaignId}`, { replace: true });
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate, campaignId]);
 
   const assignFormToPromoter = async (promoterId) => {
     try {
@@ -63,7 +77,8 @@ const AdminAssignCreatedForm = () => {
             return promoter;
           })
         );
-      } else {
+      } 
+      else {
         alert("Failed to assign form.");
       }
     } catch (error) {

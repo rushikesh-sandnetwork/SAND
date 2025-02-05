@@ -13,6 +13,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { RESET_FULL_NAME_DATA } from "./FormFields/actions/types";
+
 const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
   const [droppedItems, setDroppedItems] = useState([]);
   const [droppedItemNames, setDroppedItemNames] = useState([]);
@@ -115,6 +116,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         setShowModal(true);
         setFormId(response.data.data._id); // Ensure you access the correct path in response
         handleReset();
+        
       } else {
         console.error("Failed to submit form:", response.data.error);
       }
@@ -126,7 +128,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
   const closeModal = () => {
     setShowModal(false);
     setSuccessMessage("");
-    navigate(`/admin/assignForm/${formId}`);
+    navigate(`/admin/assignForm/${formId}`,{ replace: true });
   };
 
   return (
