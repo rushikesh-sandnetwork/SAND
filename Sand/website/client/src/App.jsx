@@ -2,7 +2,7 @@ import "./App.css";
 import LoginPage from "./pages/globals/LoginPage/LoginPage";
 import { Routes, Route, Navigate } from "react-router-dom";
 // import AdminLandingPage from "./pages/users/admin/pages/AdminLandingPage/AdminLandingPage";
-import AdminCreateForms from  "./pages/users/admin/pages/AdminCreateForm/AdminCreateForms";
+import AdminCreateForms from "./pages/users/admin/pages/AdminCreateForm/AdminCreateForms";
 import MisLandingPage from "./pages/users/mis/MisLandingPage/MisLandingPage";
 import AdminAssignCreatedForm from "./pages/users/admin/pages/AdminAssignCreatedForm/AdminAssignCreatedForm";
 import AdminFormViewData from "./pages/users/admin/pages/AdminFormViewData/AdminFormViewData";
@@ -10,15 +10,12 @@ import AdminAcceptedData from "./pages/users/admin/pages/AdminAcceptedData/Admin
 import AdminRejectedData from "./pages/users/admin/pages/AdminRejectedData/AdminRejectedData";
 import RequiredAuth from "./components/RequiredAuth/RequiredAuth";
 import { useAuth } from "./context/AuthContext";
-import AdminPage from './pages/users/admin/pages/AdminPage/AdminPage';
-import MisPage from './pages/users/mis/MisPage/MisPage';
+import AdminPage from "./pages/users/admin/pages/AdminPage/AdminPage";
+import MisPage from "./pages/users/mis/MisPage/MisPage";
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
-
-
 
 const App = () => {
   const { isAuthenticated, user, loading } = useAuth();
-
 
   // If loading or not authenticated, render the login page
   if (loading) {
@@ -26,34 +23,18 @@ const App = () => {
   }
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-            <LoginPage />       
-        }
-      />
-      <Route
-        path="/admin/:id/*"
-        element={
-            <AdminPage />
-        }
-      />
-      <Route
-        path="/mis/:id/*"
-        element={
-            <MisPage />
-        }
-      />
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/admin/:id/*" element={<AdminPage />} />
+      <Route path="/mis/:id/*" element={<MisPage />} />
 
-
-<Route
-  path="/admin/createNewForm/:campaignId"
-  element={
-    <RequiredAuth>
-      <AdminCreateForms />
-    </RequiredAuth>
-  }
-/>
+      <Route
+        path="/admin/createNewForm/:campaignId"
+        element={
+          // <RequiredAuth>
+          <AdminCreateForms />
+          //  </RequiredAuth>
+        }
+      />
 
       <Route
         path="/admin/createNestedForm/:formId"
@@ -68,12 +49,9 @@ const App = () => {
         element={<AdminAssignCreatedForm />}
       />
       <Route
-      path="/admin/assignCampaignToMis/:campaignId"
-      element={<AssignCampaignToMis />}
+        path="/admin/assignCampaignToMis/:campaignId"
+        element={<AssignCampaignToMis />}
       />
-
-
-
 
       {/* <Route path="/admin/Ad" */}
       <Route path="/admin/acceptData/:formId" element={<AdminAcceptedData />} />
@@ -84,11 +62,8 @@ const App = () => {
       />
       <Route path="/mis" element={<MisLandingPage />} />
       {/* <Route path="*" element={<Navigate to="/" />} /> */}
-    </Routes >
-
-
+    </Routes>
   );
 };
-
 
 export default App;
