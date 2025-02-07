@@ -94,7 +94,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         );
 
         response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/createNewForm",
+          "http://localhost:8000/api/v1/admin/createNewForm",
           formData
         );
       } else {
@@ -106,7 +106,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         console.log(formData);
 
         response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/createNestedForm",
+          "http://localhost:8000/api/v1/admin/createNestedForm",
           formData
         );
       }

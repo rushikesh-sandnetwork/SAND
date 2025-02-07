@@ -15,7 +15,7 @@ const ViewCampaignsContainer = ({ role }) => {
   const fetchAdminCampaigns = async () => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/fetchAllCampaigns",
+        "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
         { clientId }
       );
       setCampaigns(response.data.data.reverse());
@@ -32,7 +32,7 @@ const ViewCampaignsContainer = ({ role }) => {
       console.log(id);
 
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/mis/fetchMisCampaigns",
+        "http://localhost:8000/api/v1/mis/fetchMisCampaigns",
         { misId: id }
       );
       console.log(response);
@@ -61,7 +61,7 @@ const ViewCampaignsContainer = ({ role }) => {
   const handleDeleteClient = async () => {
     try {
       const response = await axios.delete(
-        "https://sand-backend.onrender.com/api/v1/admin/deleteClient",
+        "http://localhost:8000/api/v1/admin/deleteClient",
         {
           data: { clientId },
         }

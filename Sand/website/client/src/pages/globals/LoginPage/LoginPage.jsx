@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/user/loginUser",
+        "http://localhost:8000/api/v1/user/loginUser",
         {
           email,
           password,
