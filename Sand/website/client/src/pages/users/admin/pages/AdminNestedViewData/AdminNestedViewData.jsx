@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 const AdminNestedViewData = () => {
   const { formId } = useParams();
-  const [forms, setForms] = useState([]);
+  const [forms, setForms] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -35,9 +35,6 @@ const AdminNestedViewData = () => {
       fetchNestedForms();
     }
   }, [formId]);
-
-  console.log(forms);
-
 
   return (
     <div className="form-details">
