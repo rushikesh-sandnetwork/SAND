@@ -15,7 +15,7 @@ const DraggableItem = ({ id, text, dropped, onDelete, component: Component }) =>
     return (
       <div className="dropped-item">
         <div className="component-container">
-          {Component && <Component  />}
+          {Component && <Component />}
         </div>
         <button onClick={() => onDelete(id)} className="delete-button">
           ❌
