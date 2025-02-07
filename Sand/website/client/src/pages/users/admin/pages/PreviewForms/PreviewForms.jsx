@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { connect, useSelector } from "react-redux";
-
+import axios from "axios";
 import { setFullNameData } from "../AdminCreateForm/FormUtils/elements/FormFields/actions/fullNameActions";
 import Heading from "../AdminCreateForm/FormUtils/elements/FormFields/Heading/Heading";
 import FullName from "../AdminCreateForm/FormUtils/elements/FormFields/FullName/FullName";
@@ -65,12 +65,21 @@ const FormPreview = () => {
   useEffect(() => {
     const fetchFormData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/promoter/fetchFormField`,
-          { formId }
-        );
+        const response = await fetch("http://localhost:8000/api/v1/promoter/fetchFormField", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ formId }),
+        });
+
         const data = await response.json();
-        setFormData(data); 
-        console.log(data);
+
+        if (data?.data?.length > 0 && data.data[0].formFields) {
+          setFormData(data.data[0].formFields);
+        } else {
+          setFormData([]);
+        }
       } catch (error) {
         console.error("Error fetching form data:", error);
       }
@@ -78,6 +87,8 @@ const FormPreview = () => {
 
     fetchFormData();
   }, [formId]);
+
+
 
   return (
     <div className="preview-form-container">
