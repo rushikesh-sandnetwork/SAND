@@ -6,15 +6,17 @@ const FormDetailsBox = ({ formId, title, imgSrc, url }) => {
   const navigate = useNavigate();
 
   console.log(formId);
-  
+
 
   const handleNextClick = () => {
     if (url === "createNestedForm") {
       navigate(`/admin/createNestedForm/${formId}`)
-    } else if(url==="viewNestedFormData"){
+    } else if (url === "viewNestedFormData") {
       navigate(`viewNestedFormData`)
+    } else if (url === "previewForms") {
+      navigate(`/admin/previewForms/${formId}`)
     }
-    
+
     else {
       navigate(`/admin/${url}/${formId}`);
     }
