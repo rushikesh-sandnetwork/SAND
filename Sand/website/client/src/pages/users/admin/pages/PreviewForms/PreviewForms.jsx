@@ -77,11 +77,11 @@ const FormPreview = ({ fullNameDataList }) => {
     // Fetch form data using formId
     const fetchFormData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/user/fetchFormField`,
+        const response = await fetch(`http://localhost:8000/api/v1/promoter/fetchFormField`,
           { formId }
         );
         const data = await response.json();
-        setFormData(data);
+        setFormData(data); 
         console.log(data);
       } catch (error) {
         console.error('Error fetching form data:', error);
