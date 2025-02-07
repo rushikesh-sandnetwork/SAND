@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   const fetchCurrentUser = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/v1/user/currentUser",
+        "https://sand-backend.onrender.com/api/v1/user/currentUser",
         {
           withCredentials: true,
         }
@@ -36,7 +36,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:8000/api/v1/user/logout",
+        "https://sand-backend.onrender.com/api/v1/user/logout",
         {},
         { withCredentials: true }
       );

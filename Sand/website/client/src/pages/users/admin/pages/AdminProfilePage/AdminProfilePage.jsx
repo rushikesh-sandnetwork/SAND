@@ -14,7 +14,7 @@ const AdminProfilePage = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/v1/user/userDetails",
+          "https://sand-backend.onrender.com/api/v1/user/userDetails",
           {
             method: "POST",
             headers: {
