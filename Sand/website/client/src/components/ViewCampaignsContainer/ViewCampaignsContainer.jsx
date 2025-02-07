@@ -15,7 +15,7 @@ const ViewCampaignsContainer = ({ role }) => {
   const fetchAdminCampaigns = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/admin/fetchAllCampaigns",
+        "https://sand-backend.onrender.com/api/v1/admin/fetchAllCampaigns",
         { clientId }
       );
       setCampaigns(response.data.data.reverse());
@@ -32,7 +32,7 @@ const ViewCampaignsContainer = ({ role }) => {
       console.log(id);
 
       const response = await axios.post(
-        "http://localhost:8000/api/v1/mis/fetchMisCampaigns",
+        "https://sand-backend.onrender.com/api/v1/mis/fetchMisCampaigns",
         { misId: id }
       );
       console.log(response);
@@ -47,7 +47,7 @@ const ViewCampaignsContainer = ({ role }) => {
   };
 
   useEffect(() => {
-    if (role === "admin") {
+    if (role === "admin"|| role === "manager") {
       console.log("admin wala");
 
       fetchAdminCampaigns();
@@ -61,7 +61,7 @@ const ViewCampaignsContainer = ({ role }) => {
   const handleDeleteClient = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:8000/api/v1/admin/deleteClient",
+        "https://sand-backend.onrender.com/api/v1/admin/deleteClient",
         {
           data: { clientId },
         }
@@ -88,18 +88,33 @@ const ViewCampaignsContainer = ({ role }) => {
 
   return (
     <div className="viewCampaignsContainer">
-      <input
+      {(role === "admin" || role === "manager") && (
+        <>
+          <input
+            className="newCampaignBtn"
+            type="button"
+            value="Create New Campaign"
+            onClick={() => navigate('AdminCreateNewCampaign')}
+          />
+          
+        </>
+      )}
+
+      {(role === "admin" ) && (<>
+        <input
         className="newCampaignBtn"
         type="button"
-        value="Create New Campaign"
-        onClick={() => navigate('/AdminCreateNewCampaign')}
-      />
+        value="Assign Client To Manager"
+        onClick={() => navigate(`/admin/AssignClientToManager/${clientId}`)}
+      /> 
       <input
-        className="deleteClientBtn"
-        type="button"
-        value="Delete Client"
-        onClick={handleDeleteClient}
-      />
+            className="deleteClientBtn"
+            type="button"
+            value="Delete Client"
+            onClick={handleDeleteClient}
+          />
+      </>
+      )} 
 
       <div className="allCampaignsContainer">
         {campaigns.map((campaign) => (

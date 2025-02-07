@@ -3,11 +3,11 @@ import './AdminViewCampaignPage.css';
 import ViewCampaignsContainer from '../../../../../components/ViewCampaignsContainer/ViewCampaignsContainer';
 import PageTitle from '../../../../../components/PageTitles/PageTitle';
 
-const AdminViewCampaignsPage = ({ setActiveTab  }) => {
+const AdminViewCampaignsPage = ({role}) => {
     return (
         <div className="adminViewCampaignsPage-container">
             <PageTitle title={`View Campaigns`} />
-            <ViewCampaignsContainer  role="admin"/>
+            <ViewCampaignsContainer  role={role}/>
         </div>
     );
 }

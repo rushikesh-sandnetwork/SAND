@@ -6,7 +6,7 @@ import FormBox from "../../../../../components/FormBox/FormBox";
 import { useParams } from "react-router-dom";
 
 const AdminNestedViewData = () => {
-  const { campaignId } = useParams();
+  const { formId } = useParams();
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,12 +15,12 @@ const AdminNestedViewData = () => {
     const fetchNestedForms = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/v1/admin/fetchnestedforms",
-          { mainFormId: campaignId }
+          "https://sand-backend.onrender.com/api/v1/admin/fetchnestedforms",
+          { mainFormId: formId }
         );
         console.log("Response: ", response);
         if (response.data.success) {
-          setForms(response.data.data.nestedForms);
+          setForms(response.data.data);
         } else {
           setError(response.data.message);
         }
@@ -31,10 +31,13 @@ const AdminNestedViewData = () => {
       }
     };
 
-    if (campaignId) {
+    if (formId) {
       fetchNestedForms();
     }
-  }, [campaignId]);
+  }, [formId]);
+
+  console.log(forms);
+
 
   return (
     <div className="form-details">
@@ -45,11 +48,11 @@ const AdminNestedViewData = () => {
         ) : error ? (
           <p>{error}</p>
         ) : forms.length > 0 ? (
-          forms.map((formId) => (
+          forms.map((form) => (
             <FormBox
-              key={formId}
-              formId={formId}
-              form={{ _id: formId }}
+              key={form._id}
+              formId={forms._id}
+              form={form}
             />
           ))
         ) : (

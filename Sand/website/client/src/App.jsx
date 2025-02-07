@@ -13,6 +13,8 @@ import { useAuth } from "./context/AuthContext";
 import AdminPage from "./pages/users/admin/pages/AdminPage/AdminPage";
 import MisPage from "./pages/users/mis/MisPage/MisPage";
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
+import ManagerPage from "./pages/users/manager/ManagerPage/ManagerPage";
+import AssignClientToManager from "./pages/users/admin/pages/AssignClientToManager/AssignClientToManager";
 
 const App = () => {
   const { isAuthenticated, user, loading } = useAuth();
@@ -23,9 +25,30 @@ const App = () => {
   }
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
-      <Route path="/admin/:id/*" element={<AdminPage />} />
-      <Route path="/mis/:id/*" element={<MisPage />} />
+      <Route
+        path="/"
+        element={
+            <LoginPage />       
+        }
+      />
+      <Route
+        path="/admin/:id/*"
+        element={
+            <AdminPage />
+        }
+      />
+      <Route
+        path="/mis/:id/*"
+        element={
+            <MisPage />
+        }
+      />
+      <Route
+        path="/manager/:id/*"
+        element={
+            <ManagerPage />
+        }
+      />
 
       <Route
         path="/admin/createNewForm/:campaignId"
@@ -51,6 +74,10 @@ const App = () => {
       <Route
         path="/admin/assignCampaignToMis/:campaignId"
         element={<AssignCampaignToMis />}
+      />
+      <Route
+      path="/admin/assignClientToManager/:clientId"
+      element={<AssignClientToManager />}
       />
 
       {/* <Route path="/admin/Ad" */}

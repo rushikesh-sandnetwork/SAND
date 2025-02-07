@@ -4,7 +4,7 @@ const upload = require("../middlewares/multer.middleware");
 const adminController = require('../controllers/admins.controller');
 const { fetchNestedForms } = require('../controllers/admins.controller');
 
-    
+
 router.route("/createNestedForm").post(adminController.createNestedForm);
 router.route("/updateAcceptedData").patch(adminController.acceptRejectData);
 router.route("/fetchPromoterForms").post(adminController.fetchPromoterForms);
@@ -14,11 +14,11 @@ router.route("/fetchPromoterForms").post(adminController.fetchPromoterForms);
 router.route("/createNewClient").post(
     upload.fields([
         {
-            name:"clientPhoto",
-            maxCount:1
+            name: "clientPhoto",
+            maxCount: 1
         }
     ])
-    ,adminController.createNewClient);
+    , adminController.createNewClient);
 
 
 // delete new client
@@ -49,8 +49,8 @@ router.route("/fetchCampaignDetails").post(adminController.fetchCampaignDetails)
 router.route("/createNewCampaign").post(
     upload.fields([
         {
-            name:"campaignPhoto",
-            maxCount:1
+            name: "campaignPhoto",
+            maxCount: 1
         }
     ]),
     adminController.createNewCampaign);
@@ -89,6 +89,9 @@ router.route("/fetchnestedforms").post(adminController.fetchNestedForms);
 router.route("/assignCampaignToMis").post(adminController.assignCampaignToMis);
 
 router.route("/unassignCampaignToMis").post(adminController.unassignCampaignToMis);
+router.route("/assignClientToManager").post(adminController.assignClientToManager);
+
+router.route("/unassignClientToManager").post(adminController.unassignClientToManager);
 
 router.route("/fetchUsersByRole").post(adminController.fetchUsersByRole);
 

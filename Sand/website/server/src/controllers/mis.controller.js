@@ -1,17 +1,3 @@
-// import { Router } from "express";
-// import userController from "../controllers/users.controller.js";
-// import apiResponse from "../utils/apiResponse.js";
-// import apiError from "../utils/apiError.js";
-// import uploadOnCloudinary from "../utils/cloudinary.js";
-// import mongoose from "mongoose";
-// import client from "../models/client.model.js";
-// import campaign from "../models/campaign.model.js";
-// import Promoter from "../models/promoter.model.js";
-// import campaignRights from "../models/campaignsRightSchema.model.js";
-// import FormFieldSchema from "../models/forms.fields.model.js";
-// import asyncHandler from "../utils/asyncHandler.js";
-// import formsFieldsModel from "../models/forms.fields.model.js";
-// import User from "../models/user.model.js";
 
 const { Router } = require("express");
 const userController = require("../controllers/users.controller");
@@ -29,64 +15,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const formsFieldsModel = require("../models/forms.fields.model");
 const User = require("../models/user.model");
 
-const acceptRejectData = asyncHandler(async (req, res) => {
-    const { formId, userId, collectionName, status } = req.body;
 
-    // Input validation
-    if (!formId || !userId || !status || !collectionName) {
-        return res.status(400).json(new apiError(400, "Missing required data fields."));
-    }
-
-    try {
-        const DynamicModel = mongoose.model(collectionName, new mongoose.Schema({}, { strict: false }), collectionName);
-
-        const result = await DynamicModel.updateOne({ formId, userId }, { $set: { status } });
-
-        if (result.nModified === 0) {
-            return res.status(404).json(new apiError(404, "No matching document found to update"));
-        }
-
-        res.status(200).json(new apiResponse(200, result, "Status updated successfully"));
-    } catch (error) {
-        console.error('Error in acceptRejectData:', error);
-        res.status(400).json(new apiError(400, "Error updating the status of data."));
-    }
-});
-
-
-const fetchDataByStatus = asyncHandler(async (req, res, status) => {
-    const { collectionName } = req.body;
-
-    // Input validation
-    if (!collectionName) {
-        return res.status(400).json(new apiError(400, "Collection Name is required."));
-    }
-
-    try {
-        const DynamicModel = mongoose.model(collectionName, new mongoose.Schema({}, { strict: false }), collectionName);
-
-        if (!DynamicModel) {
-            throw new apiResponse(404, "No model was found.");
-        }
-
-        const data = await DynamicModel.find({ status });
-
-        res.status(200).json(new apiResponse(200, data, `${status ? 'Accepted' : 'Rejected'} Data fetched successfully.`));
-    } catch (error) {
-        console.error(`Error in fetch${status ? 'Accepted' : 'Rejected'}Data:`, error);
-        res.status(400).json(new apiError(400, `Error fetching ${status ? 'Accepted' : 'Rejected'} data.`));
-    }
-});
-
-
-const fetchAcceptedData = asyncHandler(async (req, res) => {
-    await fetchDataByStatus(req, res, true);
-});
-
-
-const fetchRejectedData = asyncHandler(async (req, res) => {
-    await fetchDataByStatus(req, res, false);
-});
 
 
 const fetchMisCampaigns = asyncHandler(async (req, res) => {
@@ -115,8 +44,5 @@ const fetchMisCampaigns = asyncHandler(async (req, res) => {
 
 
 module.exports = {
-    acceptRejectData,
-    fetchAcceptedData,
-    fetchRejectedData,
     fetchMisCampaigns
 };

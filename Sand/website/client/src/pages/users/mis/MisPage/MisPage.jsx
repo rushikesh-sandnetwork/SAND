@@ -5,6 +5,10 @@ import { Routes, Route } from 'react-router-dom'
 import MisViewAttendance from '../MisViewAttendance/MisViewAttendance'
 import './MisPage.css';
 import MisViewCampaign from '../MisViewCampaign/MisViewCampaign'
+import AdminCampaignDetailsPage from '../../admin/pages/AdminCampaignDetailsPage/AdminCampaignDetailsPage'
+import AdminFormDetails from '../../admin/pages/AdminFormDetails/AdminFormDetails'
+import AdminFormItems from '../../admin/pages/AdminFormItems/AdminFormItems'
+import AdminNestedViewData from '../../admin/pages/AdminNestedViewData/AdminNestedViewData'
 const MisPage = () => {
     return (
         <>
@@ -13,10 +17,15 @@ const MisPage = () => {
             </div>
             <div className="Mis-page-content">
                 <Routes>
-                    <Route path="" element={<MisLandingPage />} />
+                    <Route path="" element={<MisViewCampaign />} />
                     <Route path="profile" element={<MisProfilePage />} />
                     <Route path="promoterAttendance" element={<MisViewAttendance />} />
-                    <Route path="viewCampaigns" element={<MisViewCampaign />} />
+                    {/* <Route path="viewCampaigns" element={<MisViewCampaign />} /> */}
+                    <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
+                    <Route path="campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
+                    <Route path="campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems />} />
+                    <Route path="campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />
+
                 </Routes>
             </div>
 

@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/loginUser",
+        "https://sand-backend.onrender.com/api/v1/user/loginUser",
         {
           email,
           password,
@@ -46,6 +46,8 @@ const LoginPage = () => {
         } else if (role === "mis") {
           console.log("Mis id: ", id);
           navigate(`/mis/${id}`);
+        } else if (role === "manager") {
+          navigate(`/manager/${id}`);
         }
       } else {
         setError("Login failed. Please try again.");

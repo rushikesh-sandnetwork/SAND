@@ -53,7 +53,7 @@ const createNewClient = asyncHandler(async (req, res) => {
     throw new apiError(
       error.statusCode || 500,
       error.message ||
-        "An error occurred while creating new client. Try again later."
+      "An error occurred while creating new client. Try again later."
     );
   }
 });
@@ -67,19 +67,18 @@ const fetchNestedForms = asyncHandler(async (req, res) => {
     }
 
     const mainForm = await FormFieldSchema.findById(mainFormId);
-    console.log("Main Form: ", mainForm);
-    console.log("Nested Forms: ", mainForm.nestedForms);
     if (
       !mainForm ||
-      !mainForm.nestedForms ||
-      mainForm.nestedForms.length === 0
-    ) {
+      !mainForm.nestedForms    ) {
       throw new apiError(404, "Nested forms not found.");
     }
 
+    const nestedFormsDetails = await FormFieldSchema.find({ _id: { $in: mainForm.nestedForms } });
+    console.log(nestedFormsDetails);
+    
     res
       .status(200)
-      .json(new apiResponse(200, mainForm, "Fetched forms successfull"));
+      .json(new apiResponse(200, nestedFormsDetails, "Fetched forms successfull"));
   } catch (error) {
     console.error(error);
     throw new apiError(
@@ -536,6 +535,85 @@ const unassignCampaignToMis = asyncHandler(async (req, res) => {
   }
 });
 
+// MANAGER 
+
+// assign campaign to MIS
+const assignClientToManager = asyncHandler(async (req, res) => {
+  try {
+    const { clientId, managerId } = req.body; // Allow multiple `misIds`
+
+    if (!clientId || !managerId) {
+      throw new apiError(
+        400,
+        "Client ID and Manager IDs are required and must be an array"
+      );
+    }
+
+    const manager = await User.findById(managerId);
+
+    const clientDoc = await client.findById(clientId);
+
+    if (!clientDoc || !manager) {
+      throw new apiError(404, "details not found");
+    }
+
+    manager.listOfClients.push(clientDoc._id);
+
+    await manager.save();
+
+    res
+      .status(200)
+      .json(
+        new apiResponse(200, manager, "Client assigned to Manager users successfully")
+      );
+  } catch (error) {
+    console.error("Error assigning campaign to manager users:", error);
+    throw new apiError(
+      error.statusCode || 500,
+      error.message || "An error occurred while assigning the client"
+    );
+  }
+});
+
+//unassign the campaign from Mis
+const unassignClientToManager = asyncHandler(async (req, res) => {
+  try {
+    const { clientId, managerId } = req.body;
+
+    if (!clientId || !managerId) {
+      throw new apiError(400, "Client ID and Manager ID are required");
+    }
+
+    const managerDoc = await User.findById(managerId);
+
+    if (!managerDoc) {
+      throw new apiError(404, "manager not found");
+    }
+
+    managerDoc.listOfClients.pop(clientId);
+
+    await managerDoc.save();
+
+    res
+      .status(200)
+      .json(
+        new apiResponse(
+          200,
+          managerDoc,
+          "Client unassigned from manager user successfully"
+        )
+      );
+  } catch (error) {
+    console.error("Error unassigning client from manager:", error);
+    throw new apiError(
+      error.statusCode || 500,
+      error.message || "An error occurred while unassigning the client"
+    );
+  }
+});
+
+
+
 // fetch mis id's
 
 const fetchUsersByRole = asyncHandler(async (req, res) => {
@@ -858,6 +936,8 @@ module.exports = {
   fetchNestedForms,
   assignCampaignToMis,
   unassignCampaignToMis,
+  assignClientToManager,
+  unassignClientToManager,
   fetchUsersByRole,
   fetchPromoterForms,
 };
