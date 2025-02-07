@@ -16,7 +16,7 @@ const AssignClientToManager = () => {
       
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchUsersByRole",
+          "http://localhost:8000/api/v1/admin/fetchUsersByRole",
           { role: "manager" }
         );
 
@@ -44,7 +44,7 @@ const AssignClientToManager = () => {
   const AssignClientToManager = async (managerId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/assignClientToManager",
+        "http://localhost:8000/api/v1/admin/assignClientToManager",
         { clientId, managerId }
       );
 
@@ -65,7 +65,7 @@ const AssignClientToManager = () => {
   const unAssignClientToManager = async (managerId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/unassignClientToManager",
+        "http://localhost:8000/api/v1/admin/unassignClientToManager",
         { clientId, managerId }
       );
 
