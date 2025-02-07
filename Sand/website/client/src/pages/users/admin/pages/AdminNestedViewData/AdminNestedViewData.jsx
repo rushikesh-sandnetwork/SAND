@@ -15,7 +15,7 @@ const AdminNestedViewData = () => {
     const fetchNestedForms = async () => {
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchnestedforms",
+          "http://localhost:8000/api/v1/admin/fetchnestedforms",
           { mainFormId: formId }
         );
         console.log("Response: ", response);
@@ -54,7 +54,7 @@ const AdminNestedViewData = () => {
               formId={forms._id}
               form={form}
             />
-          ))``
+          ))
         ) : (
           <p>No nested forms available for this campaign.</p>
         )}
