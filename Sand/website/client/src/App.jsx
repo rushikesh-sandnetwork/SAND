@@ -28,25 +28,35 @@ const App = () => {
       <Route
         path="/"
         element={
-            <LoginPage />       
+          isAuthenticated ? (
+            <Navigate to={`/${user?.role}/${user?._id}`} />
+          ) : (
+            <LoginPage />
+          )
         }
       />
       <Route
         path="/admin/:id/*"
         element={
+          <RequiredAuth>
             <AdminPage />
+          </RequiredAuth>
         }
       />
       <Route
         path="/mis/:id/*"
         element={
+          <RequiredAuth>
             <MisPage />
+          </RequiredAuth>
         }
       />
       <Route
         path="/manager/:id/*"
         element={
+          <RequiredAuth>
             <ManagerPage />
+          </RequiredAuth>
         }
       />
 
@@ -76,8 +86,8 @@ const App = () => {
         element={<AssignCampaignToMis />}
       />
       <Route
-      path="/admin/assignClientToManager/:clientId"
-      element={<AssignClientToManager />}
+        path="/admin/assignClientToManager/:clientId"
+        element={<AssignClientToManager />}
       />
 
       {/* <Route path="/admin/Ad" */}
