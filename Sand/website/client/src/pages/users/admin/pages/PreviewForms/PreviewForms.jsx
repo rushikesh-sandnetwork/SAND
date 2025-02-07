@@ -65,6 +65,14 @@ const FormPreview = () => {
   useEffect(() => {
     const fetchFormData = async () => {
       try {
+<<<<<<< HEAD
+        const response = await fetch(`http://localhost:8000/api/v1/promoter/fetchFormField`,
+          { formId }
+        );
+        const data = await response.json();
+        setFormData(data); 
+        console.log(data);
+=======
         const response = await fetch("http://localhost:8000/api/v1/promoter/fetchFormField", {
           method: "POST",
           headers: {
@@ -80,6 +88,7 @@ const FormPreview = () => {
         } else {
           setFormData([]);
         }
+>>>>>>> 4c4371ce3e2615e73d1224c606772474127a1f4b
       } catch (error) {
         console.error("Error fetching form data:", error);
       }
