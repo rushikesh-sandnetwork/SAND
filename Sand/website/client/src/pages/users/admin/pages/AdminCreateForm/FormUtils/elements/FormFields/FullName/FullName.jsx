@@ -5,40 +5,24 @@ import "./FullName.css";
 import { setFullNameData } from "../actions/fullNameActions";
 import { v4 as uuidv4 } from "uuid";
 
-const FullName = ({ fullNameDataList, setFullNameData }) => {
-  const [componentId] = useState(uuidv4()); // Unique ID for this component instance
+const FullName = ({ fullNameDataList, setFullNameData, formField }) => {
+  const [componentId] = useState(uuidv4());
 
   const handleBlur = (event) => {
     const inputValue = event.target.value.trim();
 
     if (inputValue) {
       const existingEntry = fullNameDataList.find(
-        (entry) => entry.uniqueId === componentId // Match by this component's unique ID
+        (entry) => entry.uniqueId === componentId
       );
 
       if (existingEntry) {
-        // Update the existing entry
         setFullNameData(existingEntry.uniqueId, inputValue, "Full Name");
       } else {
-        // Create a new entry
         setFullNameData(componentId, inputValue, "Full Name");
       }
     }
   };
-
-  // just for testing purposes
-  // const handleFocus = (event) => {
-  //   const existingEntry = fullNameDataList.find(
-  //     (entry) => entry.uniqueId === componentId // Match by this component's unique ID
-  //   );
-
-  //   if (existingEntry) {
-  //     event.target.value = existingEntry.title; // Set the value of the input to the existing data
-  //     console.log(`Existing Data for ${componentId}:`, existingEntry.title);
-  //   } else {
-  //     console.log(`No existing data found for component: ${componentId}`);
-  //   }
-  // };
 
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
@@ -57,9 +41,8 @@ const FullName = ({ fullNameDataList, setFullNameData }) => {
       <input
         type="text"
         className="fullName-title"
-        placeholder="Full Name"
-        onBlur={handleBlur} // Trigger save on losing focus
-        // onFocus={handleFocus} // Populate the input field with existing data on focus
+        placeholder={formField?.title || "Full Name"} // Use formField.title if available
+        onBlur={handleBlur}
       />
       <div className="form-inputs">
         <div className="firstName">

@@ -100,7 +100,7 @@ const FormPreview = () => {
 
               {formData.map((field) => {
                 if (field.type === "Form Title") {
-                  return <h1  className="formTitle" key={field.uniqueId}>{field.title}</h1>;
+                  return <h1 className="formTitle" key={field.uniqueId}>{field.title}</h1>;
                 }
 
                 const componentEntry = componentsMap.find((c) => c.text === field.type);
@@ -111,6 +111,7 @@ const FormPreview = () => {
                     key={field.uniqueId}
                     setFullNameData={setFullNameData}
                     fullNameDataList={fullNameDataList}
+                    formField={field} // Pass the formField object
                     {...field}
                   />
                 ) : (
