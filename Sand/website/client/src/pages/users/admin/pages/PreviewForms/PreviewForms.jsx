@@ -127,6 +127,11 @@ const FormPreview = () => {
         </div>
 
 
+
+
+        
+
+
       </DndProvider>
 
     </div>

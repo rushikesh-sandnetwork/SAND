@@ -249,6 +249,33 @@ const userDetails = asyncHandler(async (req, res) => {
     .json(new apiResponse(200, fetchedUser, "User fetched successfully."));
 });
 
+
+
+const changePassword = asyncHandler(async (req, res) => {
+  const { userId, currentPassword, newPassword } = req.body;
+
+  if (!userId || !currentPassword || !newPassword) {
+    throw new apiError(400, "User ID, current password, and new password are required");
+  }
+
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new apiError(404, "User not found");
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(currentPassword);
+  if (!isPasswordValid) {
+    throw new apiError(401, "Current password is incorrect");
+  }
+
+  user.password = newPassword;
+
+  await user.save({validateBeforeSave: false});
+
+  res.status(200).json(new apiResponse(200, {}, "Password changed successfully"));
+});
+
+
 module.exports = {
   createNewUser,
   loginUser,
@@ -258,4 +285,5 @@ module.exports = {
   logoutUser,
   userDetails,
   currentUser,
+  changePassword,
 };

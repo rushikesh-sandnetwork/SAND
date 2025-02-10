@@ -40,6 +40,31 @@ const AdminProfilePage = () => {
     fetchUserDetails();
   }, [id]); // Include id as a dependency
   
+  // try {
+  //   const response = await fetch('http://localhost:8000/api/v1/admin/changePassword', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       currentPassword,
+  //       newPassword,
+  //     }),
+  //   });
+
+  //   const data = await response.json();
+  //   if (data.success) {
+  //     setPasswordMessage('Password changed successfully.');
+  //   } else {
+  //     setPasswordMessage(data.message || 'Error changing password.');
+  //   }
+  // } catch (error) {
+  //   console.error('Error changing password:', error);
+  //   setPasswordMessage('Error changing password.');
+  // }
+
+
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -76,5 +101,6 @@ const AdminProfilePage = () => {
     </div>
   );
 };
+
 
 export default AdminProfilePage;
