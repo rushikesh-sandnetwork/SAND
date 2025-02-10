@@ -15,6 +15,7 @@ import MisPage from "./pages/users/mis/MisPage/MisPage";
 import AssignCampaignToMis from "./pages/users/admin/pages/AssignCampaignToMis/AssignCampaignToMis";
 import ManagerPage from "./pages/users/manager/ManagerPage/ManagerPage";
 import AssignClientToManager from "./pages/users/admin/pages/AssignClientToManager/AssignClientToManager";
+import RoleBasedProtectedRoute from "./components/RoleBasedProtection/RoleBasedProtection";
 
 const App = () => {
   const { isAuthenticated, user, loading } = useAuth();
@@ -39,7 +40,9 @@ const App = () => {
         path="/admin/:id/*"
         element={
           <RequiredAuth>
-            <AdminPage />
+            <RoleBasedProtectedRoute allowedRole="admin">
+              <AdminPage />
+            </RoleBasedProtectedRoute>
           </RequiredAuth>
         }
       />
@@ -47,15 +50,20 @@ const App = () => {
         path="/mis/:id/*"
         element={
           <RequiredAuth>
-            <MisPage />
+            <RoleBasedProtectedRoute allowedRole="mis">
+              <MisPage />
+            </RoleBasedProtectedRoute>
           </RequiredAuth>
         }
       />
+
       <Route
         path="/manager/:id/*"
         element={
           <RequiredAuth>
-            <ManagerPage />
+            <RoleBasedProtectedRoute allowedRole="manager">
+              <ManagerPage />
+            </RoleBasedProtectedRoute>
           </RequiredAuth>
         }
       />
