@@ -44,7 +44,8 @@ class _ViewAttendancePageState extends State<ViewAttendancePage> {
       _isLoading = true;
     });
 
-    final url = 'http://localhost:8000/api/v1/promoter/fetchAttendance';
+    final url =
+        'https://sand-backend.onrender.com/api/v1/promoter/fetchAttendance';
     try {
       final response = await http.post(
         Uri.parse(url),

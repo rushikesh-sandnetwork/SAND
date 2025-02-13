@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:photo_view/photo_view.dart';
 
 Future<List<Map<String, dynamic>>> fetchFormFilledData(String formId) async {
   final response = await http.post(
-    Uri.parse('http://localhost:8000/api/v1/promoter/fetchFormFilledData'),
+    Uri.parse(
+        'https://sand-backend.onrender.com/api/v1/promoter/fetchFormFilledData'),
     headers: {'Content-Type': 'application/json'},
     body: json.encode({'formId': formId}),
   );
@@ -27,12 +29,124 @@ class FormDataScreen extends StatelessWidget {
 
   const FormDataScreen({super.key, required this.formId});
 
+  void _showImageModal(BuildContext context, String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Scaffold(
+            backgroundColor: Colors.black.withOpacity(0.9),
+            body: Center(
+              child: PhotoView(
+                imageProvider: NetworkImage(imageUrl),
+                backgroundDecoration: const BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                minScale: PhotoViewComputedScale.contained,
+                maxScale: PhotoViewComputedScale.covered * 3.0,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Function to parse and format the JSON-like object strings
+  Widget buildKeyValueRow(BuildContext context, String key, dynamic value) {
+    if (key == '_id') {
+      // Exclude `_id` from display
+      return const SizedBox.shrink();
+    }
+
+    final isJsonLike =
+        value is String && value.startsWith('{') && value.endsWith('}');
+    Widget valueWidget;
+
+    if (isJsonLike) {
+      try {
+        // Parse JSON-like string into a Map
+        final Map<String, dynamic> parsedData =
+            json.decode(value.replaceAll("'", '"'));
+
+        valueWidget = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: parsedData.entries.map((entry) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 16.0, bottom: 4.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${entry.key}: ',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[300],
+                      fontSize:
+                          MediaQuery.of(context).size.width < 600 ? 14 : 16,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      entry.value.toString(),
+                      style: GoogleFonts.poppins(
+                        color: Colors.grey[300],
+                        fontSize:
+                            MediaQuery.of(context).size.width < 600 ? 14 : 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      } catch (e) {
+        valueWidget = Text(
+          value.toString(),
+          style: GoogleFonts.poppins(
+            color: Colors.grey[300],
+            fontSize: MediaQuery.of(context).size.width < 600 ? 14 : 16,
+          ),
+        );
+      }
+    } else {
+      valueWidget = Text(
+        value.toString(),
+        style: GoogleFonts.poppins(
+          color: Colors.grey[300],
+          fontSize: MediaQuery.of(context).size.width < 600 ? 14 : 16,
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '$key:',
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.bold,
+              color: Colors.teal[200],
+              fontSize: MediaQuery.of(context).size.width < 600 ? 14 : 16,
+            ),
+          ),
+          const SizedBox(height: 4.0),
+          valueWidget,
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Colors.grey,
             size: 18,
@@ -70,79 +184,67 @@ class FormDataScreen extends StatelessWidget {
           } else {
             final data = snapshot.data!;
             return ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final entry = data[index];
                 return Card(
-                  margin: EdgeInsets.only(
-                      bottom: 12.0), // Reduced space between cards
+                  margin: const EdgeInsets.only(bottom: 12.0),
                   color: Colors.grey[900],
                   elevation: 4.0,
                   shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8.0), // Reduced border radius
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsets.all(12.0), // Reduced padding inside the card
+                    padding: const EdgeInsets.all(12.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: entry.entries.where((e) {
-                        return e.key != '_id' && e.key != 'promoterId';
-                      }).map((e) {
+                      children: entry.entries.map((e) {
+                        String key = e.key;
+                        dynamic value = e.value;
+
+                        // ✅ Fix: Show "Data Accepted: Yes/No" instead of "acceptedData"
+                        if (key == "acceptedData") {
+                          key = "Data Accepted";
+                          value = (value == true) ? "Yes" : "No";
+                        }
                         bool isImage = e.value
                             .toString()
                             .startsWith('http://res.cloudinary');
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 6.0), // Reduced vertical padding
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Text(
-                                  '${e.key}:',
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.teal[200],
-                                    fontSize:
-                                        MediaQuery.of(context).size.width < 600
-                                            ? 14
-                                            : 16,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 4.0),
-                              Expanded(
-                                flex: 7,
-                                child: isImage
-                                    ? Image.network(
-                                        e.value.toString(),
-                                        height:
-                                            MediaQuery.of(context).size.width <
-                                                    600
-                                                ? 60
-                                                : 80, // Reduced image height
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Text(
-                                        e.value.toString(),
-                                        style: GoogleFonts.poppins(
-                                          color: Colors.grey[300],
-                                          fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width <
+                        return isImage
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // ✅ Show Image Title
+                                  Text(
+                                    key, // Image Title Displayed
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.teal[200],
+                                      fontSize:
+                                          MediaQuery.of(context).size.width <
                                                   600
                                               ? 14
                                               : 16,
-                                        ),
-                                      ),
-                              ),
-                            ],
-                          ),
-                        );
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                      height:
+                                          4.0), // Space between title & image
+                                  GestureDetector(
+                                    onTap: () =>
+                                        _showImageModal(context, value),
+                                    child: Image.network(
+                                      value.toString(),
+                                      height: 120,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : buildKeyValueRow(context, key, value);
                       }).toList(),
                     ),
                   ),

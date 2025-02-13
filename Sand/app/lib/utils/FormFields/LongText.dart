@@ -41,7 +41,8 @@ class _LongTextState extends State<LongText> {
         children: [
           Text(
             widget.longTextTitle,
-            style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
+            style:
+                GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 20),
           TextFormField(

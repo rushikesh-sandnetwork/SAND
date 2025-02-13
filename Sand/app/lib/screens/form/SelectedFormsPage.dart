@@ -1,7 +1,7 @@
 import 'package:app/screens/NestedForms/NestedForm.dart';
 import 'package:app/screens/form/FormDetailsPage.dart';
 import 'package:app/utils/MainPageBox/MainPageBoxOne.dart';
-import 'package:app/utils/MainPageBox/SelectedPageFormBox.dart';
+// import 'package:app/utils/MainPageBox/SelectedPageFormBox.dart';
 import 'package:app/utils/MainPageBox/SelectedPageFormSecondBox.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,12 +12,11 @@ class SelectedFormsPage extends StatefulWidget {
   final String formId;
   final String formTitle;
   final String promoterId;
-  const SelectedFormsPage({
-    super.key,
-    required this.formId,
-    required this.formTitle,
-    required this.promoterId,
-  });
+  const SelectedFormsPage(
+      {super.key,
+      required this.formId,
+      required this.formTitle,
+      required this.promoterId});
 
   @override
   State<SelectedFormsPage> createState() => _SelectedFormsPageState();
@@ -65,6 +64,7 @@ class _SelectedFormsPageState extends State<SelectedFormsPage> {
                           builder: (context) => FormDetailsPage(
                             promoterId: widget.promoterId,
                             formId: widget.formId,
+                            formTitle: widget.formTitle,
                           ),
                         ),
                       );

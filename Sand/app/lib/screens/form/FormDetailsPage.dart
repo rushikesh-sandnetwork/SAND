@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:app/screens/form/SelectedFormsPage.dart';
 import 'package:app/utils/FormFields/DropDown.dart';
+import 'package:app/utils/FormFields/Heading.dart';
+import 'package:app/utils/FormFields/MultipleChoice.dart';
+import 'package:app/utils/FormFields/NormalDropDown.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +20,7 @@ import '../../utils/FormFields/Number.dart';
 
 class FormService {
   static const String baseUrl =
-      'http://localhost:8000/api/v1/promoter/fetchFormField';
+      'https://sand-backend.onrender.com/api/v1/promoter/fetchFormField';
 
   static Future<FormDetails> fetchFormDetails(String formId) async {
     try {
@@ -28,8 +32,10 @@ class FormService {
       );
 
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
-        return FormDetails.fromJson(jsonResponse['data'][0]);
+        var jsonResponse =
+            jsonDecode(response.body) as Map<String, dynamic>; // Explicit cast
+        return FormDetails.fromJson(
+            jsonResponse['data'][0] as Map<String, dynamic>);
       } else {
         throw Exception(
             'Failed to fetch form details. Status code: ${response.statusCode}');
@@ -49,8 +55,10 @@ class FormService {
       );
 
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
-        return jsonResponse['data'][0]['collectionName'];
+        var jsonResponse =
+            jsonDecode(response.body) as Map<String, dynamic>; // Explicit cast
+        return (jsonResponse['data'][0]
+            as Map<String, dynamic>)['collectionName'] as String;
       } else {
         throw Exception(
             'Failed to fetch collection name. Status code: ${response.statusCode}');
@@ -63,7 +71,7 @@ class FormService {
   static Future<void> submitFormData(
       String collectionName, Map<String, dynamic> data) async {
     final url = Uri.parse(
-        'http://localhost:8000/api/v1/promoter/fillFormData/$collectionName');
+        'https://sand-backend.onrender.com/api/v1/promoter/fillFormData/$collectionName');
 
     var request = http.MultipartRequest('POST', url);
 
@@ -71,6 +79,20 @@ class FormService {
       for (var entry in data.entries) {
         var key = entry.key;
         var value = entry.value;
+
+        // Handle dropdown field formatting
+        if (value is Map<String, dynamic> && value.containsKey("type")) {
+          if (value["type"] == "NormalDropDown") {
+            key = value["title"]; // Keep the title as the key
+            value = value["selectedValue"]; // Use only the selected value
+          }
+        }
+
+        if (value is Map<String, dynamic> &&
+            value["type"] == "Multiple Choice") {
+          key = value["title"]; // Use the title as the key
+          value = value["selectedChoices"]; // Extract only selected choices
+        }
 
         if (value is File) {
           var stream =
@@ -97,6 +119,28 @@ class FormService {
       throw Exception('Failed to save data. Error: $e');
     }
   }
+
+  // Added attendance check function
+  static Future<bool> checkPunchInStatus(String promoterId) async {
+    final url = Uri.parse(
+        'https://sand-backend.onrender.com/api/v1/promoter/checkPunchIn');
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'promoterId': promoterId}),
+      );
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        return jsonResponse['data']['isPunchedIn'];
+      } else {
+        throw Exception('Failed to check punch-in status');
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false;
+    }
+  }
 }
 
 class FormDetails {
@@ -111,18 +155,16 @@ class FormDetails {
   });
 
   factory FormDetails.fromJson(Map<String, dynamic> json) {
-    List<Map<String, dynamic>> fields =
-        (json['formFields'] as List).map((field) {
-      return {
-        'type': field['type'],
-        'title': field['title'],
-        'uniqueId': field['uniqueId'],
-      };
-    }).toList();
-
     return FormDetails(
       campaignId: json['campaignId'],
-      formFields: fields,
+      formFields: (json['formFields'] as List)
+          .map((field) => {
+                'type': field['type'],
+                'title': field['title'],
+                'uniqueId': field['uniqueId'],
+                'options': field['options'] != null ? field['options'] : null,
+              })
+          .toList(),
       collectionName: json['collectionName'],
     );
   }
@@ -130,7 +172,15 @@ class FormDetails {
 
 class FormDetailsPage extends StatefulWidget {
   final String formId;
-  const FormDetailsPage({required this.formId, required String promoterId});
+  final String promoterId;
+  final String formTitle;
+
+  const FormDetailsPage({
+    Key? key,
+    required this.formId,
+    required this.promoterId,
+    required this.formTitle,
+  }) : super(key: key);
 
   @override
   State<FormDetailsPage> createState() => _FormDetailsPageState();
@@ -140,11 +190,21 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
   late Future<FormDetails> _formDetailsFuture;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _formData = {};
+  bool _isSubmitting = false;
+  bool _isImageUploaded = false;
+  bool _isPunchedIn = false; // Added attendance flag
+
+  bool _isSubmitEnabled() {
+    // Original logic: enable submit if at least one field is filled or an image is uploaded.
+    bool hasFilledField = _formData.isNotEmpty;
+    return hasFilledField || _isImageUploaded;
+  }
 
   void _handleImageChange(String fieldTitle, File? imageFile) {
     if (imageFile != null) {
       setState(() {
         _formData[fieldTitle] = imageFile;
+        _isImageUploaded = true;
       });
     }
   }
@@ -153,50 +213,82 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
   void initState() {
     super.initState();
     _formDetailsFuture = FormService.fetchFormDetails(widget.formId);
+    _checkPunchInStatus(); // Check attendance on init
+  }
+
+  Future<void> _checkPunchInStatus() async {
+    bool status = await FormService.checkPunchInStatus(widget.promoterId);
+    setState(() {
+      _isPunchedIn = status;
+    });
   }
 
   Widget _buildFormField(Map<String, dynamic> field) {
     String fieldType = field['type'] ?? '';
     String fieldTitle = field['title'] ?? '';
+    dynamic options = field['options'];
+
     switch (fieldType) {
       case 'Address':
         return Address(
           addressTitle: fieldTitle,
-          initialValue: _formData["$fieldTitle Address"],
+          initialValue: _formData["Address"],
           onChangedAddress: (value) {
             setState(() {
-              _formData['$fieldTitle Office/Building Name'] = value;
+              _formData['Office/Building Name'] = value;
             });
           },
           onChangedStreetAddress: (value) {
             setState(() {
-              _formData['$fieldTitle Street Address'] = value;
+              _formData['Street Address'] = value;
             });
           },
           onChangedStreetAddressLine2: (value) {
             setState(() {
-              _formData['$fieldTitle Street Address Line 2'] = value;
+              _formData['Street Address Line 2'] = value;
             });
           },
           onChangedCity: (value) {
             setState(() {
-              _formData["$fieldTitle City"] = value;
+              _formData["City"] = value;
             });
           },
           onChangedState: (value) {
             setState(() {
-              _formData['$fieldTitle State'] = value;
+              _formData['State'] = value;
             });
           },
           onChangedPincode: (value) {
             setState(() {
-              _formData['$fieldTitle Pincode'] = value;
+              _formData['Pincode'] = value;
+            });
+          },
+        );
+      case 'Multiple Choice':
+        return MultipleChoiceField(
+          multipleChoiceFieldTitle: fieldTitle,
+          initialValue: (_formData[fieldTitle] is Map<String, dynamic>)
+              ? (_formData[fieldTitle]['selectedChoices'] as List<String>?)
+              : null,
+          onChanged: (value) {
+            setState(() {
+              _formData[fieldTitle] = value;
             });
           },
         );
       case 'Date Picker':
         return Appointment(
           appointmentTitle: fieldTitle,
+          initialValue: _formData[fieldTitle],
+          onChanged: (value) {
+            setState(() {
+              _formData[fieldTitle] = value;
+            });
+          },
+        );
+      case 'Heading':
+        return Heading(
+          headingTitle: fieldTitle,
           initialValue: _formData[fieldTitle],
           onChanged: (value) {
             setState(() {
@@ -220,12 +312,12 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
           initialLastName: _formData[fieldTitle + " " + '2'],
           onChangedFirstName: (value) {
             setState(() {
-              _formData["$fieldTitle 1"] = value;
+              _formData["$fieldTitle (First Name)"] = value;
             });
           },
           onChangedLastName: (value) {
             setState(() {
-              _formData[fieldTitle + " " + '2'] = value;
+              _formData[fieldTitle + " " + '(Last Name)'] = value;
             });
           },
           fullNameTitle: fieldTitle,
@@ -255,16 +347,27 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
               _formData[fieldTitle] = value;
             });
           },
+          numberTitle: fieldTitle,
         );
       case 'Drop Down':
         return DropDownField(
+          title: fieldTitle,
+          options: field['options'][0],
+          onChanged: (value) {
+            setState(() {
+              _formData[fieldTitle] = value;
+            });
+          },
+        );
+      case 'NormalDropDown':
+        return NormalDropDownField(
           initialValue: _formData[fieldTitle],
           onChanged: (value) {
             setState(() {
               _formData[fieldTitle] = value;
             });
           },
-          dropDownFieldTile: fieldTitle,
+          dropDownFieldTitle: fieldTitle,
         );
       default:
         return SizedBox.shrink();
@@ -274,17 +377,27 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
   Future<String> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print(_formData);
+      setState(() {
+        _isSubmitting = true;
+      });
+      print('Form Data: $_formData');
+
       try {
         String collectionName =
             await FormService.fetchCollectionName(widget.formId);
         await FormService.submitFormData(collectionName, _formData);
         print('Form submitted successfully!');
         setState(() {
-          _formData.clear(); // This clears the data
+          _formData.clear();
+          _isSubmitting = false;
+          _isImageUploaded = false;
         });
         return "Form Submitted Successfully!";
       } catch (e) {
+        print('Error submitting form: $e');
+        setState(() {
+          _isSubmitting = false;
+        });
         return "Error in submitting form";
       }
     }
@@ -340,28 +453,83 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
                       ),
                     ),
                     SizedBox(height: 20),
+                    // Modified submit button with attendance check:
                     ElevatedButton(
-                      onPressed: () async {
-                        String result = await _submitForm();
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            content: Text(result),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Submit',
-                        style: GoogleFonts.poppins(color: Colors.white),
-                      ),
+                      onPressed: _isSubmitting
+                          ? null
+                          : () async {
+                              // Check attendance (punch-in) first.
+                              if (!_isPunchedIn) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Attendance Required"),
+                                    content: Text(
+                                        "You must punch in before submitting the form."),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                return;
+                              }
+
+                              // Then check if form is complete.
+                              if (_formData.isEmpty && !_isImageUploaded) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text("Incomplete Form"),
+                                    content: Text(
+                                        "Please fill out at least one field before submitting."),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                return;
+                              }
+
+                              String result = await _submitForm();
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: Text(result),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        if (result ==
+                                            "Form Submitted Successfully!") {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SelectedFormsPage(
+                                                formId: widget.formId,
+                                                formTitle: widget.formTitle,
+                                                promoterId: widget.promoterId,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      child: Text('OK'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
                         minimumSize: Size(double.infinity, 48),
@@ -369,10 +537,17 @@ class _FormDetailsPageState extends State<FormDetailsPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
+                      child: _isSubmitting
+                          ? CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            )
+                          : Text(
+                              'Submit',
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    SizedBox(height: 10),
                   ],
                 ),
               ),

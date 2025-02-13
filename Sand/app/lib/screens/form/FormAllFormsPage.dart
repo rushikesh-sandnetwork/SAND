@@ -1,9 +1,9 @@
-import 'package:app/screens/form/SelectedFormsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../models/PromoterFormsModel.dart';
 import '../../service/promoterService.dart';
 import '../../utils/FormButtons/FormTabs.dart';
+import 'SelectedFormsPage.dart';
 
 class Formallformspage extends StatefulWidget {
   final String promoterId;
@@ -62,10 +62,18 @@ class _FormallformspageState extends State<Formallformspage> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
+                      return Center(
+                          child: Text(
+                        'Error: ${snapshot.error}',
+                        style: const TextStyle(color: Colors.white),
+                      ));
                     } else if (snapshot.hasData) {
                       if (snapshot.data!.isEmpty) {
-                        return const Center(child: Text('No forms found'));
+                        return const Center(
+                            child: Text(
+                          'No forms found',
+                          style: TextStyle(color: Colors.white),
+                        ));
                       }
                       return Expanded(
                         child: ListView.builder(
@@ -98,7 +106,11 @@ class _FormallformspageState extends State<Formallformspage> {
                         ),
                       );
                     } else {
-                      return const Center(child: Text('No data found'));
+                      return const Center(
+                          child: Text(
+                        'No data found',
+                        style: TextStyle(color: Colors.white),
+                      ));
                     }
                   },
                 ),

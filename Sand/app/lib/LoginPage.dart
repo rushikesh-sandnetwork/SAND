@@ -220,6 +220,7 @@ import 'package:app/screens/form/PromoterDetailsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -233,6 +234,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
   String errorText = '';
   bool isLoading = false;
+  bool isPasswordVisible = false; // For toggling password visibility
 
   Future<void> loginUser(String email, String password) async {
     setState(() {
@@ -242,7 +244,8 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       var response = await http.post(
-        Uri.parse('http://localhost:8000/api/v1/promoter/loginPromoter'),
+        Uri.parse(
+            'https://sand-backend.onrender.com/api/v1/promoter/loginPromoter'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -257,8 +260,13 @@ class _LoginPageState extends State<LoginPage> {
         var promoterId = jsonResponse['data']['_id'];
 
         if (promoterId != null) {
-          Navigator.push(
-            context,
+          // Save login session
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('promoterId', promoterId);
+          await prefs.setInt(
+              'loginTime', DateTime.now().millisecondsSinceEpoch);
+          Navigator.pushReplacement(
+            context, // Replaces the login page, so back button won't take user to login
             MaterialPageRoute(
               builder: (context) => PromoterDetailsPage(promoterId: promoterId),
             ),
@@ -377,13 +385,26 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: screenHeight * 0.02),
                         TextField(
                           controller: passwordController,
-                          obscureText: true,
+                          obscureText: !isPasswordVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
                             labelStyle:
                                 GoogleFonts.poppins(color: Colors.white),
                             prefixIcon: Icon(Icons.lock,
                                 color: Colors.white, size: screenWidth * 0.06),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  isPasswordVisible = !isPasswordVisible;
+                                });
+                              },
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: const BorderSide(color: Colors.white),
                               borderRadius: BorderRadius.circular(10),
@@ -417,7 +438,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: isLoading
                                 ? CircularProgressIndicator(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   )
                                 : Text(
                                     'LOGIN',

@@ -6,7 +6,7 @@ import '../screens/form/FormAllFormsPage.dart';
 
 class PromoterService {
   static const String baseUrl =
-      'http://localhost:8000/api/v1/promoter/fetchPromoterDetails';
+      'https://sand-backend.onrender.com/api/v1/promoter/fetchPromoterDetails';
   static Future<PromoterDetails> fetchPromoterDetails(String promoterId) async {
     final url = Uri.parse(baseUrl);
     final response = await http.post(
@@ -28,7 +28,8 @@ class PromoterService {
 
   static Future<List<PromoterForm>> fetchPromoterForms(
       String promoterId) async {
-    final url = Uri.parse("http://localhost:8000/api/v1/promoter/fetchAllForms");
+    final url = Uri.parse(
+        "https://sand-backend.onrender.com/api/v1/promoter/fetchAllForms");
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -48,7 +49,8 @@ class PromoterService {
   }
 
   static Future<PromoterDetails> fetchNestedForms(String formId) async {
-    final url = Uri.parse("http://localhost:8000/api/v1/promoter/fetchFormField");
+    final url = Uri.parse(
+        "https://sand-backend.onrender.com/api/v1/promoter/fetchFormField");
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

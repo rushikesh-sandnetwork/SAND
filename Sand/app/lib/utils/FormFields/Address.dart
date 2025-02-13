@@ -71,6 +71,9 @@ class _AddressState extends State<Address> {
                 GoogleFonts.poppins(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(height: 12),
+          Text(
+            "Office/Building Name"
+          ),
           TextFormField(
             controller: addressController,
             onChanged: widget.onChangedAddress,

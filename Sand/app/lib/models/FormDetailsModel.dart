@@ -6,7 +6,7 @@ import 'package:async/async.dart';
 
 class FormService {
   static const String baseUrl =
-      'http://localhost:8000/api/v1/promoter/fetchFormField';
+      'https://sand-backend.onrender.com/api/v1/promoter/fetchFormField';
 
   /// Fetch form details including campaignId, formFields, and collectionName
   static Future<FormDetails> fetchFormDetails(String formId) async {
@@ -55,7 +55,7 @@ class FormService {
   static Future<String> submitFormData(
       String collectionName, Map<String, dynamic> data) async {
     final url = Uri.parse(
-        'http://localhost:8000/api/v1/promoter/fillFormData/$collectionName');
+        'https://sand-backend.onrender.com/api/v1/promoter/fillFormData/$collectionName');
 
     var request = http.MultipartRequest('POST', url);
 

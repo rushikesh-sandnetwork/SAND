@@ -44,6 +44,7 @@ class _EmailState extends State<Email> {
           TextFormField(
             onChanged: widget.onChanged,
             controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: 'Enter your email here:',
               border: OutlineInputBorder(
@@ -51,6 +52,17 @@ class _EmailState extends State<Email> {
               ),
             ),
             style: GoogleFonts.poppins(),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Email is required';
+              }
+              final emailRegex =
+                  RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+              if (!emailRegex.hasMatch(value)) {
+                return 'Enter a valid email address';
+              }
+              return null;
+            },
           ),
         ],
       ),
