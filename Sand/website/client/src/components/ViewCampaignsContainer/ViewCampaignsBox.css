@@ -34,13 +34,21 @@
     }
     
     .viewCampaignsBox h3 {
-        font-size: 18px;
+        font-size: 16px; /* Adjusted font size for better fit */
         font-family: "Poppins", sans-serif;
         font-weight: bold;
         letter-spacing: 1px;
-        text-transform: capitalize;
         color: #333;
+        text-transform: capitalize;
         margin: 10px 0;
+        text-align: center;
+        width: 100%;
+        word-wrap: break-word; /* Ensure text wraps instead of overflowing */
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Show "..." if text is too long */
+        white-space: nowrap; /* Prevents wrapping */
+        max-width: 90%; /* Ensures it doesn't exceed the container width */
+        display: block;
     }
     
     .viewCampaignsBox p {

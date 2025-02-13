@@ -13,17 +13,17 @@ const AssignCampaignToMis = () => {
 
   useEffect(() => {
     const fetchMis = async () => {
-      
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchUsersByRole",
+          "http://localhost:8000/api/v1/admin/fetchUsersByRole",
           { role: "mis" }
         );
 
         if (response.status === 200) {
           const misWithAssignment = response.data.data.map((mis) => ({
             ...mis,
-            hasCampaignAssigned: mis.listOfCampaigns?.includes(campaignId) || false,
+            hasCampaignAssigned:
+              mis.listOfCampaigns?.includes(campaignId) || false,
           }));
 
           setMis(misWithAssignment);
@@ -44,7 +44,7 @@ const AssignCampaignToMis = () => {
   const assignCampaignToMis = async (misId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/assignCampaignToMis",
+        "http://localhost:8000/api/v1/admin/assignCampaignToMis",
         { campaignId, misId }
       );
 
@@ -65,14 +65,13 @@ const AssignCampaignToMis = () => {
   const unAssignCampaignToMis = async (misId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/unassignCampaignToMis",
+        "http://localhost:8000/api/v1/admin/unassignCampaignToMis",
         { campaignId, misId }
       );
 
       if (response.status === 200) {
         alert("Mis un assigned successfully!");
 
-        
         setMis((prevMis) =>
           prevMis.map((mis) =>
             mis._id === misId ? { ...mis, hasCampaignAssigned: false } : mis
@@ -114,7 +113,10 @@ const AssignCampaignToMis = () => {
                   <td>{mis.email}</td>
                   <td>
                     {mis.hasCampaignAssigned ? (
-                      <button className="unassignFormBtn" onClick={() => unAssignCampaignToMis(mis._id)}>
+                      <button
+                        className="unassignFormBtn"
+                        onClick={() => unAssignCampaignToMis(mis._id)}
+                      >
                         Remove Campaign
                       </button>
                     ) : (

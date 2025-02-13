@@ -94,7 +94,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         );
 
         response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/createNewForm",
+          "http://localhost:8000/api/v1/admin/createNewForm",
           formData
         );
       } else {
@@ -106,7 +106,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         console.log(formData);
 
         response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/createNestedForm",
+          "http://localhost:8000/api/v1/admin/createNestedForm",
           formData
         );
       }
@@ -116,7 +116,6 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         setShowModal(true);
         setFormId(response.data.data._id); // Ensure you access the correct path in response
         handleReset();
-        
       } else {
         console.error("Failed to submit form:", response.data.error);
       }
@@ -128,7 +127,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
   const closeModal = () => {
     setShowModal(false);
     setSuccessMessage("");
-    navigate(`/admin/assignForm/${formId}`,{ replace: true });
+    navigate(`/admin/assignForm/${formId}`, { replace: true });
   };
 
   return (

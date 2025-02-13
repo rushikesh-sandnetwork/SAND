@@ -8,13 +8,13 @@ const ManagerProfilePage = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const {id} = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          "https://sand-backend.onrender.com/api/v1/user/userDetails",
+          "http://localhost:8000/api/v1/user/userDetails",
           {
             method: "POST",
             headers: {
@@ -23,7 +23,7 @@ const ManagerProfilePage = () => {
             body: JSON.stringify({ id }), // Send id from the URL
           }
         );
-  
+
         const data = await response.json();
         if (response.ok) {
           setUserDetails(data.data);
@@ -36,10 +36,10 @@ const ManagerProfilePage = () => {
         setLoading(false);
       }
     };
-  
+
     fetchUserDetails();
   }, [id]); // Include id as a dependency
-  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 

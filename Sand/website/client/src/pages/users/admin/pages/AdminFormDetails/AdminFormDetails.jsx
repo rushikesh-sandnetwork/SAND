@@ -5,8 +5,6 @@ import "./AdminFormDetails.css";
 import FormBox from "../../../../../components/FormBox/FormBox";
 import { useParams } from "react-router-dom";
 
-
-
 const AdminFormDetails = () => {
   const { campaignId } = useParams();
   const [forms, setForms] = useState([]);
@@ -14,14 +12,12 @@ const AdminFormDetails = () => {
   const [error, setError] = useState(null);
   //const fetchnestedform  same as fetchform
 
-
-
   useEffect(() => {
-    //call if else if url contains "fetchnestedforms" call this or fetchforms. 
+    //call if else if url contains "fetchnestedforms" call this or fetchforms.
     const fetchForms = async () => {
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchFormsForGivenClient",
+          "http://localhost:8000/api/v1/admin/fetchFormsForGivenClient",
           { campaignId }
         );
         setForms(response.data.data.reverse());
@@ -32,12 +28,7 @@ const AdminFormDetails = () => {
       }
     };
 
-
-    const fetchNestedForm = async () => {
-      
-    }
-
-
+    const fetchNestedForm = async () => {};
 
     if (campaignId) {
       fetchForms();
@@ -55,12 +46,14 @@ const AdminFormDetails = () => {
         ) : forms.length > 0 ? (
           forms.map((form) => {
             if (!form.isThisNestedForm) {
-              return (<FormBox
-                key={form._id}
-                formId={form._id}
-                form={form}
-              // setActiveTab={setActiveTab}
-              />)
+              return (
+                <FormBox
+                  key={form._id}
+                  formId={form._id}
+                  form={form}
+                  // setActiveTab={setActiveTab}
+                />
+              );
             }
           })
         ) : (

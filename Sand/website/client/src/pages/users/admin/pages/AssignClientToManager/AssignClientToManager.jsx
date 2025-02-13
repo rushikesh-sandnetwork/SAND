@@ -13,17 +13,17 @@ const AssignClientToManager = () => {
 
   useEffect(() => {
     const fetchManager = async () => {
-      
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchUsersByRole",
+          "http://localhost:8000/api/v1/admin/fetchUsersByRole",
           { role: "manager" }
         );
 
         if (response.status === 200) {
           const managerWithAssignment = response.data.data.map((manager) => ({
             ...manager,
-            hasClientAssigned: manager.listOfClient?.includes(clientId) || false,
+            hasClientAssigned:
+              manager.listOfClient?.includes(clientId) || false,
           }));
 
           setManager(managerWithAssignment);
@@ -44,7 +44,7 @@ const AssignClientToManager = () => {
   const AssignClientToManager = async (managerId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/assignClientToManager",
+        "http://localhost:8000/api/v1/admin/assignClientToManager",
         { clientId, managerId }
       );
 
@@ -52,7 +52,9 @@ const AssignClientToManager = () => {
         alert("Manager assigned successfully!");
         setManager((prevManager) =>
           prevManager.map((manager) =>
-            manager._id === managerId ? { ...manager, hasClientAssigned: true } : manager
+            manager._id === managerId
+              ? { ...manager, hasClientAssigned: true }
+              : manager
           )
         );
       } else {
@@ -65,17 +67,18 @@ const AssignClientToManager = () => {
   const unAssignClientToManager = async (managerId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/unassignClientToManager",
+        "http://localhost:8000/api/v1/admin/unassignClientToManager",
         { clientId, managerId }
       );
 
       if (response.status === 200) {
         alert("Manager un assigned successfully!");
 
-        
         setManager((prevManager) =>
           prevManager.map((manager) =>
-            manager._id === managerId ? { ...manager, hasClientAssigned: false } : manager
+            manager._id === managerId
+              ? { ...manager, hasClientAssigned: false }
+              : manager
           )
         );
       } else {
@@ -114,7 +117,10 @@ const AssignClientToManager = () => {
                   <td>{manager.email}</td>
                   <td>
                     {manager.hasClientAssigned ? (
-                      <button className="unassignFormBtn" onClick={() => unAssignClientToManager(manager._id)}>
+                      <button
+                        className="unassignFormBtn"
+                        onClick={() => unAssignClientToManager(manager._id)}
+                      >
                         Remove Client
                       </button>
                     ) : (

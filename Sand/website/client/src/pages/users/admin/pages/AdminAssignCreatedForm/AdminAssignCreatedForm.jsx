@@ -20,7 +20,7 @@ const AdminAssignCreatedForm = () => {
   const fetchPromoters = async () => {
     try {
       const response = await axios.get(
-        "https://sand-backend.onrender.com/api/v1/promoter/fetchPromoters"
+        "http://localhost:8000/api/v1/promoter/fetchPromoters"
       );
       if (response.status === 200) {
         const promotersWithAssignment = response.data.data.map((promoter) => ({
@@ -41,23 +41,23 @@ const AdminAssignCreatedForm = () => {
   useEffect(() => {
     fetchPromoters();
   }, [formId]);
-//handled back button issue
+  //handled back button issue
   useEffect(() => {
     const handlePopState = () => {
       navigate(`/admin/campaignDetailsPage/${campaignId}`, { replace: true });
     };
 
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener("popstate", handlePopState);
     };
   }, [navigate, campaignId]);
 
   const assignFormToPromoter = async (promoterId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/assignCreatedForms",
+        "http://localhost:8000/api/v1/admin/assignCreatedForms",
         {
           formId,
           promoterId,
@@ -77,8 +77,7 @@ const AdminAssignCreatedForm = () => {
             return promoter;
           })
         );
-      } 
-      else {
+      } else {
         alert("Failed to assign form.");
       }
     } catch (error) {
@@ -89,7 +88,7 @@ const AdminAssignCreatedForm = () => {
   const unassignFormFromPromoter = async (promoterId) => {
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/unassignCreatedForms",
+        "http://localhost:8000/api/v1/admin/unassignCreatedForms",
         {
           formId,
           promoterId,
@@ -121,7 +120,7 @@ const AdminAssignCreatedForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/promoter/registerNewPromoter",
+        "http://localhost:8000/api/v1/promoter/registerNewPromoter",
         {
           promoterName,
           promoterEmailId,

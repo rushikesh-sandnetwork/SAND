@@ -2,17 +2,18 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import '././ManagerLandingPage.css';
 import Logo from './SAND 1 logo.png'; // Ensure this path is correct
-
+import { useAuth } from '../../../../context/AuthContext';
 
 
 
 const ManagerLandingPage = () => {
   const userId = '123'; 
   const navigate = useNavigate();
+  const{logout} = useAuth();
   const handleLogout = () => {
     // Confirm logout, then redirect to login
     if (window.confirm('Are you sure you want to log out?')) {
-      navigate('/'); // Redirect to login page
+     logout(); // Redirect to login page
     }
   };
 

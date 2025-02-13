@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import PageTitle from "../../../../components/PageTitles/PageTitle";
 import "./ManagerCreateNewClient.css";
@@ -13,15 +13,13 @@ const ManagerCreateNewClient = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-
-
   const { campaignId } = useParams();
-  
-    // useEffect(() => {
-    //   if (!campaignId) {
-    //     console.error("Campaign ID is missing");
-    //   }
-    // }, [campaignId]);
+
+  // useEffect(() => {
+  //   if (!campaignId) {
+  //     console.error("Campaign ID is missing");
+  //   }
+  // }, [campaignId]);
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);
@@ -52,7 +50,7 @@ const ManagerCreateNewClient = () => {
 
     try {
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/admin/createNewClient",
+        "http://localhost:8000/api/v1/admin/createNewClient",
         formData,
         {
           headers: {

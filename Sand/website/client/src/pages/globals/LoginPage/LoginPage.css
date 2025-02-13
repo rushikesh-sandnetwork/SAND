@@ -6,28 +6,32 @@
   width: 100%;
   min-height: 100vh;
   margin: 0;
-  padding: 0;
+  padding: 20px; /* Added padding for smaller screens */
 }
 
-/* login page main container */
+/* Login page main container */
 .LoginPage-box {
   background-color: white;
-  height: 80vh;
-  width: 1100px;
+  height: 80vh; /* Fixed height for the main container */
+  width: 90%; /* Adjusted width for smaller screens */
+  max-width: 1100px; /* Added max-width to prevent stretching on larger screens */
   border-radius: 23px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 20px; /* Added padding for smaller screens */
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-/* left part of the login page  */
+/* Left part of the login page */
 .LoginPage-logo {
-  height: 90%;
+  height: 90%; /* Fixed height for the logo container */
   width: 40%;
+  max-width: 400px; /* Added max-width for larger screens */
   background-color: #dadada;
   border-radius: 13px;
-  margin-left: 30px;
+  margin-left: 30px; /* Adjusted margin for smaller screens */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,7 +40,8 @@
 }
 
 .LoginPage-logo img {
-  width: 350px; /* Adjust the width to make the logo small */
+  width: 100%; /* Made the logo responsive */
+  max-width: 350px; /* Added max-width for larger screens */
   transition: transform 0.3s ease-in-out;
 }
 
@@ -46,14 +51,15 @@
 }
 
 .LoginPage-logo:hover img {
-  transform: scale(1.1); /* Adjust the hover scale effect */
+  transform: scale(1.1);
 }
 
-/* right part of the login container */
+/* Right part of the login container */
 .LoginPage-content {
   height: 100%;
   width: 50%;
-  margin-right: 30px;
+  max-width: 500px; /* Added max-width for larger screens */
+  margin-right: 30px; /* Adjusted margin for smaller screens */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,16 +83,6 @@
   text-align: center;
 }
 
-.content-form p {
-  padding: 0;
-  margin: 0;
-  margin-top: 20px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  font-size: 18px;
-  text-align: start;
-}
-
 .content-form label {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
@@ -95,7 +91,8 @@
 
 .content-form input {
   padding: 16px 24px;
-  width: 500px;
+  width: 100%; /* Made input width responsive */
+  max-width: 500px; /* Added max-width for larger screens */
   background-color: #f1f1f1;
   border: none;
   border-radius: 12px;
@@ -104,9 +101,10 @@
   font-size: 16px;
   margin-bottom: 20px;
   outline: none;
+  box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-/* login button */
+/* Login button */
 .loginBtn {
   margin-top: 25px;
   padding: 18px 0;
@@ -118,6 +116,8 @@
   font-size: 18px;
   color: white;
   cursor: pointer;
+  width: 100%; /* Made button width responsive */
+  max-width: 500px; /* Added max-width for larger screens */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -131,25 +131,21 @@
   transform: translateY(0);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
+
 /* Error message styling */
 .error {
-  color: #ff4d4d; /* Bright red for visibility */
+  color: #ff4d4d;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   font-size: 14px;
   margin-top: 10px;
-  text-align: center; /* Center the error message */
-  background-color: rgba(
-    255,
-    77,
-    77,
-    0.1
-  ); /* Light red background for emphasis */
-  padding: 10px 15px; /* Add some padding for better spacing */
-  border: 1px solid #ff4d4d; /* Optional: border to highlight the message */
-  border-radius: 8px; /* Smooth edges */
-  box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2); /* Subtle shadow for pop-out effect */
-  animation: fadeIn 0.3s ease-in-out; /* Add a fade-in animation */
+  text-align: center;
+  background-color: rgba(255, 77, 77, 0.1);
+  padding: 10px 15px;
+  border: 1px solid #ff4d4d;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 /* Fade-in animation */
@@ -159,5 +155,67 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Media Queries for Responsiveness */
+
+/* For tablets and smaller screens */
+@media (max-width: 768px) {
+  .LoginPage-box {
+    flex-direction: column; /* Stack logo and content vertically */
+    height: auto; /* Allow height to adjust based on content */
+    padding: 20px;
+  }
+
+  .LoginPage-logo {
+    height: auto; /* Fixed height for tablets */
+    width: 80%; /* Adjusted width for tablets */
+    margin: 20px 0; /* Adjusted margin for tablets */
+  }
+
+  .LoginPage-content {
+    width: 80%; /* Adjusted width for tablets */
+    margin: 20px 0; /* Adjusted margin for tablets */
+  }
+
+  .content-title h1 {
+    font-size: 32px; /* Reduced font size for tablets */
+  }
+
+  .content-title p {
+    font-size: 16px; /* Reduced font size for tablets */
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 480px) {
+  .LoginPage-logo {
+    height: auto; /* Fixed height for mobile */
+    width: 90%; /* Adjusted width for mobile */
+    margin: 10px 0; /* Adjusted margin for mobile */
+  }
+
+  .LoginPage-content {
+    width: 90%; /* Adjusted width for mobile */
+    margin: 10px 0; /* Adjusted margin for mobile */
+  }
+
+  .content-title h1 {
+    font-size: 28px; /* Reduced font size for mobile */
+  }
+
+  .content-title p {
+    font-size: 14px; /* Reduced font size for mobile */
+  }
+
+  .content-form input {
+    padding: 12px 20px; /* Reduced padding for mobile */
+    font-size: 14px; /* Reduced font size for mobile */
+  }
+
+  .loginBtn {
+    padding: 14px 0; /* Reduced padding for mobile */
+    font-size: 16px; /* Reduced font size for mobile */
   }
 }

@@ -4,9 +4,15 @@ import "./CampaignDeleteBox.css";
 import axios from "axios";
 const CampaignDeleteBox = ({ campaignId, title, imgSrc, setActiveTab }) => {
   const handleDeleteClient = async () => {
+    // Confirmation dialog before deletion
+    const isConfirmed = window.confirm("Are you sure you want to delete this campaign?");
+    
+    if (!isConfirmed) {
+      return; // Stop execution if the user cancels
+    }
     try {
       const response = await axios.delete(
-        "https://sand-backend.onrender.com/api/v1/admin/deleteCampaign",
+        "http://localhost:8000/api/v1/admin/deleteCampaign",
         {
           data: { campaignId },
         }

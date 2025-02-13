@@ -12,7 +12,7 @@ const ViewClientsContainer = ({ role }) => {
   const fetchClients = async () => {
     try {
       const response = await axios.get(
-        "https://sand-backend.onrender.com/api/v1/admin/fetchAllClient"
+        "http://localhost:8000/api/v1/admin/fetchAllClient"
       );
       setClients(response.data.data.reverse());
       setLoading(false);
@@ -28,7 +28,7 @@ const ViewClientsContainer = ({ role }) => {
     try {
       console.log(id);
       const response = await axios.post(
-        "https://sand-backend.onrender.com/api/v1/manager/fetchManagerClients",{
+        "http://localhost:8000/api/v1/manager/fetchManagerClients",{
           managerId:id,
         }
       );
@@ -66,6 +66,12 @@ const ViewClientsContainer = ({ role }) => {
           clientId={client["_id"]}
         />
       ))}
+      <ViewClientsBox clientName={"1djddjdklhlkdfhlkwhflhjlfhlrh"}/>
+      {/* <ViewClientsBox/>
+      <ViewClientsBox/>
+      <ViewClientsBox/>
+      <ViewClientsBox/>
+      <ViewClientsBox/> */}
     </div>
   );
 };

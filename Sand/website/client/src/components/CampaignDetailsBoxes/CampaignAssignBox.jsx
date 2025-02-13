@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import './CampaignAssignBox.css';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import "./CampaignAssignBox.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CampaignAssignBox = ({ campaignId, title, imgSrc }) => {
   const [misUsers, setMisUsers] = useState([]);
   const [selectedMisId, setSelectedMisId] = useState("");
   const [message, setMessage] = useState("");
 
-
   const handleAssign = async () => {
     try {
-      const response = await axios.post("https://sand-backend.onrender.com/api/v1/admin/assignCampaign", {
-        campaignId,
-        misId: selectedMisId,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/admin/assignCampaign",
+        {
+          campaignId,
+          misId: selectedMisId,
+        }
+      );
 
       if (response.data.success) {
         setMessage("Campaign assigned to MIS user successfully");
@@ -50,6 +52,6 @@ const CampaignAssignBox = ({ campaignId, title, imgSrc }) => {
       </div>
     </div>
   );
-}
+};
 
 export default CampaignAssignBox;
