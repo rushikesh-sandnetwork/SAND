@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from "axios";
 import PageTitle from "../../../../../components/PageTitles/PageTitle";
 import "./AdminCreateNewUser.css";
@@ -12,6 +12,15 @@ const AdminCreateNewUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  useEffect(() => {
+    setname("");
+    setsurname("");
+    setemail("");
+    setpassword("");
+    setrole("");
+    setError("");
+    setSuccess("");
+  }, []);
 
   const handleInputChange = (setter) => (event) => {
     setter(event.target.value);

@@ -22,5 +22,7 @@ router.route("/currentUser").get(verifyJWT, userController.currentUser);
 router.route("/createUser").post(userController.createNewUser);
 //assigning client to user
 router.route("/assignClient").post(userController.assignClient);
+router.post("/sendOTP").post(userController.sendOtp);
+router.post("/changePassword").post(userController.changePassword);
 
 module.exports = router;
