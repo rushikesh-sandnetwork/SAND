@@ -7,7 +7,6 @@ const { fetchNestedForms } = require('../controllers/admins.controller');
 
 router.route("/createNestedForm").post(adminController.createNestedForm);
 router.route("/updateAcceptedData").patch(adminController.acceptRejectData);
-router.route("/fetchPromoterForms").post(adminController.fetchPromoterForms);
 
 // Done----------
 // create new client 

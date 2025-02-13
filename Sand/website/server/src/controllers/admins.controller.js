@@ -888,26 +888,6 @@ const acceptRejectData = asyncHandler(async (req, res) => {
     );
   }
 });
-
-const fetchPromoterForms = asyncHandler(async (req, res) => {
-  try {
-    const { promoterId } = req.body;
-    const promoter = await Promoter.findById(promoterId).select("-password");
-    const forms = promoter.forms;
-    // console.log("Promoter Details:", promoter);
-    return res
-      .status(200)
-      .json(
-        new apiResponse(200, forms, "Promoter Forms fetched Successfully.")
-      );
-  } catch (error) {
-    console.log("Errors in fetchPromoter Forms: ", error);
-    throw new apiError(
-      error.statusCode || 500,
-      error.message || "Internal Server Error"
-    );
-  }
-});
 //create a new controller to fetch nested forms
 //parameters: mainformid=> look for an array object (nestedForms : Array (1)) fetch this
 // create route in route.js for this
@@ -939,5 +919,5 @@ module.exports = {
   assignClientToManager,
   unassignClientToManager,
   fetchUsersByRole,
-  fetchPromoterForms,
 };
+``;

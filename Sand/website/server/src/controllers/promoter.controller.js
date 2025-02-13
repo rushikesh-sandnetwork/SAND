@@ -468,6 +468,52 @@ const fillAttendancePunchOut = asyncHandler(async (req, res) => {
 //   }
 // });
 
+const checkPunchInStatus = asyncHandler(async (req, res) => {
+  try {
+    const { promoterId } = req.body;
+
+    if (!promoterId) {
+      throw new apiError(400, "Missing required data fields.");
+    }
+
+    const currentDate = new Date().toISOString().split("T")[0];
+
+    // Check if there is an attendance record for today
+    const attendanceRecord = await AttendanceModel.findOne({
+      promoterId,
+      date: currentDate,
+    });
+
+    if (attendanceRecord) {
+      res
+        .status(200)
+        .json(
+          new apiResponse(
+            200,
+            { isPunchedIn: true },
+            "Punch-in found for today"
+          )
+        );
+    } else {
+      res
+        .status(200)
+        .json(
+          new apiResponse(
+            200,
+            { isPunchedIn: false },
+            "No punch-in found for today"
+          )
+        );
+    }
+  } catch (error) {
+    console.error("Error in checking punch-in status.", error);
+    throw new apiError(
+      error.statusCode || 500,
+      error.message || "Error in checking punch-in status"
+    );
+  }
+});
+
 const fetchAttendance = asyncHandler(async (req, res) => {
   try {
     const { promoterId } = req.body;
@@ -656,4 +702,5 @@ module.exports = {
   fillAttendancePunchIn,
   fillAttendancePunchOut,
   fetchAttendance,
+  checkPunchInStatus,
 };
