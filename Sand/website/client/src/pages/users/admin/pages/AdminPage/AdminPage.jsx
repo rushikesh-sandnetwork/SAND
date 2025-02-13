@@ -16,7 +16,7 @@ import AdminFormViewData from '../AdminFormViewData/AdminFormViewData.jsx';
 import AdminListOfForms from '../AdminListOfForms/AdminListOfForms.jsx';
 import FormBox from '../../../../../components/FormBox/FormBox.jsx';
 import AdminFormItems from '../AdminFormItems/AdminFormItems.jsx';
-import AdminNestedViewData from '../AdminNestedViewData/AdminNestedViewData.jsx'; 
+import AdminNestedViewData from '../AdminNestedViewData/AdminNestedViewData.jsx';
 import SettingPage from '../SettingPage/SettingPage.jsx';
 
 const AdminPage = () => {
@@ -26,7 +26,7 @@ const AdminPage = () => {
                 <AdminLandingPage></AdminLandingPage>
             </div>
             <div className="admin-page-content">
-            <Routes>
+                <Routes>
                     <Route path="" element={<AdminOverViewPage />} />
                     <Route path="newClient" element={<AdminCreateNewClient />} />
                     <Route path="viewClients" element={<AdminViewClientsPage />} />
@@ -34,13 +34,14 @@ const AdminPage = () => {
                     <Route path="promoterAttendance" element={<AdminViewAttendance />} />
                     <Route path="profile" element={<AdminProfilePage />} />
                     <Route path="campaignDetailsPage/:campaignId" element={<AdminCampaignDetailsPage />} />
-                    <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage role = "admin" />} />
+                    <Route path="viewClients/client-detail/:clientId" element={<AdminViewCampaignsPage role="admin" />} />
                     <Route path="viewClients/client-detail/:clientId/AdminCreateNewCampaign" element={<AdminCreateNewCampaign />} />
-                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={< AdminCampaignDetailsPage role="admin"/> } />
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId" element={< AdminCampaignDetailsPage role="admin" />} />
                     <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms" element={<AdminFormDetails />} />
-                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems role ="admin"/>} />
-                    <Route path = "viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />  
-                    <Route path="settingPage" element={<SettingPage />}/>
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId" element={<AdminFormItems role="admin" />} />
+                    <Route path="viewClients/client-detail/:clientId/campaignDetailsPage/:campaignId/viewForms/viewFormData/:formId/viewNestedFormData" element={<AdminNestedViewData />} />
+                    {/* 1. : changed original route so that settingPage will open on profile itself and i dont need to pass "id" specially or alag se */}
+                    <Route path="profile/settingPage" element={<SettingPage />} />
                 </Routes>
             </div>
 

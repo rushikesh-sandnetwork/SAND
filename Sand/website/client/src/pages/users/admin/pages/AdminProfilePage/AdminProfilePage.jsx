@@ -61,7 +61,8 @@ const AdminProfilePage = () => {
       <PageTitle title="Profile" />
 
       {/* Settings Button on the Right */}
-      <button className="settingsButton" onClick={() => navigate(`/users/admin/pages/SettingPage/${id}`)}>
+      {/* 2. : since in my admin page I have written profile/settingPage this direct navigate to settingPage is the best approach */}
+      <button className="settingsButton" onClick={() => navigate(`settingPage`)}>
         <Settings size={24} />
       </button>
 
