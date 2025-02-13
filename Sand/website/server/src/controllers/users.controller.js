@@ -278,26 +278,17 @@ const userDetails = asyncHandler(async (req, res) => {
 // });
 
 
-
-
-
-
 // Controller: Send OTP
 const sendOtp = asyncHandler(async (req, res) => {
-  const { currentPassword } = req.body;
+  const { email } = req.body;
 
-  if (!currentPassword) {
-    throw new apiError(400, 'Current password is required');
+  if (!email) {
+    throw new apiError(400, 'Email is required');
   }
 
-  const user = await User.findOne({ email: req.user.email });
+  const user = await User.findOne({ email });
   if (!user) {
     throw new apiError(404, 'User not found');
-  }
-
-  const isPasswordValid = await user.isPasswordCorrect(currentPassword);
-  if (!isPasswordValid) {
-    throw new apiError(401, 'Current password is incorrect');
   }
 
   const otp = crypto.randomInt(100000, 999999).toString();
@@ -305,24 +296,31 @@ const sendOtp = asyncHandler(async (req, res) => {
   user.otpExpires = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
   await user.save();
 
-  await sendEmail({
-    to: user.email,
-    subject: 'Your OTP Code',
-    text: `Your OTP code is ${otp}`,
-  });
+  const templateParams = {
+    to_email: email,
+    code: otp,
+  };
 
-  res.status(200).json(new apiResponse(200, {}, 'OTP sent successfully'));
+  emailjs.send('service_92zeeyo', 'template_oyh4qjg', templateParams, 'falgunipar2024@gmail.com')
+    .then((response) => {
+      console.log('Verification code sent!', response.status, response.text);
+      res.status(200).json(new apiResponse(200, { email: user.email }, 'OTP sent successfully'));
+    })
+    .catch((error) => {
+      console.error('Failed to send verification code:', error);
+      throw new apiError(500, 'Failed to send OTP');
+    });
 });
 
 // Controller: Change Password
 const changePassword = asyncHandler(async (req, res) => {
-  const { currentPassword, newPassword, otp } = req.body;
+  const { email, currentPassword, newPassword, otp } = req.body;
 
-  if (!currentPassword || !newPassword || !otp) {
+  if (!email || !currentPassword || !newPassword || !otp) {
     throw new apiError(400, 'All fields are required');
   }
 
-  const user = await User.findOne({ email: req.user.email });
+  const user = await User.findOne({ email });
   if (!user) {
     throw new apiError(404, 'User not found');
   }
@@ -343,6 +341,7 @@ const changePassword = asyncHandler(async (req, res) => {
 
   res.status(200).json(new apiResponse(200, {}, 'Password changed successfully'));
 });
+
 
 
 

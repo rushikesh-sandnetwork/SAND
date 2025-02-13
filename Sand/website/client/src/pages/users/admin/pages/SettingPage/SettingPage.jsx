@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import emailjs from 'emailjs-com';
 import './SettingPage.css';
 
 const SettingPage = () => {
@@ -9,6 +10,7 @@ const SettingPage = () => {
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [message, setMessage] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
 
   const handleSendOtp = async () => {
     try {
@@ -16,6 +18,9 @@ const SettingPage = () => {
         currentPassword,
       });
       if (response.status === 200) {
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        setVerificationCode(code);
+        sendVerificationCode(response.data.email, code);
         setOtpSent(true);
         setMessage('OTP sent to your email.');
       } else {
@@ -27,10 +32,30 @@ const SettingPage = () => {
     }
   };
 
+  const sendVerificationCode = (email, code) => {
+    const templateParams = {
+      to_email: email,
+      code: code,
+    };
+
+    emailjs.send('service_92zeeyo', 'template_oyh4qjg', templateParams, 'falgunipar2024@gmail.com')
+      .then((response) => {
+        console.log('Verification code sent!', response.status, response.text);
+      })
+      .catch((error) => {
+        console.error('Failed to send verification code:', error);
+      });
+  };
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
       setMessage('New password and confirm password do not match.');
+      return;
+    }
+
+    if (otp !== verificationCode) {
+      setMessage('Invalid OTP.');
       return;
     }
 
