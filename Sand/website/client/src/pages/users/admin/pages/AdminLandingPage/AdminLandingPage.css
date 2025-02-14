@@ -2,47 +2,55 @@
   display: flex;
   height: 100vh;
   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  overflow: hidden;
 }
-
+/* Sidebar */
 .sidebar {
   width: 275px;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -275px; /* Initially hidden */
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto; /* Scroll vertically if content overflows */
   background: linear-gradient(135deg, #667eea, #764ba2);
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease-in-out;
+  z-index: 1000; /* Ensure sidebar is above other content */
+}
+.sidebar.open {
+  left: 0; /* Slide in */
 }
 
+/* Content */
 .content {
-  margin-left: 275px;
+  margin-left: 0;
   padding: 20px;
-  width: calc(100% - 275px);
+  width: 100%;
   overflow: auto;
+  transition: margin-left 0.3s ease-in-out;
 }
 
-/* Navbar styling */
+.content.shifted {
+  margin-left: 275px; /* Shift content when sidebar is open */
+}
+
+/* Navbar */
 .navbar {
   height: 100%;
   width: 275px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Scroll vertically if content overflows */
 }
 
 .navbar img {
-  margin-left: 10px;
-  width: 200px;
+  width: 180px;
   height: auto;
-  margin-bottom: 20px;
-  align-items: center;
+  margin-bottom: 30px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -51,44 +59,145 @@
 }
 
 .navbar a {
-  padding: 15px 8px;
+  padding: 15px 20px;
   width: 80%;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   font-family: "Poppins", sans-serif;
   color: white;
-  display: block;
   background-color: #4a90e2;
-  margin-bottom: 18px;
-  border-radius: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navbar a:hover {
   background-color: #357ABD;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 .navbar input {
-  padding: 15px 8px;
+  padding: 15px 20px;
   background-color: #2d9bff;
-  width: 90%;
+  width: 80%;
   border: none;
-  margin-right: 5px;
-  border-radius: 10px;
-  font-size: 18px;
+  border-radius: 8px;
+  font-size: 16px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .navbar input:hover {
   background-color: #003e77;
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 250px;
+  }
+
+  .content.shifted {
+    margin-left: 250px;
+  }
+
+  .navbar {
+    width: 250px;
+  padding: 15px 0;
+  }
+
+  .navbar img {
+    width: 150px;
+  margin-bottom: 20px;
+  }
+
+  .navbar a,
+  .navbar input {
+    width: 85%;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .content.shifted {
+    margin-left: 220px;
+  }
+
+  .navbar {
+    width: 220px;
+    padding: 10px 0;
+  }
+
+  .navbar img {
+    width: 120px;
+    margin-bottom: 15px;
+  }
+
+  .navbar a,
+  .navbar input {
+    width: 90%;
+    font-size: 13px;
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    top: -100%; /* Hide off-screen */
+    left: 0;
+    transition: top 0.3s ease-in-out;
+  }
+
+  .sidebar.open {
+    top: 0; /* Slide down */
+  }
+
+  .content.shifted {
+    margin-left: 0;
+  }
+
+  .navbar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .navbar img {
+    width: 100px;
+    margin: 10px;
+  }
+
+  .navbar a,
+  .navbar input {
+    width: 45%;
+    margin: 5px;
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar a,
+  .navbar input {
+    width: 100%;
+    margin: 5px 0;
+  }
 }
