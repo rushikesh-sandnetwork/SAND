@@ -1,32 +1,32 @@
 .LandingPage-container {
   display: flex;
-  height: 100vh; 
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
 }
 
 .sidebar {
-  width: 275px; 
-  position: fixed; 
+  width: 275px;
+  position: fixed;
   top: 0;
   left: 0;
-  height: 100vh; 
-  overflow: auto; 
+  height: 100vh;
+  overflow: auto;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .content {
   margin-left: 275px;
   padding: 20px;
   width: calc(100% - 275px);
-  overflow: auto; 
+  overflow: auto;
 }
 
 /* Navbar styling */
 .navbar {
-  height: 90%;
+  height: 100%;
   width: 275px;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   top: 0;
   left: 0;
   padding-top: 20px;
@@ -34,42 +34,46 @@
   flex-direction: column;
   align-items: center;
   background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .navbar img {
   margin-left: 10px;
   width: 200px;
   height: auto;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   align-items: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar img:hover {
+  transform: scale(1.1);
 }
 
 .navbar a {
-  padding: 15px 8px 15px 16px;
+  padding: 15px 8px;
   width: 80%;
   text-decoration: none;
   font-size: 18px;
   text-align: center;
   font-family: "Poppins", sans-serif;
-  color: black;
+  color: white;
   display: block;
-  background-color: #f8f8f8;
+  background-color: #4a90e2;
   margin-bottom: 18px;
-  margin-left: 20px;
-  margin-right: 20px;
   border-radius: 12px;
-  transition: background-color 00.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .navbar a:hover {
-  background-color: #979797;
-  color: white;
+  background-color: #357ABD;
+  transform: translateY(-5px);
 }
 
 .navbar input {
-  padding: 15px 8px 15px 16px;
+  padding: 15px 8px;
   background-color: #2d9bff;
   width: 90%;
   border: none;
@@ -81,9 +85,10 @@
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  transition: background-color 00.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .navbar input:hover {
   background-color: #003e77;
+  transform: translateY(-5px);
 }

@@ -253,29 +253,29 @@ const userDetails = asyncHandler(async (req, res) => {
 
 
 
-// const changePassword = asyncHandler(async (req, res) => {
-//   const { userId, currentPassword, newPassword } = req.body;
+const changePassword = asyncHandler(async (req, res) => {
+  const { id, currentPassword, newPassword } = req.body;
 
-//   if (!userId || !currentPassword || !newPassword) {
-//     throw new apiError(400, "User ID, current password, and new password are required");
-//   }
+  if (!id || !currentPassword || !newPassword) {
+    throw new apiError(400, "User ID, current password, and new password are required");
+  }
 
-//   const user = await User.findById(userId);
-//   if (!user) {
-//     throw new apiError(404, "User not found");
-//   }
+  const user = await User.findById(id);
+  if (!user) {
+    throw new apiError(404, "User not found");
+  }
 
-//   const isPasswordValid = await user.isPasswordCorrect(currentPassword);
-//   if (!isPasswordValid) {
-//     throw new apiError(401, "Current password is incorrect");
-//   }
+  const isPasswordValid = await user.isPasswordCorrect(currentPassword);
+  if (!isPasswordValid) {
+    throw new apiError(401, "Current password is incorrect");
+  }
 
-//   user.password = newPassword;
+  user.password = newPassword;
 
-//   await user.save({validateBeforeSave: false});
+  await user.save({validateBeforeSave: false});
 
-//   res.status(200).json(new apiResponse(200, {}, "Password changed successfully"));
-// });
+  res.status(200).json(new apiResponse(200, {}, "Password changed successfully"));
+});
 
 
 // Controller: Send OTP
@@ -312,35 +312,30 @@ const sendOtp = asyncHandler(async (req, res) => {
     });
 });
 
-// Controller: Change Password
-const changePassword = asyncHandler(async (req, res) => {
-  const { email, currentPassword, newPassword, otp } = req.body;
+// // Controller: Change Password
+// const changePassword = asyncHandler(async (req, res) => {
+//   const { email, currentPassword, newPassword } = req.body;
 
-  if (!email || !currentPassword || !newPassword || !otp) {
-    throw new apiError(400, 'All fields are required');
-  }
+//   if (!email || !currentPassword || !newPassword ) {
+//     throw new apiError(400, 'All fields are required');
+//   }
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new apiError(404, 'User not found');
-  }
+//   const user = await User.findOne({ email });
+//   if (!user) {
+//     throw new apiError(404, 'User not found');
+//   }
 
-  if (user.otp !== otp || user.otpExpires < Date.now()) {
-    throw new apiError(400, 'Invalid or expired OTP');
-  }
 
-  const isPasswordValid = await user.isPasswordCorrect(currentPassword);
-  if (!isPasswordValid) {
-    throw new apiError(401, 'Current password is incorrect');
-  }
+//   const isPasswordValid = await user.isPasswordCorrect(currentPassword);
+//   if (!isPasswordValid) {
+//     throw new apiError(401, 'Current password is incorrect');
+//   }
 
-  user.password = newPassword;
-  user.otp = undefined;
-  user.otpExpires = undefined;
-  await user.save();
+//   user.password = newPassword;
+//   await user.save();
 
-  res.status(200).json(new apiResponse(200, {}, 'Password changed successfully'));
-});
+//   res.status(200).json(new apiResponse(200, {}, 'Password changed successfully'));
+// });
 
 
 
