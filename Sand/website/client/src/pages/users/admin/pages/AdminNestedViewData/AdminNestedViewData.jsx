@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 const AdminNestedViewData = () => {
   const { formId } = useParams();
-  const [forms, setForms] = useState([]);
+  const [forms, setForms] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -15,7 +15,7 @@ const AdminNestedViewData = () => {
     const fetchNestedForms = async () => {
       try {
         const response = await axios.post(
-          "https://sand-backend.onrender.com/api/v1/admin/fetchnestedforms",
+          "http://localhost:8000/api/v1/admin/fetchnestedforms",
           { mainFormId: formId }
         );
         console.log("Response: ", response);
@@ -35,9 +35,6 @@ const AdminNestedViewData = () => {
       fetchNestedForms();
     }
   }, [formId]);
-
-  console.log(forms);
-
 
   return (
     <div className="form-details">

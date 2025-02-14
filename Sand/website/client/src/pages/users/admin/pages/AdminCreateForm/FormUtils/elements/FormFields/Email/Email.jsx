@@ -5,7 +5,7 @@ import './Email.css';
 import { setFullNameData } from '../actions/fullNameActions';
 import { v4 as uuidv4 } from 'uuid';
 
-const Email = ({ fullNameDataList, setFullNameData }) => {
+const Email = ({ fullNameDataList, setFullNameData, formField }) => {
   const [id] = useState(uuidv4()); // Generate a unique ID once
 
   const handleBlur = (event) => {
@@ -32,8 +32,8 @@ const Email = ({ fullNameDataList, setFullNameData }) => {
         type="email"
         name="emailTitle"
         className="email-title"
-        placeholder="Email"
-        onBlur={handleBlur} // Trigger save on losing focus
+        placeholder={formField?.title || "Email"} // Use formField.title if available
+        onBlur={handleBlur}
       />
       <input type="text" name="emailInput" className="email-input" />
     </div>

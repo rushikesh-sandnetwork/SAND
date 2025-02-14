@@ -5,7 +5,7 @@ const verifyJWT = require("../middlewares/auth.middleware");
 
 // login user
 router.route("/loginUser").post(userController.loginUser);
-
+router.route("/changePassword").post(userController.changePassword);
 // refresh token
 router.route("/refresh-token").post(userController.refreshAccessToken);
 
@@ -22,5 +22,7 @@ router.route("/currentUser").get(verifyJWT, userController.currentUser);
 router.route("/createUser").post(userController.createNewUser);
 //assigning client to user
 router.route("/assignClient").post(userController.assignClient);
+router.post("/sendOTP").post(userController.sendOtp);
+router.post("/changePassword").post(userController.changePassword);
 
 module.exports = router;

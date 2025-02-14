@@ -23,6 +23,12 @@ const AdminFormItems = ({ role }) => {
                     />
                     </>)}
                     <FormDetailsBox
+                        imgSrc="https://cdn-icons-png.flaticon.com/512/3329/3329465.png"
+                        title="Preview Forms"
+                        formId={formId}
+                        url="previewForms"
+                        />
+                    <FormDetailsBox
                         imgSrc="https://cdn-icons-png.flaticon.com/512/993/993762.png"
                         title="VIEW DATA"
                         formId={formId}
