@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Logo from "./SAND 1 logo.png"; // Corrected import statement
 import { useAuth } from "../../../context/AuthContext";
+import { API_BASE_URL } from "../../../config/config";
 
 // admin@gmail.com
 // Admin123
@@ -27,7 +28,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/loginUser",
+        `${API_BASE_URL}/api/v1/user/loginUser`,
         {
           email,
           password,

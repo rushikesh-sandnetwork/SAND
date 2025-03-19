@@ -5,7 +5,9 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000", // Replace with your client origin
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://your-frontend-domain.com']
+    : ['http://localhost:3000'],
   credentials: true, // Allow cookies or other credentials
 };
 
