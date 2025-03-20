@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { fetchAttendance, fetchPromoterForms, fetchFormFilledData, fillFormData, fetchPromoterAttendanceDetails, fillAttendancePunchIn, fillAttendancePunchOut, fetchPromoterDetails, promoterLogin, fetchFormField, fetchAllPromoters, createNewPromoter } from "../controllers/promoter.controller";
+import { fetchAttendance, fetchPromoterForms, fetchFormFilledData, fillFormData, fetchPromoterAttendanceDetails, fillAttendancePunchIn, fillAttendancePunchOut, fetchPromoterDetails, promoterLogin, fetchFormField, fetchAllPromoters, createNewPromoter } from "../controllers/promoter.controller.js";
 const router = Router();
 import { any, fields } from "../middlewares/multer.middleware";
 

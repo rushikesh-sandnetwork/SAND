@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = Router();
 import { fields } from "../middlewares/multer.middleware.js";
-import { createNestedForm, acceptRejectData, createNewClient, deleteClient, deleteCampaign, fetchClient, fetchAllClients, fetchAllClientSpecificCampaigns, fetchAllCampaigns, fetchCampaignDetails, createNewCampaign, createNewForm, assignCreatedForm, unassignCreatedForm, updateUserRights, fetchUserRights, fetchData, fetchNumberOfClientsAndCampaigns, fetchFormsForCampaigns, fetchNestedForms as _fetchNestedForms, assignCampaignToMis, unassignCampaignToMis, assignClientToManager, unassignClientToManager, fetchUsersByRole } from '../controllers/admins.controller.js';
-import { fetchNestedForms } from '../controllers/admins.controller';
+import { createNestedForm, acceptRejectData, createNewClient, deleteClient, deleteCampaign, fetchClient, fetchAllClients, fetchAllClientSpecificCampaigns, fetchAllCampaigns, fetchCampaignDetails, createNewCampaign, createNewForm, assignCreatedForm, unassignCreatedForm, updateUserRights, fetchUserRights, fetchData, fetchNumberOfClientsAndCampaigns, fetchFormsForCampaigns, fetchNestedForms , assignCampaignToMis, unassignCampaignToMis, assignClientToManager, unassignClientToManager, fetchUsersByRole } from '../controllers/admins.controller.js';
+// import { fetchNestedForms } from '../controllers/admins.controller';
 
 
 router.route("/createNestedForm").post(createNestedForm);
@@ -82,7 +82,7 @@ router.route("/fetchNumberOfClientsAndCampaigns").get(fetchNumberOfClientsAndCam
 router.route("/fetchFormsForGivenClient").post(fetchFormsForCampaigns);
 
 //fetch nested forms
-router.route("/fetchnestedforms").post(_fetchNestedForms);
+router.route("/fetchnestedforms").post(fetchNestedForms);
 
 //assign campaign to MIS and Manager
 router.route("/assignCampaignToMis").post(assignCampaignToMis);
