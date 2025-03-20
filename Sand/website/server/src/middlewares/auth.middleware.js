@@ -1,32 +1,33 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/user.model.js");
-
-const auth = async (req, res, next) => {
+const apiError = require("../utils/apiError.js");
+const asyncHandler = require("../utils/asyncHandler.js");
+const apiResponse = require("../utils/apiResponse.js");
+const jwt = require("jsonwebtoken")
+const User = require("../models/user.model.js")
+const verifyJWT = asyncHandler(async(req, _, next) => {
     try {
-        const token = req.headers.authorization?.replace('Bearer ', '');
+        const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
         
+        // console.log(token);
         if (!token) {
-            throw new Error('Authentication token missing');
+            throw new apiError(401, "Unauthorized request")
         }
-
-        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-        const user = await User.findOne({ _id: decoded._id });
-
+    
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    
+        const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
+    
         if (!user) {
-            throw new Error('User not found');
+            
+            throw new apiError(401, "Invalid Access Token")
         }
-
+    
         req.user = user;
-        req.token = token;
-        next();
+        next()
     } catch (error) {
-        console.error('Auth Error:', error.message);
-        res.status(401).json({ 
-            success: false, 
-            message: 'Please authenticate',
-            error: error.message 
-        });
+        throw new apiError(401, error?.message || "Invalid access token")
     }
-};
+    
+})
 
-module.exports = auth;
+
+module.exports = verifyJWT

@@ -4,36 +4,12 @@ var cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
-// Backend setup example (Express.js)
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000", // Replace with your client origin
+  credentials: true, // Allow cookies or other credentials
+};
 
-const session = require('express-session');
-
-app.use(session({
-  secret: 'your-secret-key',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: true, // For HTTPS
-    sameSite: 'none', // Required for cross-site cookies
-    maxAge: 24 * 60 * 60 * 1000 // 1 day
-  }
-}));
-app.use(cors({
-    origin: function(origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    credentials: true // Allow credentials
-}));
-
-app.options('*', cors()); // Enable preflight requests for all routes
+app.use(cors(corsOptions));
 
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
