@@ -15,7 +15,7 @@ const AdminViewAttendance = () => {
   const fetchAttendanceDetails = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/promoter/fetchPromoterAttendanceDetails",
+        "https://sand-6.onrender.com/api/v1/promoter/fetchPromoterAttendanceDetails",
         { email }
       );
 

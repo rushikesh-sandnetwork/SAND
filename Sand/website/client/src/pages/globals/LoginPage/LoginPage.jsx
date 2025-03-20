@@ -15,7 +15,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { fetchCurrentUser } = useAuth();
+  // const { fetchCurrentUser } = useAuth();
 
   const authenticateAndLogin = async () => {
     if (!email || !password) {

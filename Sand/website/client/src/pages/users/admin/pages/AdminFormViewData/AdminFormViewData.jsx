@@ -19,7 +19,7 @@ const AdminFormViewData = () => {
     setError(null);
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/promoter/fetchFormFilledData",
+        "https://sand-6.onrender.com/api/v1/promoter/fetchFormFilledData",
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ const AdminFormViewData = () => {
   const updateAcceptedData = async (itemId, accepted) => {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/v1/admin/updateAcceptedData",
+        "https://sand-6.onrender.com/api/v1/admin/updateAcceptedData",
         {
           method: "PATCH",
           headers: {

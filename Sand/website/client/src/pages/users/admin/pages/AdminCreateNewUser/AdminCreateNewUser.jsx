@@ -43,7 +43,7 @@ const AdminCreateNewUser = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/createUser",
+        "https://sand-6.onrender.com/api/v1/user/createUser",
         userData,
         {
           headers: {
