@@ -1,15 +1,28 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
-var cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000", // Replace with your client origin
-  credentials: true, // Allow cookies or other credentials
-};
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
-app.use(cors(corsOptions));
+app.use(cors({
+    origin: function(origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true
+}));
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
 
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
