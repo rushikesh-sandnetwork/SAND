@@ -52,7 +52,7 @@ const ManagerCreateNewClient = () => {
 
     try {
       const response = await axios.post(
-        "https://sand-6.onrender.com/api/v1/admin/createNewClient",
+        "https://sand-backend-kwqd.onrender.com/api/v1/admin/createNewClient",
         formData,
         {
           headers: {

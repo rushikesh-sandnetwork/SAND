@@ -1,5 +1,8 @@
-const mongoose = require("mongoose");
-const app = require("./app");
+import { connect } from "mongoose";
+import { listen } from "./app";
+import { config } from "dotenv";
+config();
+
 require("dotenv").config();
 
 (async () => {
@@ -7,7 +10,7 @@ require("dotenv").config();
     console.log("Attempting to connect to MongoDB...");
     console.log("Database URL:", process.env.DATABASE_URL);
 
-    const connection = await mongoose.connect(process.env.DATABASE_URL);
+    const connection = await connect(process.env.DATABASE_URL);
 
     console.log(
       "MongoDB connection established and the host is : ",
@@ -15,7 +18,7 @@ require("dotenv").config();
     );
 
     const port = process.env.PORT || 8080;
-    app.listen(port, () => {
+    listen(port, () => {
       console.log(
         `Express app is connected to SAND ONE & listening on port ${port}`
       );

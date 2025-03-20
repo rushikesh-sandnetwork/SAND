@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import Logo from "./SAND 1 logo.png"; // Corrected import statement
+import Logo from "./SAND 1 logo.png";
 import { useAuth } from "../../../context/AuthContext";
-import { API_BASE_URL } from "../../../config/config";
+import { API_BASE_URL, axiosInstance } from "../../../config/config";
 
 // admin@gmail.com
 // Admin123
@@ -27,16 +26,10 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api/v1/user/loginUser`,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post('/api/v1/user/loginUser', {
+        email,
+        password
+      });
 
       if (response.status === 200) {
         // await fetchCurrentUser();

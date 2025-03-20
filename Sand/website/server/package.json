@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "server",
   "version": "1.0.0",
   "description": "This is the server which will be used for SAND ONE",

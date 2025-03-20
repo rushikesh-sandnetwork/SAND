@@ -1,18 +1,24 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import corsOptions from './config/cors.config.js';
-const cookieParser = require("cookie-parser");
+import { FRONTEND_URL } from './constants.js';
 require("dotenv").config();
 
 const app = express();
 
-app.use(cors(corsOptions));
+const corsOptions = {
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
 
-app.use(express.json({ limit: "20mb" }));
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(express.static("public"));
-
-app.use(cookieParser());
 
 const userRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
