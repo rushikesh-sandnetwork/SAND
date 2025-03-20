@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { FRONTEND_URL } from './constants.js';
+// import { FRONTEND_URL } from './constants.js';
 require("dotenv").config();
 
 const app = express();
