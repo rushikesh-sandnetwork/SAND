@@ -1,15 +1,13 @@
-import { connect } from "mongoose";
-import { config } from "dotenv";
-import app from "./app.js";
+const mongoose = require("mongoose");
+const app = require("./app");
+require("dotenv").config();
 
-config();
-
-const startServer = async () => {
+(async () => {
   try {
     console.log("Attempting to connect to MongoDB...");
-    console.log("Database URL:", process.env.DATABASE_URL);
+    // console.log("Database URL:", process.env.DATABASE_URL);
 
-    const connection = await connect(process.env.DATABASE_URL);
+    const connection = await mongoose.connect(process.env.DATABASE_URL);
 
     console.log(
       "MongoDB connection established and the host is : ",
@@ -26,6 +24,4 @@ const startServer = async () => {
     console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);
   }
-};
-
-startServer();
+})();

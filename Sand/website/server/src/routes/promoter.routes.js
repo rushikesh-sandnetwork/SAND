@@ -1,48 +1,48 @@
-import { Router } from "express";
-import { fetchAttendance, fetchPromoterForms, fetchFormFilledData, fillFormData, fetchPromoterAttendanceDetails, fillAttendancePunchIn, fillAttendancePunchOut, fetchPromoterDetails, promoterLogin, fetchFormField, fetchAllPromoters, createNewPromoter } from "../controllers/promoter.controller.js";
+const { Router } = require("express");
+const promoterController = require("../controllers/promoter.controller");
 const router = Router();
-import { any, fields } from "../middlewares/multer.middleware";
+const upload = require("../middlewares/multer.middleware");
 
-router.route("/fetchAttendance").post(fetchAttendance);
-router.route("/fetchAllForms").post(fetchPromoterForms);
+router.route("/fetchAttendance").post(promoterController.fetchAttendance);
+router.route("/fetchAllForms").post(promoterController.fetchPromoterForms);
 
 router
   .route("/fetchFormFilledData")
-  .post(fetchFormFilledData);
+  .post(promoterController.fetchFormFilledData);
 router.post(
   "/fillFormData/:collectionName",
-  any(),
-  fillFormData
+  upload.any(),
+  promoterController.fillFormData
 );
 
 //Done
 router
   .route("/fetchPromoterAttendanceDetails")
-  .post(fetchPromoterAttendanceDetails);
+  .post(promoterController.fetchPromoterAttendanceDetails);
 router.route("/fillAttendancePunchIn").post(
-  fields([
+  upload.fields([
     {
       name: "loginPhoto",
       maxCount: 1,
     },
   ]),
-  fillAttendancePunchIn
+  promoterController.fillAttendancePunchIn
 );
 router.route("/fillAttendancePunchOut").post(
-  fields([
+  upload.fields([
     {
       name: "logOutPhoto",
       maxCount: 1,
     },
   ]),
-  fillAttendancePunchOut
+  promoterController.fillAttendancePunchOut
 );
 router
   .route("/fetchPromoterDetails")
-  .post(fetchPromoterDetails);
-router.route("/loginPromoter").post(promoterLogin);
-router.route("/fetchFormField").post(fetchFormField);
-router.route("/fetchPromoters").get(fetchAllPromoters);
+  .post(promoterController.fetchPromoterDetails);
+router.route("/loginPromoter").post(promoterController.promoterLogin);
+router.route("/fetchFormField").post(promoterController.fetchFormField);
+router.route("/fetchPromoters").get(promoterController.fetchAllPromoters);
 
-router.route("/registerNewPromoter").post(createNewPromoter);
-export default router;
+router.route("/registerNewPromoter").post(promoterController.createNewPromoter);
+module.exports = router;

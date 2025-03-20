@@ -1,8 +1,8 @@
-import apiError from "../utils/apiError.js";
-import asyncHandler from "../utils/asyncHandler.js";
-import apiResponse from "../utils/apiResponse.js";
-import { verify } from "jsonwebtoken";
-import { findById } from "../models/user.model.js";
+const apiError = require("../utils/apiError.js");
+const asyncHandler = require("../utils/asyncHandler.js");
+const apiResponse = require("../utils/apiResponse.js");
+const jwt = require("jsonwebtoken")
+const User = require("../models/user.model.js")
 const verifyJWT = asyncHandler(async(req, _, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
@@ -12,9 +12,9 @@ const verifyJWT = asyncHandler(async(req, _, next) => {
             throw new apiError(401, "Unauthorized request")
         }
     
-        const decodedToken = verify(token, process.env.ACCESS_TOKEN_SECRET)
+        const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     
-        const user = await findById(decodedToken?._id).select("-password -refreshToken")
+        const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
     
         if (!user) {
             
@@ -30,4 +30,4 @@ const verifyJWT = asyncHandler(async(req, _, next) => {
 })
 
 
-export default verifyJWT
+module.exports = verifyJWT

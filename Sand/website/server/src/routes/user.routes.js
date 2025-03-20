@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const userController = require("../controllers/users.controller");
 const router = Router();
-const verifyJWT = require("../middlewares/auth.middleware").default;
+const verifyJWT = require("../middlewares/auth.middleware");
 
 // login user
 router.route("/loginUser").post(userController.loginUser);

@@ -1,97 +1,97 @@
-import { Router } from "express";
+const { Router } = require("express");
 const router = Router();
-import { fields } from "../middlewares/multer.middleware.js";
-import { createNestedForm, acceptRejectData, createNewClient, deleteClient, deleteCampaign, fetchClient, fetchAllClients, fetchAllClientSpecificCampaigns, fetchAllCampaigns, fetchCampaignDetails, createNewCampaign, createNewForm, assignCreatedForm, unassignCreatedForm, updateUserRights, fetchUserRights, fetchData, fetchNumberOfClientsAndCampaigns, fetchFormsForCampaigns, fetchNestedForms , assignCampaignToMis, unassignCampaignToMis, assignClientToManager, unassignClientToManager, fetchUsersByRole } from '../controllers/admins.controller.js';
-// import { fetchNestedForms } from '../controllers/admins.controller';
+const upload = require("../middlewares/multer.middleware");
+const adminController = require('../controllers/admins.controller');
+const { fetchNestedForms } = require('../controllers/admins.controller');
 
 
-router.route("/createNestedForm").post(createNestedForm);
-router.route("/updateAcceptedData").patch(acceptRejectData);
+router.route("/createNestedForm").post(adminController.createNestedForm);
+router.route("/updateAcceptedData").patch(adminController.acceptRejectData);
 
 // Done----------
 // create new client 
 router.route("/createNewClient").post(
-    fields([
+    upload.fields([
         {
             name: "clientPhoto",
             maxCount: 1
         }
     ])
-    , createNewClient);
+    , adminController.createNewClient);
 
 
 // delete new client
-router.route("/deleteClient").delete(deleteClient);
+router.route("/deleteClient").delete(adminController.deleteClient);
 
 // delete campaign
-router.route("/deleteCampaign").delete(deleteCampaign);
+router.route("/deleteCampaign").delete(adminController.deleteCampaign);
 
 // fetchClient
-router.route("/fetchClient").post(fetchClient);
+router.route("/fetchClient").post(adminController.fetchClient);
 
 // fetch all client 
-router.route("/fetchAllClient").get(fetchAllClients);
+router.route("/fetchAllClient").get(adminController.fetchAllClients);
 
 
 // fetch all client specific campaigns
-router.route("/fetchAllCampaigns").post(fetchAllClientSpecificCampaigns);
+router.route("/fetchAllCampaigns").post(adminController.fetchAllClientSpecificCampaigns);
 
 // fetch last 4 campaigns
-router.route("/fetchLastCampaigns").get(fetchAllCampaigns);
+router.route("/fetchLastCampaigns").get(adminController.fetchAllCampaigns);
 
 
 // fetch campaign details
-router.route("/fetchCampaignDetails").post(fetchCampaignDetails);
+router.route("/fetchCampaignDetails").post(adminController.fetchCampaignDetails);
 
 
 // create new campaign
 router.route("/createNewCampaign").post(
-    fields([
+    upload.fields([
         {
             name: "campaignPhoto",
             maxCount: 1
         }
     ]),
-    createNewCampaign);
+    adminController.createNewCampaign);
 
 
 // create new form
-router.route("/createNewForm").post(createNewForm)
+router.route("/createNewForm").post(adminController.createNewForm)
 
 // assignCreatedForm
-router.route("/assignCreatedForms").post(assignCreatedForm);
+router.route("/assignCreatedForms").post(adminController.assignCreatedForm);
 
 
 // unassignCreatedForm
-router.route("/unassignCreatedForms").post(unassignCreatedForm);
+router.route("/unassignCreatedForms").post(adminController.unassignCreatedForm);
 
 
 // update user rights
-router.route("/updateUserRights").post(updateUserRights);
+router.route("/updateUserRights").post(adminController.updateUserRights);
 
 // fetch User Rights
-router.route("/fetchUserRight").post(fetchUserRights);
+router.route("/fetchUserRight").post(adminController.fetchUserRights);
 
 // fetch data from the form 
-router.route("/fetchDataFromCollection").post(fetchData)
+router.route("/fetchDataFromCollection").post(adminController.fetchData)
 
 // fetch number of clients and campaigns
-router.route("/fetchNumberOfClientsAndCampaigns").get(fetchNumberOfClientsAndCampaigns);
+router.route("/fetchNumberOfClientsAndCampaigns").get(adminController.fetchNumberOfClientsAndCampaigns);
 
 // fetch forms
-router.route("/fetchFormsForGivenClient").post(fetchFormsForCampaigns);
+router.route("/fetchFormsForGivenClient").post(adminController.fetchFormsForCampaigns);
 
 //fetch nested forms
-router.route("/fetchnestedforms").post(fetchNestedForms);
+router.route("/fetchnestedforms").post(adminController.fetchNestedForms);
 
 //assign campaign to MIS and Manager
-router.route("/assignCampaignToMis").post(assignCampaignToMis);
+router.route("/assignCampaignToMis").post(adminController.assignCampaignToMis);
 
-router.route("/unassignCampaignToMis").post(unassignCampaignToMis);
-router.route("/assignClientToManager").post(assignClientToManager);
+router.route("/unassignCampaignToMis").post(adminController.unassignCampaignToMis);
+router.route("/assignClientToManager").post(adminController.assignClientToManager);
 
-router.route("/unassignClientToManager").post(unassignClientToManager);
+router.route("/unassignClientToManager").post(adminController.unassignClientToManager);
 
-router.route("/fetchUsersByRole").post(fetchUsersByRole);
+router.route("/fetchUsersByRole").post(adminController.fetchUsersByRole);
 
-export default router;
+module.exports = router;

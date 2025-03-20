@@ -1,45 +1,32 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import { config } from 'dotenv';
-import userRouter from './routes/user.routes.js';
-import adminRouter from './routes/admin.routes.js';
-import promoterRouter from './routes/promoter.routes.js';
-import misRouter from './routes/mis.routes.js';
-import managerRouter from './routes/manager.routes.js';
-
-config();
-
+const express = require("express");
 const app = express();
+var cors = require("cors");
+const cookieParser = require("cookie-parser");
+require("dotenv").config();
 
 const corsOptions = {
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000", // Replace with your client origin
+  credentials: true, // Allow cookies or other credentials
 };
 
 app.use(cors(corsOptions));
-app.use(express.json());
-app.use(cookieParser());
 
+app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(express.static("public"));
 
-// API routes
+app.use(cookieParser());
+
+const userRouter = require("./routes/user.routes");
+const adminRouter = require("./routes/admin.routes");
+const promoterRouter = require("./routes/promoter.routes");
+const misRouter = require("./routes/mis.routes");
+const managerRouter = require("./routes/manager.routes");
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ 
-        success: false, 
-        message: 'Something went wrong!' 
-    });
-});
-
-export default app;
+module.exports = app;
