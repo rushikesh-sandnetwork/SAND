@@ -86,51 +86,56 @@ const assignClient = asyncHandler(async (req, res) => {
 });
 
 // Controller: Login User
-const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials"
+            });
+        }
 
-  if (!email || !password) {
-    throw new apiError(400, "Email and password are required");
-  }
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid credentials"
+            });
+        }
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new apiError(404, "User not found");
-  }
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
 
-  const isPasswordValid = await user.isPasswordCorrect(password);
-  if (!isPasswordValid) {
-    throw new apiError(401, "Invalid credentials");
-  }
+        // Set refresh token in HTTP-only cookie
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'deployment',
+            sameSite: 'none',
+            maxAge: 10 * 24 * 60 * 60 * 1000 // 10 days
+        });
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    user.email
-  );
-
-  const loggedInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
-
-  console.log("Secure ? :", process.env.NODE_ENV !== "development");
-
-  const options = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "none",
-  };
-
-  res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-      new apiResponse(
-        200,
-        { user: loggedInUser, accessToken, refreshToken },
-        "User logged in successfully"
-      )
-    );
-});
+        res.status(200).json({
+            success: true,
+            accessToken,
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error('Login Error:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error during login",
+            error: error.message
+        });
+    }
+};
 
 // Controller: Register User
 const registerUser = asyncHandler(async (req, res) => {
