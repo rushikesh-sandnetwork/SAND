@@ -1,15 +1,10 @@
-const express = require("express");
-const app = express();
-var cors = require("cors");
+import express from 'express';
+import cors from 'cors';
+import corsOptions from './config/cors.config.js';
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? ['https://your-frontend-domain.com']
-    : ['http://localhost:3000'],
-  credentials: true, // Allow cookies or other credentials
-};
+const app = express();
 
 app.use(cors(corsOptions));
 
