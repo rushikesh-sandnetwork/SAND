@@ -1,8 +1,14 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-// import { FRONTEND_URL } from './constants.js';
-require("dotenv").config();
+import { config } from 'dotenv';
+import userRouter from './routes/user.routes.js';
+import adminRouter from './routes/admin.routes.js';
+import promoterRouter from './routes/promoter.routes.js';
+import misRouter from './routes/mis.routes.js';
+import managerRouter from './routes/manager.routes.js';
+
+config();
 
 const app = express();
 
@@ -20,16 +26,20 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(express.static("public"));
 
-const userRouter = require("./routes/user.routes");
-const adminRouter = require("./routes/admin.routes");
-const promoterRouter = require("./routes/promoter.routes");
-const misRouter = require("./routes/mis.routes");
-const managerRouter = require("./routes/manager.routes");
-
+// API routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
 
-module.exports = app;
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ 
+        success: false, 
+        message: 'Something went wrong!' 
+    });
+});
+
+export default app;

@@ -1,8 +1,8 @@
-const { Router } = require("express");
+import { Router } from "express";
 const router = Router();
-const upload = require("../middlewares/multer.middleware");
-const managerController = require('../controllers/manager.controller');
+import upload from "../middlewares/multer.middleware";
+import { fetchManagerClients } from '../controllers/manager.controller';
 
-router.route("/fetchManagerClients").post(managerController.fetchManagerClients);
+router.route("/fetchManagerClients").post(fetchManagerClients);
 
-module.exports = router;
+export default router;

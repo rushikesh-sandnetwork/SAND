@@ -1,8 +1,8 @@
-const { Router } = require("express");
+import { Router } from "express";
 const router = Router();
-const upload = require("../middlewares/multer.middleware");
-const misController = require('../controllers/mis.controller');
+import upload from "../middlewares/multer.middleware";
+import { fetchMisCampaigns } from '../controllers/mis.controller';
 
-router.route("/fetchMisCampaigns").post(misController.fetchMisCampaigns);
+router.route("/fetchMisCampaigns").post(fetchMisCampaigns);
 
-module.exports = router;
+export default router;
