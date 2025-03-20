@@ -9,5 +9,9 @@ export const API_CONFIG = {
         'Content-Type': 'application/json'
     }
 };
-
-export const axiosInstance = axios.create(API_CONFIG);
+// In your config/config.js where axiosInstance is created
+export const axiosInstance = axios.create({
+    baseURL: "https://sand-backend-kwqd.onrender.com",
+    withCredentials: true, // 👈 Add this to send cookies
+    timeout: 10000
+  });

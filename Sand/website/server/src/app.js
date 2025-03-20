@@ -5,7 +5,20 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+// Backend setup example (Express.js)
 
+const session = require('express-session');
+
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true, // For HTTPS
+    sameSite: 'none', // Required for cross-site cookies
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  }
+}));
 app.use(cors({
     origin: function(origin, callback) {
         // Allow requests with no origin (like mobile apps or curl requests)
