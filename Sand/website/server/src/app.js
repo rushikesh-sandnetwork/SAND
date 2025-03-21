@@ -8,25 +8,31 @@ const app = express();
 
 // CORS Configuration
 const corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+  origin: process.env.ALLOWED_ORIGINS|| "http://localhost:3000",
   credentials: true,
 };
-app.use(cors(corsOptions));
-
+pp.use(cors({origin: function(origin, callback) 
+  {        
+    if (!origin) return callback(null, true);                
+    if (allowedOrigins.indexOf(origin) === -1) 
+      {            
+        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';            
+        return callback(new Error(msg), false);        
+      }        
+      return callback(null, true);    
+    },    
+    credentials: true}));
+    app.use((req, res, next) => {    
+      res.header("Access-Control-Allow-Credentials", "true");    
+      next();
+    });
+   
 // Middleware
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
-// // Serve static frontend files from 'client/dist'
-// app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// // Serve frontend for all other routes
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-// });
-
-// API Routes
 const userRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
 const promoterRouter = require("./routes/promoter.routes");
