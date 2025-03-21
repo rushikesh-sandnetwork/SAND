@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Logo from "SAND 1 logo.png"; // Corrected import statement
+import Logo from "./SAND 1 logo.png"; // Corrected import statement
 import { useAuth } from "../../../context/AuthContext";
 
 // admin@gmail.com

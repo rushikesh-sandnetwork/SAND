@@ -1,51 +1,35 @@
 const express = require("express");
+const path = require("path");
 const cors = require("cors");
-const path = require("path"); // Add this for proper path handling
-const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+const app = express();
 
-// Fix 1: Configure static files properly (single configuration)
-app.use(express.static(path.join(__dirname, "client/build"), {
-  setHeaders: (res, filePath) => {
-    if (filePath.endsWith(".js")) {
-      res.set("Content-Type", "text/javascript");
-    }
-  }
-}));
+// CORS Configuration
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000", // Replace with your client origin
+  credentials: true, // Allow cookies or other credentials
+};
+app.use(cors(corsOptions));
 
-// Fix 2: Add this if using client-side routing (e.g., React Router)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
-
-app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true
-}));
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
+// Middleware
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
-// Fix 3: Remove duplicate express.static() calls
-// (Keep only the one at the top)
+// Serve static files from 'dist'
+app.use(
+  express.static(path.join(__dirname, "dist"), {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".js")) {
+        res.setHeader("Content-Type", "application/javascript");
+      }
+    },
+  })
+);
 
-// Your routes
+// API Routes
 const userRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
 const promoterRouter = require("./routes/promoter.routes");
@@ -57,5 +41,14 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
+
+// Serve frontend for all other routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 module.exports = app;
