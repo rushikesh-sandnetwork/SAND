@@ -4,8 +4,9 @@ const app = express();
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+app.use(express.static('public'));
 app.use(cors({
     origin: function(origin, callback) {
         if (!origin) return callback(null, true);
@@ -36,7 +37,8 @@ app.use(
     setHeaders: (res, filePath) => {
       if (filePath.endsWith(".js")) {
         res.setHeader("Content-Type", "text/javascript");
-      } },
+      }
+},
 })
 );
 
