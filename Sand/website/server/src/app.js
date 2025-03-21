@@ -30,6 +30,17 @@ app.use(express.static("public"));
 
 app.use(cookieParser());
 
+
+app.use(
+  express.static("public", {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".js")) {
+        res.setHeader("Content-Type", "text/javascript");
+      } },
+})
+);
+
+
 const userRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
 const promoterRouter = require("./routes/promoter.routes");

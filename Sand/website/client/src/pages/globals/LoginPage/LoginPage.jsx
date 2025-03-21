@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
-import Logo from "./SAND 1 logo.png";
+import axios from "axios";
+import Logo from "SAND 1 logo.png"; // Corrected import statement
 import { useAuth } from "../../../context/AuthContext";
-import { API_BASE_URL, axiosInstance } from "../../../config/config";
 
 // admin@gmail.com
 // Admin123
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const { fetchCurrentUser } = useAuth();
+  const { fetchCurrentUser } = useAuth();
 
   const authenticateAndLogin = async () => {
     if (!email || !password) {
@@ -26,10 +26,16 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await axiosInstance.post('/api/v1/user/loginUser', {
-        email,
-        password
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/user/loginUser",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         // await fetchCurrentUser();
