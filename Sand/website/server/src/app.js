@@ -18,13 +18,13 @@ app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
-// Serve static frontend files from 'client/dist'
-app.use(express.static(path.join(__dirname, "../client/dist")));
+// // Serve static frontend files from 'client/dist'
+// app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// Serve frontend for all other routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-});
+// // Serve frontend for all other routes
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+// });
 
 // API Routes
 const userRouter = require("./routes/user.routes");
