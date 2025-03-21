@@ -6,27 +6,34 @@ require("dotenv").config();
 
 const app = express();
 
-// CORS Configuration
-const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS|| "http://localhost:3000",
-  credentials: true,
-};
-pp.use(cors({origin: function(origin, callback) 
-  {        
-    if (!origin) return callback(null, true);                
-    if (allowedOrigins.indexOf(origin) === -1) 
-      {            
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';            
-        return callback(new Error(msg), false);        
-      }        
-      return callback(null, true);    
-    },    
-    credentials: true}));
-    app.use((req, res, next) => {    
-      res.header("Access-Control-Allow-Credentials", "true");    
-      next();
-    });
-   
+// 1. Fix CORS Configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',') 
+  : ["http://localhost:3000"];
+
+app.use(cors({
+  origin: function(origin, callback) {        
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
+
+// 2. Add required CORS headers middleware
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 // Middleware
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
