@@ -16,4 +16,4 @@ root.render(
     </Provider>
   </Router>
 );
-export default root;
+
