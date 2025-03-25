@@ -19,7 +19,7 @@ const AdminAcceptedData = () => {
     setError(null);
     try {
       const response = await fetch(
-        "https://sand-backend-kwqd.onrender.com/api/v1/promoter/fetchFormFilledData",
+        "https://sand-dymk.onrender.com/api/v1/promoter/fetchFormFilledData",
         {
           method: "POST",
           headers: {

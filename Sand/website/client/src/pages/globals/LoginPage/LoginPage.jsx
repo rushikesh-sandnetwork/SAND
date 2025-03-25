@@ -27,7 +27,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "https://sand-backend-kwqd.onrender.com/api/v1/user/loginUser",
+        "https://sand-dymk.onrender.com/api/v1/user/loginUser",
         {
           email,
           password,

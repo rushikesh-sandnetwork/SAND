@@ -18,7 +18,7 @@ const CreatePromoterModal = memo(({ onClose, onCreate }) => {
 
     try {
       const response = await axios.post(
-        "https://sand-backend-kwqd.onrender.com/api/v1/promoter/registerNewPromoter",
+        "https://sand-dymk.onrender.com/api/v1/promoter/registerNewPromoter",
         {
           promoterName,
           promoterEmailId,

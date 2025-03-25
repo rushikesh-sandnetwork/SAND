@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://sand-backend-kwqd.onrender.com/api/v1',
+  baseURL: 'https://sand-dymk.onrender.com/api/v1',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

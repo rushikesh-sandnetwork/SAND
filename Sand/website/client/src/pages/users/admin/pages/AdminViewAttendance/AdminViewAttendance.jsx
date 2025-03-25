@@ -15,7 +15,7 @@ const AdminViewAttendance = () => {
   const fetchAttendanceDetails = async () => {
     try {
       const response = await axios.post(
-        "https://sand-backend-kwqd.onrender.com/api/v1/promoter/fetchPromoterAttendanceDetails",
+        "https://sand-dymk.onrender.com/api/v1/promoter/fetchPromoterAttendanceDetails",
         { email }
       );
 

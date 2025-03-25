@@ -12,7 +12,7 @@ const OverViewTileTwo = () => {
     const fetchCampaigns = async () => {
       try {
         const response = await axios.get(
-          "https://sand-backend-kwqd.onrender.com/api/v1/admin/fetchLastCampaigns"
+          "https://sand-dymk.onrender.com/api/v1/admin/fetchLastCampaigns"
         );
         setCampaigns(response.data.data); // Assuming the response structure is { data: { data: campaigns } }
         setLoading(false);

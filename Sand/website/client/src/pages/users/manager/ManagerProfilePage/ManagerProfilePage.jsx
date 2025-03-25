@@ -14,7 +14,7 @@ const ManagerProfilePage = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          "https://sand-backend-kwqd.onrender.com/api/v1/user/userDetails",
+          "https://sand-dymk.onrender.com/api/v1/user/userDetails",
           {
             method: "POST",
             headers: {
