@@ -34,6 +34,14 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, "public"))); // Change "public" to your frontend build folder
+
+// Handle unknown routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html")); // Change "public" to your frontend build folder
+});
+
 // Middleware
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
