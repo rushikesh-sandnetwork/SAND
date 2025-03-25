@@ -39,6 +39,7 @@ app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
+
 // Serve static files from React's build folder
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
@@ -65,7 +66,6 @@ app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
 
 module.exports = app;
