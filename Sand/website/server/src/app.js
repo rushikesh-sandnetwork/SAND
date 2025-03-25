@@ -40,19 +40,19 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
 
-// Serve static files from React's build folder
-app.use(express.static(path.join(__dirname, '../../client/dist')));
+// // Serve static files from React's build folder
+// app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-// Explicitly set MIME type for JavaScript files
-app.use('*.js', (req, res, next) => {
-  res.set('Content-Type', 'application/javascript');
-  next();
-});
+// // Explicitly set MIME type for JavaScript files
+// app.use('*.js', (req, res, next) => {
+//   res.set('Content-Type', 'application/javascript');
+//   next();
+// });
 
-// All other routes redirect to React
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
-});
+// // All other routes redirect to React
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
+// });
 
 const userRouter = require("./routes/user.routes");
 const adminRouter = require("./routes/admin.routes");
