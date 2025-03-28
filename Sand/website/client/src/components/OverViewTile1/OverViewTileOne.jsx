@@ -19,7 +19,7 @@ const OverViewTileOne = () => {
 
     try {
       const response = await axios.get(
-        "https://sand-dymk.onrender.com/api/v1/admin/fetchNumberOfClientsAndCampaigns"
+        "https://sand-pbmk.onrender.com/api/v1/admin/fetchNumberOfClientsAndCampaigns"
       );
 
       if (response.status === 200) {

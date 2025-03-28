@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 const FormBox = ({ form, formId }) => {
     const navigate = useNavigate();
 
-
     return (
         <div className="formBox">
             <h3>{form.collectionName}</h3> {/* Displaying the form's title */}

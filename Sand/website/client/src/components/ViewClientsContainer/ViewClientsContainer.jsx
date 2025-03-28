@@ -12,7 +12,7 @@ const ViewClientsContainer = ({ role }) => {
   const fetchClients = async () => {
     try {
       const response = await axios.get(
-        "https://sand-dymk.onrender.com/api/v1/admin/fetchAllClient"
+        "https://sand-pbmk.onrender.com/api/v1/admin/fetchAllClient"
       );
       setClients(response.data.data.reverse());
       setLoading(false);
@@ -28,7 +28,7 @@ const ViewClientsContainer = ({ role }) => {
     try {
       console.log(id);
       const response = await axios.post(
-        "https://sand-dymk.onrender.com/api/v1/manager/fetchManagerClients",{
+        "https://sand-pbmk.onrender.com/api/v1/manager/fetchManagerClients",{
           managerId:id,
         }
       );

@@ -19,7 +19,7 @@ const AdminFormViewData = () => {
     setError(null);
     try {
       const response = await fetch(
-        "https://sand-dymk.onrender.com/api/v1/promoter/fetchFormFilledData",
+        "https://sand-pbmk.onrender.com/api/v1/promoter/fetchFormFilledData",
         {
           method: "POST",
           headers: {
@@ -45,7 +45,7 @@ const AdminFormViewData = () => {
   const updateAcceptedData = async (itemId, accepted) => {
     try {
       const response = await fetch(
-        "https://sand-dymk.onrender.com/api/v1/admin/updateAcceptedData",
+        "https://sand-pbmk.onrender.com/api/v1/admin/updateAcceptedData",
         {
           method: "PATCH",
           headers: {

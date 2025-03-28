@@ -94,7 +94,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         );
 
         response = await axios.post(
-          "https://sand-dymk.onrender.com/api/v1/admin/createNewForm",
+          "https://sand-pbmk.onrender.com/api/v1/admin/createNewForm",
           formData
         );
       } else {
@@ -106,7 +106,7 @@ const DropArea = ({ onDrop, setFullNameData, deleteFullNameData }) => {
         console.log(formData);
 
         response = await axios.post(
-          "https://sand-dymk.onrender.com/api/v1/admin/createNestedForm",
+          "https://sand-pbmk.onrender.com/api/v1/admin/createNestedForm",
           formData
         );
       }

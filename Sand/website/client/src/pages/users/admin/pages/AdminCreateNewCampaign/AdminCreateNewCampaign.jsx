@@ -54,7 +54,7 @@ const AdminCreateNewCampaign = ({ setActiveTab }) => {
       formData.append("campaignPhoto", campaignPhoto);
 
       const response = await axios.post(
-        "https://sand-dymk.onrender.com/api/v1/admin/createNewCampaign",
+        "https://sand-pbmk.onrender.com/api/v1/admin/createNewCampaign",
         formData,
         {
           headers: {

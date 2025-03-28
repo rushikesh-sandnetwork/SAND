@@ -21,7 +21,7 @@ const SettingPage = () => {
     
 
     try {
-      const response = await axios.post('https://sand-dymk.onrender.com/api/v1/user/changePassword', {
+      const response = await axios.post('https://sand-pbmk.onrender.com/api/v1/user/changePassword', {
         id,
         currentPassword,
         newPassword,

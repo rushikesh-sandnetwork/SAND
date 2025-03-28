@@ -57,7 +57,7 @@ const AdminCreateNewClient = () => {
 
     try {
       const response = await axios.post(
-        "https://sand-dymk.onrender.com/api/v1/admin/createNewClient",
+        "https://sand-pbmk.onrender.com/api/v1/admin/createNewClient",
         formData,
         {
           headers: {

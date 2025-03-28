@@ -14,7 +14,7 @@ const MisProfilePage = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          "https://sand-dymk.onrender.com/api/v1/user/userDetails",
+          "https://sand-pbmk.onrender.com/api/v1/user/userDetails",
           {
             method: "POST",
             headers: {

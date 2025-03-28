@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sand-frontend
+    env: node
+    buildCommand: cd client && npm install && npm run build
+    startCommand: cd server && npm install && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_BASE_URL
+        value: https://sand-pbmk.onrender.com/api/v1
