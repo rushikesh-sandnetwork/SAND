@@ -1,6 +1,7 @@
 import "./App.css";
 import LoginPage from "./pages/globals/LoginPage/LoginPage";
-import { Routes, Route, Navigate } from "react-router-dom";
+// In your React app's entry file (e.g., App.js)
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import AdminLandingPage from "./pages/users/admin/pages/AdminLandingPage/AdminLandingPage";
 import AdminCreateForms from "./pages/users/admin/pages/AdminCreateForm/AdminCreateForms";
 import MisLandingPage from "./pages/users/mis/MisLandingPage/MisLandingPage";
@@ -28,6 +29,7 @@ const App = () => {
     return <div>Loading...</div>;
   }
   return (
+    <Router>
     <Routes>
       <Route
         path="/"
@@ -100,6 +102,7 @@ const App = () => {
       <Route path="/mis" element={<MisLandingPage />} />
       {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes >
+    </Router>
 
 
   );

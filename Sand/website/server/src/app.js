@@ -39,24 +39,27 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
 
-// Serve React static files
-app.use(express.static(path.join(__dirname, "client/dist")));
-
-// API Routes
+// API Routes (Register these BEFORE static files)
 app.use("/api/v1/user", require("./routes/user.routes"));
 app.use("/api/v1/admin", require("./routes/admin.routes"));
 app.use("/api/v1/promoter", require("./routes/promoter.routes"));
 app.use("/api/v1/mis", require("./routes/mis.routes"));
 app.use("/api/v1/manager", require("./routes/manager.routes"));
 
-// 404 Handler for API Routes
-app.use("/api", (req, res) => {
-  res.status(404).json({ error: "API endpoint not found" });
-});
+// Serve React static files (AFTER API routes)
+app.use(express.static(path.join(__dirname, "client/dist")));
 
-// 🔹 **Fix for React Refresh Issue**
+// Catch-all route for client-side routing (AFTER all other routes)
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+});
+// After API routes and static files
+app.use((req, res, next) => {
+  if (!req.path.startsWith("/api")) {
+    res.sendFile(path.join(__dirname, "client/dist", "index.html"));
+  } else {
+    next();
+  }
 });
 
 // Start Server
