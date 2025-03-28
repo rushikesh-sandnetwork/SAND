@@ -60,6 +60,14 @@ const promoterRouter = require("./routes/promoter.routes");
 const misRouter = require("./routes/mis.routes");
 const managerRouter = require("./routes/manager.routes");
 
+
+app.use(express.static(path.join(__dirname, 'client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
+
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
