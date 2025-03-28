@@ -53,6 +53,8 @@ app.use(express.static(path.join(__dirname, "client/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/dist", "index.html"));
 });
+console.log("Static files path:", path.join(__dirname, "client/dist"));
+// Should output: /absolute/path/to/website/client/dist
 // After API routes and static files
 app.use((req, res, next) => {
   if (!req.path.startsWith("/api")) {
