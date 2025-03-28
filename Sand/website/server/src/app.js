@@ -61,10 +61,8 @@ const misRouter = require("./routes/mis.routes");
 const managerRouter = require("./routes/manager.routes");
 
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+app.use((req, res, next) => {
+  res.status(404).json({ error: "API endpoint not found" });
 });
 
 
@@ -73,6 +71,15 @@ app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
+
+app.use(express.static(path.join(__dirname, 'client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
+});
+  app.use((req, res, next) => {
+    res.status(404).json({ error: "API endpoint not found" });
+  });
 
 
 
