@@ -1,18 +1,22 @@
-const express = require("express");
-const path = require("path");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-require("dotenv").config();
+import express from 'express';
+import path from 'path';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import { config } from 'dotenv';
+
+config();
 
 const app = express();
 
-// 1. Fix CORS Configuration
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(',') 
-  : ["http://localhost:3000"];
+// CORS Configuration
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
+  'http://localhost:3000',
+  'https://sand-01-kqjq.onrender.com',
+  'https://sand-pbmk.onrender.com'
+];
 
 app.use(cors({
-  origin: function(origin, callback) {        
+  origin: function(origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
@@ -22,50 +26,28 @@ app.use(cors({
     }
     return callback(null, true);
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept']
 }));
-
-// 2. Add required CORS headers middleware
-app.use((req, res, next) => {
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
 
 // Middleware
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.use(cookieParser());
 
+// Import routes using ES modules
+import userRouter from './routes/user.routes.js';
+import adminRouter from './routes/admin.routes.js';
+import promoterRouter from './routes/promoter.routes.js';
+import misRouter from './routes/mis.routes.js';
+import managerRouter from './routes/manager.routes.js';
 
-// // Serve static files from React's build folder
-// app.use(express.static(path.join(__dirname, '../../client/dist')));
-
-// // Explicitly set MIME type for JavaScript files
-// app.use('*.js', (req, res, next) => {
-//   res.set('Content-Type', 'application/javascript');
-//   next();
-// });
-
-// // All other routes redirect to React
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
-// });
-
-const userRouter = require("./routes/user.routes");
-const adminRouter = require("./routes/admin.routes");
-const promoterRouter = require("./routes/promoter.routes");
-const misRouter = require("./routes/mis.routes");
-const managerRouter = require("./routes/manager.routes");
-
+// Routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/promoter", promoterRouter);
 app.use("/api/v1/mis", misRouter);
 app.use("/api/v1/manager", managerRouter);
 
-
-
-module.exports = app;
+export default app;
