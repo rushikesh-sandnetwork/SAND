@@ -29,7 +29,7 @@ const App = () => {
     return <div>Loading...</div>;
   }
   return (
-    <Router>
+    // <Router>
     <Routes>
       <Route
         path="/"
@@ -102,7 +102,7 @@ const App = () => {
       <Route path="/mis" element={<MisLandingPage />} />
       {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes >
-    </Router>
+    // </Router>
 
 
   );
