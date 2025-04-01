@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "dist",
+    outDir: 'dist',
   },
   server: {
     port: 3000,
@@ -12,14 +12,11 @@ export default defineConfig({
       '/api': {
         target: 'https://sand-pbmk.onrender.com',
         changeOrigin: true,
-        secure: false
+        secure: false,
       }
     }
   },
-  resolve: {
-    alias: {
-      'react': 'react',
-      'react-dom': 'react-dom'
-    }
+  esbuild: {
+    jsxInject: `import React from 'react'`
   }
-});
+})
